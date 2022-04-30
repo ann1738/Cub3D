@@ -4,9 +4,6 @@ CFLAGS = -Wall -Werror -Wextra -c
 LINK_LIBFT = -Llibft -lft
 LIBFT_LIB = libft
 
-
-
-
 ifeq ($(shell uname -s), Darwin)
 	CFLAGS += -Imlx
 	LINK_MLX = -Lmlx_macos -lmlx -framework OpenGL -framework AppKit
@@ -20,19 +17,23 @@ endif
 MLX_STATIC_LIB = $(MLX_LIB)/libmlx.a
 LIBFT_STATIC_LIB = $(LIBFT_LIB)/libft.a
 
-SRC = main.c
+SRC = cub3d.c get_next_line.c temp_parser.c drawing.c minimap.c \
+      
 OBJ = $(SRC:%.c=%.o)
+DEP = $(SRC:%.c=%.d)
 
 all: $(NAME)
 
-$(NAME): obj $(addprefix obj/,$(OBJ)) $(LIBFT_STATIC_LIB) $(MLX_STATIC_LIB)
+-include $(addprefix dep/,$(DEP))
+
+$(NAME): obj dep $(addprefix obj/,$(OBJ)) $(LIBFT_STATIC_LIB) $(MLX_STATIC_LIB)
 	@printf "\e[92mLinking..\n\e[95m"
 	$(CC) $(addprefix obj/,$(OBJ)) $(LINK_MLX) $(LINK_LIBFT) -o $(NAME)
 	@printf "\e[92mCompilation and Linking Done!\e[0m\n"
 
 obj/%.o: src/%.c
 	@printf "\e[92mCompiling cub3d..\n\e[94m"
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ -MMD -MP -MF $(@:obj/%.o=dep/%.d)
 
 $(LIBFT_STATIC_LIB):
 	@printf "\e[92mCompiling libft..\e[0m\n"
@@ -45,11 +46,14 @@ $(MLX_STATIC_LIB):
 obj:
 	mkdir obj
 
+dep:
+	mkdir dep
+
 clean:
 	@printf "\e[93mCleaning..\e[0m\n"
 	@make -sC $(LIBFT_LIB) clean
 	@make -sC $(MLX_LIB) clean
-	@rm -f $(addprefix obj/,$(OBJ))
+	@rm -f $(addprefix obj/,$(OBJ)) $(addprefix dep/,$(DEP))
 
 fclean: clean
 	@printf "\e[92mCleaning..\e[0m\n"
