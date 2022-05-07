@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   for_cub.c                                          :+:      :+:    :+:   */
+/*   temp_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 20:25:26 by ann               #+#    #+#             */
-/*   Updated: 2022/04/30 12:10:32 by ann              ###   ########.fr       */
+/*   Updated: 2022/04/30 14:24:57 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ char	**save_map(char **map, char *file, int x)
 	int	fd;
 
 	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("%sError: invalid file%s\n", RED, RESET);
+		exit(1);
+	}
 	map = (char **)malloc((x + 1) * sizeof(char *));
 	if (!map)
 		exit(1);
@@ -28,6 +33,13 @@ char	**save_map(char **map, char *file, int x)
 	printf("x = %d\n", x);
 	close(fd);
 	return (map);
+}
+
+int	get_y(char **map)
+{
+	int count = -1;
+	while (map[++count]);
+	return (count);
 }
 
 int	get_x(char *file)

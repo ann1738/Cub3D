@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 11:22:36 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/02/14 05:20:45 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/07 17:30:06 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_variables
 
 /* *************************** int return ************************** */
 
+int		abs(int x);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isalnum(int c);
@@ -79,6 +80,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 /* ************************** void return ************************** */
 
+void	ft_swap(int *a, int *b);
 void	ft_bzero(void *s, size_t n);
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);

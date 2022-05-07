@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/04/30 13:09:15 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/07 21:03:46 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@
 # define LIGHT_BLUE3	"\033[3;36m"
 
 # define HX_WHITE 0xFFFFFF
+# define HX_OFF_WHITE 0xBEBEBE
+# define HX_PASTEL_PINK 0xF8C8DC
+# define HX_PASTEL_GREEN 0xC1E1C1
+# define HX_GRASS_GREEN 0x7CFC00
+# define HX_GREEN 0x86DC3D
+# define HX_BLACK 0x000000
+# define HX_RED 0xFF0000
+# define HX_BLUE 0x0000FF
+
+# define MINI_BG_COLOR HX_GREEN
+# define MINI_PLAYER_COLOR HX_BLUE
+# define MINI_WALL_COLOR HX_PASTEL_PINK
+# define RAY_COLOR HX_RED
 
 /* ----------------------- > >> Macros << < ----------------------- */
 
@@ -74,13 +87,56 @@
 # define N "N"
 # define S "S"
 
+//YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
+
+#ifdef linux
+
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
+# define LEFT_KEY 65363
+# define RIGHT_KEY 65361
+# define ESC_KEY 65307
+
+#endif
+
+#ifdef macos //needs to be checked
+	# define W_KEY 18
+	# define A_KEY 30
+	# define S_KEY 31
+	# define D_KEY 33
+#endif
+
+# define MOVEMENT_AMOUNT 5
+# define ROTATION_AMOUNT 0.05
+# define MINI_PLAYER_ICON_SIZE 5
+
 /* ----------------------- > >> Struct << < ----------------------- */
 
 typedef struct s_coord
 {
-	int x;
-	int y;
-} t_coord;
+	int				x;
+	int				y;
+	unsigned int	color;
+}	t_coord;
+
+typedef struct s_vector
+{
+	double			x;
+	double			y;
+}	t_vector;
+
+// typedef struct s_player
+// {
+	
+// }
+
+typedef struct s_bresenham{
+	int	dy;
+	int	dx;
+	int	p;
+}	t_bresenham;
 
 typedef struct s_main
 {
@@ -92,8 +148,27 @@ typedef struct s_main
 	int		bpp;
 	int		endian;
 	int		size_line;
-	//
-} t_main;
+	//parse
+	char	**map;
+	int		map_width;
+	int		map_height;
+	//minimap
+	int		mini_width_unit;
+	int		mini_height_unit;
+	//line
+	t_bresenham *draw;
+	//player
+	t_coord		player_position;
+	t_coord		player_map_position;
+
+	t_vector	player_direction;
+	t_vector	camera_plane;
+
+	t_coord		step;
+	t_vector	ray_direction;
+	t_vector	side_distance;
+	t_vector	delta_distance; //length from one x/y wall/side to another 
+}	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
 
@@ -103,6 +178,7 @@ char	*get_next_line(int fd);
 
 /* -------------- ** temp parse ** -------------- */
 
+int		get_y(char **map);
 int		get_x(char *file);
 char	**save_map(char **map, char *file, int x);
 
@@ -110,5 +186,27 @@ char	**save_map(char **map, char *file, int x);
 
 void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
+void	draw_circle(int radius, t_coord const *origin, t_main *s);
+
+/* --------------- ** minimap ** ---------------- */
+
+void	draw_minimap(t_main *s);
+void	update_minimap(t_main *s);
+
+/* ---------------- ** hooks ** ----------------- */
+
+int		key_hooks(int keycode, t_main *s);
+int		close_x(int keycode, t_main *s);
+
+void	rotate_coor(double *x, double *y, double angle);
+
+/* --------------- ** ray cast ** --------------- */
+
+void	cast_rays(t_main *s);
+
+/* ---------------- ** line ** ------------------ */
+
+void	draw_line(t_coord start, t_coord end, t_main *s);
+
 
 #endif
