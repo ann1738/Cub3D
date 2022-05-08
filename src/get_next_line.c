@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:11:38 by ann               #+#    #+#             */
-/*   Updated: 2022/04/30 12:13:05 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 17:42:21 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_next_line(int fd)
 {
 	char	*ret;
 	char	temp[2];
-	int 	check;
+	int		check;
 
 	ret = 0;
 	temp[0] = 0;
@@ -79,7 +79,7 @@ char	*get_next_line(int fd)
 	{
 		check = read(fd, temp, 1);
 		if (check == -1)
-			return(0);
+			return (0);
 		else if (!check)
 			return (ret);
 		ret = join_with_temp(ret, temp);
@@ -88,16 +88,3 @@ char	*get_next_line(int fd)
 	}
 	return (ret);
 }
-
-// int main()
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	// line = get_next_line(fd);
-// 	for (line = get_next_line(fd); line; line = get_next_line(fd))
-// 	{
-// 		printf("%s", line);
-// 	}
-// }

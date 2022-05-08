@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/07 12:54:50 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 17:40:11 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,19 @@ void	draw_rect(int width, int height, t_coord const *origin, t_main *s)
 	}
 }
 
-
 void	draw_circle(int radius, t_coord const *origin, t_main *s)
 {
 	double	angle;
 
-	for (; radius >= 0; radius--)
+	while (radius >= 0)
 	{
 		angle = 0;
 		while (angle <= 360)
 		{
-			put_pixel(origin->x + (int)(radius * cos(angle)), origin->y + (int)(radius * sin(angle)), origin->color, s);
+			put_pixel(origin->x + (int)(radius * cos(angle)), \
+			origin->y + (int)(radius * sin(angle)), origin->color, s);
 			angle += 0.05;
 		}
+		--radius;
 	}
 }

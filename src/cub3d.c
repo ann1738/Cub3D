@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/07 01:12:13 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 23:26:53 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 static void	init_struct(t_main *s)
 {	
+	ft_bzero(s, sizeof(t_main));
 	s->mlx = mlx_init();
 	s->mlx_window = mlx_new_window(s->mlx, WINDOW_X, WINDOW_Y, "cub3d");
 	s->mlx_image = mlx_new_image(s->mlx, WINDOW_X, WINDOW_Y);
 	s->image_address = mlx_get_data_addr(s->mlx_image, &s->bpp, &s->size_line, &s->endian);
-	mlx_do_key_autorepeatoff(s->mlx);
+	// mlx_do_key_autorepeatoff(s->mlx);
 	mlx_do_key_autorepeaton(s->mlx);
 }
 
@@ -35,10 +36,16 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		return (write(2, "Invalid\n", 8));
-	ft_bzero(&s, sizeof(t_main));
+	//initiate struct
 	init_struct(&s);
+	//parse map
 	temp_parse(argv[1], &s);
+	//draw map
 	draw_minimap(&s);
+	//cast rays
+	cast_rays(&s);
+	s.player_map_position.x = (int)s.player_position.x;
+	s.player_map_position.y = (int)s.player_position.y;
 
 	mlx_put_image_to_window(s.mlx, s.mlx_window, s.mlx_image, 0, 0);
 	mlx_key_hook(s.mlx_window, key_hooks, &s);

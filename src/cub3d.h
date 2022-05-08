@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/07 21:03:46 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 22:53:32 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@
 
 # define BUFFER_SIZE 1
 
-# define N "N"
-# define S "S"
-
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
 #ifdef linux
@@ -108,8 +105,8 @@
 	# define D_KEY 33
 #endif
 
-# define MOVEMENT_AMOUNT 5
-# define ROTATION_AMOUNT 0.05
+# define MOVEMENT_AMOUNT 0.1
+# define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 5
 
 /* ----------------------- > >> Struct << < ----------------------- */
@@ -158,16 +155,25 @@ typedef struct s_main
 	//line
 	t_bresenham *draw;
 	//player
-	t_coord		player_position;
+	//player position based on the coordinate of which grid box the player is in
 	t_coord		player_map_position;
-
+	//player position based on the coordinate of which grid box the player is in but with decimal (to show within the box)
+	t_vector	player_position; 
+	//player direction from the player position
+	double		player_angle;
 	t_vector	player_direction;
+	// distance of the ray (accounting for its direction) to traverse one x and y unit
+	double	delta_distance_x;
+	double	delta_distance_y;
+	// side length: the length of the ray to hit the x or y side of a wall
+	double	side_length_x;
+	double	side_length_y;
+	double	final_side_length;
+	
 	t_vector	camera_plane;
 
 	t_coord		step;
 	t_vector	ray_direction;
-	t_vector	side_distance;
-	t_vector	delta_distance; //length from one x/y wall/side to another 
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */

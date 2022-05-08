@@ -6,7 +6,7 @@
 /*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:52:46 by ann               #+#    #+#             */
-/*   Updated: 2022/05/07 17:31:13 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 17:43:41 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ t_coord *temp, t_main *s)
 	while (start->x <= end->x)
 	{
 		if (s->draw->dy < 0)
-			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), RAY_COLOR, s);
+			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), \
+			RAY_COLOR, s);
 		else if (s->draw->dx < 0)
-			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, RAY_COLOR, s);
+			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, \
+			RAY_COLOR, s);
 		else
 			put_pixel(start->x, start->y, RAY_COLOR, s);
 		(start->x)++;
@@ -43,9 +45,11 @@ t_coord *temp, t_main *s)
 	while (start->y <= end->y)
 	{
 		if (s->draw->dy < 0)
-			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), RAY_COLOR, s);
+			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), \
+			RAY_COLOR, s);
 		else if (s->draw->dx < 0)
-			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, RAY_COLOR, s);
+			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, \
+			RAY_COLOR, s);
 		else
 			put_pixel(start->x, start->y, RAY_COLOR, s);
 		(start->y)++;
