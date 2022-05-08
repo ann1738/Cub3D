@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/04/30 13:09:15 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/08 22:17:26 by Alia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,35 @@ typedef struct s_coord
 	int y;
 } t_coord;
 
+typedef struct s_pars
+{
+	int		map_w;
+	int		map_h;
+
+	bool	extra;
+	bool	n;
+	bool	s;
+	bool	w;
+	bool	e;
+	bool	f;
+	bool	c;
+
+	char	*n_texture;
+	char	*s_texture;
+	char	*w_texture;
+	char	*e_texture;
+
+	char	*f_color_rgb;
+	int		f_color_rgb_int[3];
+	char	*c_color_rgb;
+	int		c_color_rgb_int[3];
+
+	char	f_color_hex[7];
+	char	c_color_hex[7];
+
+	char	**full_file;
+}	t_pars;
+
 typedef struct s_main
 {
 	//mlx info
@@ -97,17 +126,28 @@ typedef struct s_main
 
 /* --------------------- > >> Prototypes << < --------------------- */
 
-/* ----------------- ** gnl ** ------------------ */
+/* ----------- ** check user input ** ------------ */
+void	user_input_check(int argc, char **argv);
 
+/* ----------- ** save check map ** ------------- */
+void	get_max_x_y(char *file_path, t_pars *p);
+void	remove_nl(char *str);
+
+/* ----------- ** full map save ** ------------- */
+void	init_map_save(char *file_path, t_pars *p);
+
+/* ------------- ** rgb to hex ** -------------- */
+void	rgb_char_to_int(char *char_rgb, int int_rgb[3]);
+void	rgb_to_hex(int rgb_int[3], char *hex);
+
+/* ----------------- ** gnl ** ------------------ */
 char	*get_next_line(int fd);
 
 /* -------------- ** temp parse ** -------------- */
-
 int		get_x(char *file);
 char	**save_map(char **map, char *file, int x);
 
 /* --------------- ** drawing ** ---------------- */
-
 void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
 
