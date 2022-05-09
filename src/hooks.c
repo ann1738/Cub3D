@@ -3,32 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 23:31:27 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 14:28:53 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+//make this better.. it still doesn't work properly on open edges
+
 bool	check_collision(double change_x, double change_y, t_main *s)
 {
 	t_vector temp_position;
 	t_coord temp_map_position;
+	double	temp_change;
 
-	temp_map_position.x = s->player_map_position.x;
-	temp_map_position.y = s->player_map_position.y;
-	temp_position.x = s->player_position.x + change_x + (MINI_PLAYER_ICON_SIZE / s->mini_width_unit);
-	temp_position.y = s->player_position.y + change_y + (MINI_PLAYER_ICON_SIZE / s->mini_height_unit);
-	if (temp_position.x > temp_map_position.x + 1)
-		++temp_map_position.x;
-	else if (temp_position.x < temp_map_position.x)
-		--temp_map_position.x;
-	if (temp_position.y > temp_map_position.y + 1)
-		++temp_map_position.y;
-	else if (temp_position.y < temp_map_position.y)
-		--temp_map_position.y;
+	printf("%lf\n", MINI_PLAYER_ICON_SIZE / (double)s->mini_width_unit);
+	if (change_x != 0)
+	{
+		if (change_x > 0)
+			change_x += MINI_PLAYER_ICON_SIZE / (double)s->mini_width_unit;
+		else if (change_x < 0)
+			change_x -= MINI_PLAYER_ICON_SIZE / (double)s->mini_width_unit;
+		change_y = MINI_PLAYER_ICON_SIZE / (double)s->mini_height_unit;
+		temp_change = -MINI_PLAYER_ICON_SIZE / (double)s->mini_height_unit;
+	}
+	else
+	{
+		if (change_y > 0)
+			change_y += MINI_PLAYER_ICON_SIZE / (double)s->mini_height_unit;
+		else if (change_y < 0)
+			change_y -= MINI_PLAYER_ICON_SIZE / (double)s->mini_height_unit;
+		change_x = MINI_PLAYER_ICON_SIZE / (double)s->mini_width_unit;
+		temp_change = -MINI_PLAYER_ICON_SIZE / (double)s->mini_width_unit;
+	}
+	temp_position.x = s->player_position.x + change_x;
+	temp_position.y = s->player_position.y + change_y;
+	temp_map_position.x = (int)temp_position.x;
+	temp_map_position.y = (int)temp_position.y;
+	if (s->map[temp_map_position.y][temp_map_position.x] == '1')
+		return (true);
+	if (change_x != 0)
+	{
+		temp_position.x = s->player_position.x + change_x;
+		temp_position.y = s->player_position.y + temp_change;
+	}
+	else
+	{
+		temp_position.y = s->player_position.y + change_y;
+		temp_position.x = s->player_position.x + temp_change;
+	}
+	temp_map_position.x = (int)temp_position.x;
+	temp_map_position.y = (int)temp_position.y;
 	if (s->map[temp_map_position.y][temp_map_position.x] == '1')
 		return (true);
 	return (false);
@@ -41,14 +69,8 @@ void	movement(double change_x, double change_y, t_main *s)
 		return ;
 	s->player_position.x += change_x;
 	s->player_position.y += change_y;
-	if (s->player_position.x > s->player_map_position.x + 1)
-		++s->player_map_position.x;
-	else if(s->player_position.x < s->player_map_position.x)
-		--s->player_map_position.x;
-	if (s->player_position.y > s->player_map_position.y)
-		s->player_map_position.y++;
-	else if(s->player_position.y < s->player_map_position.y)
-		--s->player_map_position.y;
+	s->player_map_position.x = (int)s->player_position.x;
+	s->player_map_position.y = (int)s->player_position.y;
 	ft_bzero(s->image_address, WINDOW_X * WINDOW_Y);
 	update_minimap(s);
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
@@ -58,7 +80,7 @@ void	rotate(double change_angle, t_main *s)
 {
 	ft_bzero(s->image_address, WINDOW_X * WINDOW_Y);
 	rotate_coor(&s->camera_plane.x, &s->camera_plane.y, change_angle);
-	rotate_coor(&s->player_direction.x, &s->player_direction.y, change_angle);
+	// rotate_coor(&s->player_direction.x, &s->player_direction.y, change_angle);
 	s->player_angle += change_angle;
 	update_minimap(s);
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);	
@@ -81,6 +103,7 @@ int	key_hooks(int keycode, t_main *s)
 		rotate(ROTATION_AMOUNT, s);
 	else if (keycode == ESC_KEY)
 		close_x(0, s);
+	// printf("%lf \n", s->player_angle); 	
 	return (1);
 }
 

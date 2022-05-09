@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 22:53:32 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 14:01:39 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@
 
 #endif
 
-#ifdef macos //needs to be checked
-	# define W_KEY 18
-	# define A_KEY 30
-	# define S_KEY 31
-	# define D_KEY 33
+#ifdef __MACH__
+	# define W_KEY 13
+	# define A_KEY 0
+	# define S_KEY 1
+	# define D_KEY 2
+	# define LEFT_KEY 123
+	# define RIGHT_KEY 124
+	# define ESC_KEY 53
 #endif
 
 # define MOVEMENT_AMOUNT 0.1
@@ -157,11 +160,12 @@ typedef struct s_main
 	//player
 	//player position based on the coordinate of which grid box the player is in
 	t_coord		player_map_position;
+	t_coord		ray_map_position;
 	//player position based on the coordinate of which grid box the player is in but with decimal (to show within the box)
 	t_vector	player_position; 
 	//player direction from the player position
 	double		player_angle;
-	t_vector	player_direction;
+	// t_vector	player_direction;
 	// distance of the ray (accounting for its direction) to traverse one x and y unit
 	double	delta_distance_x;
 	double	delta_distance_y;

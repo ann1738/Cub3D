@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 23:26:53 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 14:33:40 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 	draw_minimap(&s);
 	//cast rays
 	cast_rays(&s);
-	s.player_map_position.x = (int)s.player_position.x;
-	s.player_map_position.y = (int)s.player_position.y;
+	// s.player_map_position.x = (int)s.player_position.x;
+	// s.player_map_position.y = (int)s.player_position.y;
 
 	mlx_put_image_to_window(s.mlx, s.mlx_window, s.mlx_image, 0, 0);
 	mlx_key_hook(s.mlx_window, key_hooks, &s);

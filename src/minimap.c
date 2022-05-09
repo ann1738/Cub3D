@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 23:26:29 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 14:31:44 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	init_n_draw_player(int x, int y, t_main *s)
 	s->player_map_position.x = x;
 	s->player_map_position.y = y;
 	//player direction
-	s->player_direction.x = 0;
-	s->player_direction.y = 1;
-	s->player_angle = M_PI * 0.75;
+	// s->player_direction.x = 0;
+	// s->player_direction.y = 1;
+	s->player_angle = M_PI_4 * 4;
 	temp.x = s->player_position.x * s->mini_width_unit; 
 	temp.y = s->player_position.y * s->mini_height_unit;
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
+	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
 	// intialize camera plane *
 	s->camera_plane.x = 0;
 	s->camera_plane.y = 0.66;
@@ -69,9 +70,7 @@ void	draw_minimap(t_main *s)
 				//draw player icon
 				init_n_draw_player(x, y, s);
 			}
-			printf("%d ", s->map[y][x]);
 		}
-		printf("\n");
 	}
 }
 
@@ -106,10 +105,10 @@ void	update_minimap(t_main *s)
 	temp.y = s->player_position.y * s->mini_height_unit;
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
-	s->player_map_position.x = (int)s->player_position.x;
-	s->player_map_position.y = (int)s->player_position.y;
+	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
+	// s->player_map_position.x = (int)s->player_position.x;
+	// s->player_map_position.y = (int)s->player_position.y;
 	cast_rays(s);
-	s->player_map_position.x = (int)s->player_position.x;
-	s->player_map_position.y = (int)s->player_position.y;
-
+	// s->player_map_position.x = (int)s->player_position.x;
+	// s->player_map_position.y = (int)s->player_position.y;
 }

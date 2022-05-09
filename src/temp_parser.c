@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 20:25:26 by ann               #+#    #+#             */
-/*   Updated: 2022/04/30 14:24:57 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 12:56:22 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	**save_map(char **map, char *file, int x)
 	while (i < x)
 		map[i++] = get_next_line(fd);
 	map[i] = 0;
-	printf("x = %d\n", x);
 	close(fd);
 	return (map);
 }
