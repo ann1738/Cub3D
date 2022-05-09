@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 14:33:40 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 17:03:32 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ void	temp_parse(char *path, t_main *s)
 	s->map_height = get_y(s->map);
 }
 
+//to do
+//change the player icon size to scale with the map
+//change the players movement to change with the map too 
+
 int main(int argc, char **argv)
 {
 	t_main	s;
@@ -48,7 +52,7 @@ int main(int argc, char **argv)
 	// s.player_map_position.y = (int)s.player_position.y;
 
 	mlx_put_image_to_window(s.mlx, s.mlx_window, s.mlx_image, 0, 0);
-	mlx_key_hook(s.mlx_window, key_hooks, &s);
+	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
 	mlx_loop(s.mlx);
 }

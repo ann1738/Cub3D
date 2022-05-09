@@ -6,13 +6,18 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 14:31:44 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:26:22 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_n_draw_player(int x, int y, t_main *s)
+double	deg_to_rad(double deg)
+{
+	return(deg * (M_PI / 180.0));
+}
+
+void	init_n_draw_player(int x, int y, double start_angle, t_main *s)
 {
 	t_coord	temp;
 
@@ -23,15 +28,17 @@ void	init_n_draw_player(int x, int y, t_main *s)
 	//player direction
 	// s->player_direction.x = 0;
 	// s->player_direction.y = 1;
-	s->player_angle = M_PI_4 * 4;
+	s->player_angle = start_angle;
+	// intialize camera plane * cos() and sin() are flipped bec camera_plane is perpendicular to the player_direction vector
+	s->camera_plane.x = tan(deg_to_rad(FOV_DEG / 2.0)) * sin(s->player_angle);
+	s->camera_plane.y = tan(deg_to_rad(FOV_DEG / 2.0)) * cos(s->player_angle);
+	printf("camera_plane.x = %lf, camera_plane.y = %lf\n", s->camera_plane.x, s->camera_plane.y);
 	temp.x = s->player_position.x * s->mini_width_unit; 
 	temp.y = s->player_position.y * s->mini_height_unit;
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
 	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
-	// intialize camera plane *
-	s->camera_plane.x = 0;
-	s->camera_plane.y = 0.66;
+
 }
 
 void	draw_minimap(t_main *s)
@@ -50,7 +57,7 @@ void	draw_minimap(t_main *s)
 	while(++y < s->map_height)
 	{
 		x = -1;
-		while (++x < s->map_width)
+		while (++x < s->map_width && s->map[y][x])
 		{
 			temp.x = x * s->mini_width_unit + 1;
 			temp.y = y * s->mini_height_unit + 1;
@@ -58,18 +65,19 @@ void	draw_minimap(t_main *s)
 			//to comply with norm either make function that has cases or one that uses function pointers
 			if (s->map[y][x] == '1')
 				draw_rect(s->mini_width_unit - 1, s->mini_height_unit - 1, &temp, s);
-			else if (s->map[y][x] == '0')
+			else
 			{
 				temp.color = HX_WHITE;
 				draw_rect(s->mini_width_unit - 1, s->mini_height_unit - 1, &temp, s);
 			}
-			else if (s->map[y][x] == 'N')
-			{
-				temp.color = HX_WHITE;
-				draw_rect(s->mini_width_unit - 1, s->mini_height_unit - 1, &temp, s);
-				//draw player icon
-				init_n_draw_player(x, y, s);
-			}
+			if (s->map[y][x] == 'N')
+				init_n_draw_player(x, y, NORTH, s);
+			else if (s->map[y][x] == 'S')
+				init_n_draw_player(x, y, SOUTH, s);
+			else if (s->map[y][x] == 'W')
+				init_n_draw_player(x, y, WEST, s);
+			else if (s->map[y][x] == 'E')
+				init_n_draw_player(x, y, EAST, s);
 		}
 	}
 }
@@ -85,7 +93,7 @@ void	update_minimap(t_main *s)
 	while(++y < s->map_height)
 	{
 		x = -1;
-		while (++x < s->map_width)
+		while (++x < s->map_width && s->map[y][x])
 		{
 			temp.x = x * s->mini_width_unit + 1;
 			temp.y = y * s->mini_height_unit + 1;
@@ -93,7 +101,7 @@ void	update_minimap(t_main *s)
 			//to comply with norm either make function that has cases or one that uses function pointers
 			if (s->map[y][x] == '1')
 				draw_rect(s->mini_width_unit - 1, s->mini_height_unit - 1, &temp, s);
-			else
+			else if (s->map[y][x] != ' ')
 			{
 				temp.color = HX_WHITE;
 				draw_rect(s->mini_width_unit - 1, s->mini_height_unit - 1, &temp, s);

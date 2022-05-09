@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 14:01:39 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 18:23:51 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,13 @@
 # define MINIMAP_X 420
 # define MINIMAP_Y 210
 
+# define SOUTH -M_PI_2
+# define NORTH M_PI_2
+# define WEST M_PI
+# define EAST 0
+
 # define BUFFER_SIZE 1
+# define FOV_DEG 66
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -108,7 +114,7 @@
 	# define ESC_KEY 53
 #endif
 
-# define MOVEMENT_AMOUNT 0.1
+# define MOVEMENT_AMOUNT 0.5
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 5
 
