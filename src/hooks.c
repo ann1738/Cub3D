@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 14:28:53 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:48:13 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,28 @@ bool	check_collision(double change_x, double change_y, t_main *s)
 
 void	movement(double change_x, double change_y, t_main *s)
 {
+	printf("hi 2\n");
 	if (check_collision(change_x, change_y, s))
 		return ;
 	s->player_position.x += change_x;
 	s->player_position.y += change_y;
 	s->player_map_position.x = (int)s->player_position.x;
 	s->player_map_position.y = (int)s->player_position.y;
-	ft_bzero(s->image_address, WINDOW_X * WINDOW_Y);
-	update_minimap(s);
-	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
+	redraw_window(s);
 }
 
 void	rotate(double change_angle, t_main *s)
 {
-	ft_bzero(s->image_address, WINDOW_X * WINDOW_Y);
 	rotate_coor(&s->camera_plane.x, &s->camera_plane.y, change_angle);
 	// rotate_coor(&s->player_direction.x, &s->player_direction.y, change_angle);
 	s->player_angle += change_angle;
-	update_minimap(s);
-	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);	
+	redraw_window(s);
 }
 
 int	key_hooks(int keycode, t_main *s)
 {
 	(void)s;
+	printf("hi 1\n");
 	if (keycode == W_KEY)
 		movement(0, -MOVEMENT_AMOUNT, s);
 	else if (keycode == S_KEY)
@@ -101,6 +99,11 @@ int	key_hooks(int keycode, t_main *s)
 		rotate(-ROTATION_AMOUNT, s);
 	else if (keycode == RIGHT_KEY)
 		rotate(ROTATION_AMOUNT, s);
+	else if (keycode == M_KEY)
+	{
+		s->minimap_on = !s->minimap_on;
+		redraw_window(s);
+	}
 	else if (keycode == ESC_KEY)
 		close_x(0, s);
 	// printf("%lf \n", s->player_angle); 	

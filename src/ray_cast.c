@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 17:57:03 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:49:41 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	cast_rays(t_main *s)
 		temp_end.x = temp_start.x + (s->final_side_length * s->mini_width_unit * cos(atan2(s->ray_direction.y, s->ray_direction.x)));
 		temp_end.y = temp_start.y + (s->final_side_length * s->mini_height_unit * sin(atan2(s->ray_direction.y, s->ray_direction.x)));
 		// printf("start(%d, %d), end(%d, %d)\n", temp_start.x, temp_start.y, temp_end.x, temp_end.y);
-		draw_line(temp_start, temp_end, s);
+		if (s->minimap_on)
+			draw_line(temp_start, temp_end, s);
 		i += 0.1;
 	}
 }

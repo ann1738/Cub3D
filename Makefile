@@ -18,7 +18,8 @@ MLX_STATIC_LIB = $(MLX_LIB)/libmlx.a
 LIBFT_STATIC_LIB = $(LIBFT_LIB)/libft.a
 
 SRC = cub3d.c get_next_line.c temp_parser.c drawing.c minimap.c \
-    hooks.c rotation.c line.c ray_cast.c
+    hooks.c rotation.c line.c ray_cast.c floor.c ceiling.c redraw.c \
+	initiate.c
 OBJ = $(SRC:%.c=%.o)
 DEP = $(SRC:%.c=%.d)
 

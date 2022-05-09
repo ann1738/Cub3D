@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 17:40:11 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/09 18:57:17 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,29 @@ void	draw_rect(int width, int height, t_coord const *origin, t_main *s)
 		while (++width_index < width)
 			put_pixel(origin->x + width_index, origin->y + height_index, \
 			origin->color, s);
+	}
+}
+
+void	draw_border(int width, int height, t_coord const *origin, t_main *s)
+{
+	int	width_index;
+	int	height_index;
+
+	height_index = -1;
+	while (++height_index < height)
+	{
+		if (!height_index || height_index == height - 1)
+		{
+			width_index = -1;
+			while (++width_index < width)
+				put_pixel(origin->x + width_index, origin->y + height_index, \
+				origin->color, s);
+		}
+		else
+		{
+			put_pixel(origin->x + 0, origin->y + height_index, origin->color, s);
+			put_pixel(origin->x + width, origin->y + height_index, origin->color, s);
+		}
 	}
 }
 

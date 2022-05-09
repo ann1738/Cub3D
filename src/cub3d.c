@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 17:03:32 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:49:14 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,17 @@ int main(int argc, char **argv)
 	init_struct(&s);
 	//parse map
 	temp_parse(argv[1], &s);
+	//initiate player info after parsing
+	initiate_player_info(&s);
+	// if (s.map_width >= MINIMAP_X || s.map_height >= MINIMAP_Y) //if map is too big
+	// 	exit(write(STDERR_FILENO, "Error: Map is too big to be rendered\n", 37));
+	s.mini_width_unit = round((double)MINIMAP_X / s.map_width);
+	s.mini_height_unit = round((double)MINIMAP_Y / s.map_height);
+	//draw floor and ceiling
+	draw_floor(FLOOR_COLOR, &s);
+	draw_ceiling(CEILING_COLOR, &s);
 	//draw map
-	draw_minimap(&s);
+	// draw_minimap(&s);
 	//cast rays
 	cast_rays(&s);
 	// s.player_map_position.x = (int)s.player_position.x;

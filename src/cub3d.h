@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 18:23:51 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/09 19:44:47 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,18 @@
 # define HX_BLACK 0x000000
 # define HX_RED 0xFF0000
 # define HX_BLUE 0x0000FF
+# define HX_SKY_BLUE 0x87CEEB
 
 # define MINI_BG_COLOR HX_GREEN
 # define MINI_PLAYER_COLOR HX_BLUE
 # define MINI_WALL_COLOR HX_PASTEL_PINK
+# define MINI_WALL_BORDER HX_BLACK
+
 # define RAY_COLOR HX_RED
+
+// # define FLOOR_COLOR 0x8b5a2b
+# define FLOOR_COLOR HX_PASTEL_GREEN
+# define CEILING_COLOR HX_SKY_BLUE
 
 /* ----------------------- > >> Macros << < ----------------------- */
 
@@ -112,10 +119,11 @@
 	# define LEFT_KEY 123
 	# define RIGHT_KEY 124
 	# define ESC_KEY 53
+	# define M_KEY 46
 #endif
 
 # define MOVEMENT_AMOUNT 0.5
-# define ROTATION_AMOUNT 0.1
+# define ROTATION_AMOUNT 0.2
 # define MINI_PLAYER_ICON_SIZE 5
 
 /* ----------------------- > >> Struct << < ----------------------- */
@@ -184,6 +192,8 @@ typedef struct s_main
 
 	t_coord		step;
 	t_vector	ray_direction;
+
+	bool	minimap_on;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -202,6 +212,7 @@ char	**save_map(char **map, char *file, int x);
 
 void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
+void	draw_border(int width, int height, t_coord const *origin, t_main *s);
 void	draw_circle(int radius, t_coord const *origin, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
@@ -224,5 +235,22 @@ void	cast_rays(t_main *s);
 
 void	draw_line(t_coord start, t_coord end, t_main *s);
 
+/* ---------------- ** floor ** ----------------- */
+
+void	draw_floor(unsigned int color, t_main *s);
+
+/* ---------------- ** ceiling ** --------------- */
+
+void	draw_ceiling(unsigned int color, t_main *s);
+
+/* ---------------- ** redraw ** ---------------- */
+
+void	redraw_window(t_main *s);
+
+/* --------------- ** initiate ** --------------- */
+
+void	initiate_player_info(t_main *s);
+
+double	deg_to_rad(double deg);
 
 #endif
