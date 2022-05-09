@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   full_map_save.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:49:10 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/08 18:16:44 by Alia             ###   ########.fr       */
+/*   Updated: 2022/05/09 13:54:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,15 @@ static int	save_texture_f_c_extra(char *map_line, t_pars *p, int *i)
 static void	check_save_texture(char *map_line, t_pars *p)
 {
 	int	i;
-	
+
 	i = 0;
 	while (map_line[i])
 	{
 		if (p->n && p->s && p->w && p->e && p->f && p->c)
+		{
+			p->map_time = true;
 			return ;
+		}
 		if (!ft_isspace(map_line[i]))
 		{
 			if (!save_texture_no_so(map_line, p, &i))
@@ -113,18 +116,28 @@ static void	check_save_texture(char *map_line, t_pars *p)
 
 void	init_map_save(char *file_path, t_pars *p)
 {
+	bool	get_index;
 	int		i;
-	int 	fd;
+	int		fd;
 
 	get_max_x_y(file_path, p);
-	p->full_file = ft_calloc((p->map_h + 1), sizeof(char **));
+	p->full_file = ft_calloc((p->file_h + 1), sizeof(char **));
 	fd = open(file_path, O_RDONLY);
+	//protect open
 	i = 0;
-	while (i < p->map_h)
+	get_index = false;
+	while (i < p->file_h)
 	{
 		p->full_file[i] = get_next_line(fd);
 		remove_nl(p->full_file[i]);
-		check_save_texture(p->full_file[i], p);
+		if (!p->map_time)
+			check_save_texture(p->full_file[i], p);
+		else if (p->map_time && !get_index && p->full_file[i])
+		{
+			get_index = true;
+			p->map_starting_i = i - 1;
+		}
 		i++;
 	}
+	close(fd);
 }

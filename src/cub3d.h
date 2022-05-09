@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 22:17:26 by Alia             ###   ########.fr       */
+/*   Updated: 2022/05/09 13:40:52 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,13 @@ typedef struct s_pars
 {
 	int		map_w;
 	int		map_h;
+	int		file_w;
+	int		file_h;
 
+	int		map_starting_i;
+	
+	bool	map_error;
+	bool	map_time;
 	bool	extra;
 	bool	n;
 	bool	s;
@@ -100,11 +106,12 @@ typedef struct s_pars
 	char	*w_texture;
 	char	*e_texture;
 
-	char	*f_color_rgb;
-	int		f_color_rgb_int[3];
-	char	*c_color_rgb;
-	int		c_color_rgb_int[3];
+	char	**map;
 
+	char	*f_color_rgb;
+	char	*c_color_rgb;
+	int		f_color_rgb_int[3];
+	int		c_color_rgb_int[3];
 	char	f_color_hex[7];
 	char	c_color_hex[7];
 
@@ -125,6 +132,11 @@ typedef struct s_main
 } t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
+
+/* ----------- ** pars utils ** ------------ */
+void	remove_nl(char *str);
+void	free_char_double_pointer(char **str);
+void	get_max_x_y(char *file_path, t_pars *p);
 
 /* ----------- ** check user input ** ------------ */
 void	user_input_check(int argc, char **argv);

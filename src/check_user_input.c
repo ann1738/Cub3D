@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_user_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:48:06 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/07 00:36:22 by Alia             ###   ########.fr       */
+/*   Updated: 2022/05/09 12:44:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ bool	has_dot_cub(char *file_path)
 			{
 				if (file_path[i + 2] == 'u')
 				{
-					if(file_path[i + 3] == 'b')
+					if (file_path[i + 3] == 'b')
 					{
-						if(!file_path[i + 4])
+						if (!file_path[i + 4])
 							return (true);
 					}
 				}
@@ -64,7 +64,7 @@ void	print_error_n_exit(int flag, char *argv1)
 
 void	user_input_check(int argc, char **argv)
 {
-	int fd;
+	int	fd;
 
 	if (argc != 2)
 		print_error_n_exit(1, argv[1]);

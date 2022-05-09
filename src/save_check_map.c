@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_check_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Alia <Alia@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/08 22:17:56 by Alia             ###   ########.fr       */
+/*   Updated: 2022/05/09 21:25:56 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,76 @@ bool	ft_str_isrgb(char *str)
 	return (true);
 }
 
-void	remove_nl(char *str)
+void	check_file_validity(t_pars *p)
+{
+	if (!p->n || !p->s || !p->w || !p->e || !p->f || !p->c || p->extra || \
+	ft_str_isrgb(p->f_color_rgb) == false || \
+	ft_str_isrgb(p->c_color_rgb) == false)
+	{
+		printf("%soooi .. fix your shit%s\n", RED, RESET);
+		// printf("%sError: check map%s\n", RED, RESET);
+		free_char_double_pointer(p->full_file);
+		exit(0);
+	}
+	rgb_char_to_int(p->f_color_rgb, p->f_color_rgb_int);
+	rgb_char_to_int(p->c_color_rgb, p->c_color_rgb_int);
+	if (p->f_color_rgb_int[0] > 255 || p->f_color_rgb_int[1] > 255 || \
+	p->f_color_rgb_int[2] > 255 || p->c_color_rgb_int[0] > 255 || \
+	p->c_color_rgb_int[1] > 255 || p->c_color_rgb_int[2] > 255)
+	{
+		printf("%soooi .. fix your shit%s\n", RED, RESET);
+		// printf("%sError: check map%s\n", RED, RESET);
+		free_char_double_pointer(p->full_file);
+		exit(0);
+	}
+}
+
+void	get_map_x_y(t_pars *p)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	p->map_h = p->file_h - p->map_starting_i;
+	while (i < p->map_h)
 	{
-		if (str[i] == '\n')
-			str[i] = 0;
+		if (!p->map[i][0])
+			p->map_error = true;
+		if (p->map_w < (int)ft_strlen(p->map[i]))
+			p->map_w = ft_strlen(p->map[i]);
 		i++;
 	}
 }
 
-void	get_max_x_y(char *file_path, t_pars *p)
+void	check_map_surrounding(t_pars *p)
 {
-	int		i;
-	int 	fd;
-	char	*temp;
-
-	fd = open(file_path, O_RDONLY);
-	temp = get_next_line(fd);
-	if (!temp)
-		exit(1);
-	i = 0;
-	while (temp)
-	{
-		p->map_h++;
-		i = ft_strlen(temp);
-		if (i > p->map_w)
-			p->map_w = i;
-		free(temp);
-		temp = get_next_line(fd);
-	}
-	close(fd);
-}
-
-void	free_char_double_pointer(char **str)
-{
-	int i;
+	int	x;
+	int	y;
 	
-	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
+	y = -1;
+	while (p->map[++y])
+	{
+		x = -1;
+		while (p->map[y][++x])
+		{
+			if ((!y || !x || x == (int)ft_strlen(p->map[y]) - 1 || !p->map[y + 1]) && (p->map[y][x] != '1' && p->map[y][x] != ' '))
+				p->map_error = true;
+			else if (((p->map[y + 1] && x >= (int)ft_strlen(p->map[y + 1])) || (y && x >= (int)ft_strlen(p->map[y - 1]))) && (p->map[y][x] != '1' && p->map[y][x] != ' '))
+				p->map_error = true;
+			else if (p->map[y][x] == ' ')
+			{
+				if (x && p->map[y][x - 1] != '1' && p->map[y][x - 1] != ' ')
+						p->map_error = true;
+				else if (p->map[y][x + 1] && p->map[y][x + 1] != '1' && p->map[y][x + 1] != ' ')
+					p->map_error = true;
+				else if (y && x < (int)ft_strlen(p->map[y - 1]) && p->map[y - 1][x] != '1' && p->map[y - 1][x] != ' ')
+					p->map_error = true;
+				else if (p->map[y + 1] && x < (int)ft_strlen(p->map[y + 1]) && p->map[y + 1][x] != '1' && p->map[y + 1][x] != ' ')
+					p->map_error = true;
+			}
+			if (p->map_error)
+				return ;
+		}
+	}
 }
 
 int	main(int argc, char **argv)
@@ -91,43 +117,31 @@ int	main(int argc, char **argv)
 	ft_bzero(&p, sizeof(t_pars));
 	user_input_check(argc, argv);
 	init_map_save(argv[1], &p);
-	rgb_char_to_int(p.f_color_rgb, p.f_color_rgb_int);
-	rgb_char_to_int(p.c_color_rgb, p.c_color_rgb_int);
-	if (!p.n || !p.s || !p.w || !p.e || !p.f || !p.c || p.extra)
-	{
-		printf("%smap is shit%s\n", RED, RESET);
-		free_char_double_pointer(p.full_file);
-		exit(0);
-	}
-	if (ft_str_isrgb(p.f_color_rgb) == false || p.f_color_rgb_int[0] > 255 || p.f_color_rgb_int[1] > 255 || p.f_color_rgb_int[2] > 255)
-	{
-		printf("%sfloor is wrong%s\n", LIGHT_BLUE1, RESET);
-		free_char_double_pointer(p.full_file);
-		exit(0);
-	}
-	if (ft_str_isrgb(p.c_color_rgb) == false || p.c_color_rgb_int[0] > 255 || p.c_color_rgb_int[1] > 255 || p.c_color_rgb_int[2] > 255)
-	{
-		printf("%scelling is wrong%s\n", LIGHT_BLUE1, RESET);
-		free_char_double_pointer(p.full_file);
-		exit(0);
-	}
+	check_file_validity(&p);
 	rgb_to_hex(p.f_color_rgb_int, p.f_color_hex);
 	rgb_to_hex(p.c_color_rgb_int, p.c_color_hex);
-	
+	p.map = &p.full_file[p.map_starting_i];
+	get_map_x_y(&p);
+	check_map_surrounding(&p);
+	if (p.map_error)
+	{
+		printf("%soooi .. fix your shit%s\n", RED, RESET);
+		// printf("%sError: check map%s\n", RED, RESET);
+		free_char_double_pointer(p.full_file);
+		exit(0);
+	}
 	/* ----------------------- testing ---------------------- */
 	printf("%syaaaay! no errors%s\n", GREEN1, RESET);
 
-	printf("int: %d,%d,%d\n", p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2]);
-	printf("char: %s\n", p.f_color_hex);
+	printf("%sint: %d,%d,%d%s\n", YELLOW1, p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2], RESET);
+	printf("%schar: %s%s\n", LIGHT_BLUE1, p.f_color_hex, RESET);
 
-	printf("int: %d,%d,%d\n", p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2]);
-	printf("char: %s\n", p.c_color_hex);
-
-	
-	// for (int i = 0; p.full_file[i]; i++)
-	// 	printf("%s%s%s\n", PURPLE1, p.full_file[i], RESET);
-	printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
-	printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
+	printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
+	printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
+	for (int i = 0; i < p.map_h; i++)
+		printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
+	// printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
+	// printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
 	// printf("%s*%s*%s\n", GREEN1, p.s_texture, RESET);
 	// printf("%s*%s*%s\n", GREEN1, p.n_texture, RESET);
 	// printf("%s*%s*%s\n", GREEN1, p.w_texture, RESET);
