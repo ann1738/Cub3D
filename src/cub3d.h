@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 13:40:52 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:33:08 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ typedef struct s_coord
 
 typedef struct s_pars
 {
-	int		map_w;
-	int		map_h;
 	int		file_w;
 	int		file_h;
 
@@ -141,9 +139,9 @@ void	get_max_x_y(char *file_path, t_pars *p);
 /* ----------- ** check user input ** ------------ */
 void	user_input_check(int argc, char **argv);
 
-/* ----------- ** save check map ** ------------- */
-void	get_max_x_y(char *file_path, t_pars *p);
-void	remove_nl(char *str);
+/* -------------- ** map checks ** --------------- */
+void	check_map_content(t_pars *p);
+void	check_file_validity(t_pars *p);
 
 /* ----------- ** full map save ** ------------- */
 void	init_map_save(char *file_path, t_pars *p);

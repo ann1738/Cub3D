@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_check_map.c                                   :+:      :+:    :+:   */
+/*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/10 13:52:21 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:34:25 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,50 @@ void	check_file_validity(t_pars *p)
 	}
 }
 
-void	get_map_x_y(t_pars *p)
+static void	player_n_other_map_content(t_pars *p, int x, int y, int *p_count)
 {
-	int	i;
-
-	i = 0;
-	p->map_h = p->file_h - p->map_starting_i;
-	while (i < p->map_h)
-	{
-		if (!p->map[i][0])
-			p->map_error = true;
-		if (p->map_w < (int)ft_strlen(p->map[i]))
-			p->map_w = ft_strlen(p->map[i]);
-		i++;
-	}
+	if (p->map[y][x] == 'N' || p->map[y][x] == 'S' || \
+	p->map[y][x] == 'E' || p->map[y][x] == 'W')
+		(*p_count)++;
+	else if (p->map[y][x] != '1' && p->map[y][x] != '0' && \
+	p->map[y][x] != ' ' && p->map[y][x] != 'N' && \
+	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W')
+		p->map_error = true;
 }
 
-void	check_map_surrounding(t_pars *p)
+static void	must_be_sp_or_1(t_pars *p, int x, int y, int *p_count)
+{
+	if ((!y || !x || x == (int)ft_strlen(p->map[y]) - 1 || !\
+	p->map[y + 1]) && (p->map[y][x] != '1' && p->map[y][x] != ' '))
+		p->map_error = true;
+	else if (((p->map[y + 1] && x >= (int)ft_strlen(p->map[y + 1])) || \
+	(y && x >= (int)ft_strlen(p->map[y - 1]))) && \
+	(p->map[y][x] != '1' && p->map[y][x] != ' '))
+		p->map_error = true;
+	else if (p->map[y][x] == ' ')
+	{
+		if (x && p->map[y][x - 1] != '1' && p->map[y][x - 1] != ' ')
+				p->map_error = true;
+		else if (p->map[y][x + 1] && p->map[y][x + 1] != '1' && \
+		p->map[y][x + 1] != ' ')
+			p->map_error = true;
+		else if (y && x < (int)ft_strlen(p->map[y - 1]) && \
+		p->map[y - 1][x] != '1' && p->map[y - 1][x] != ' ')
+			p->map_error = true;
+		else if (p->map[y + 1] && x < (int)ft_strlen(p->map[y + 1]) && \
+		p->map[y + 1][x] != '1' && p->map[y + 1][x] != ' ')
+			p->map_error = true;
+	}
+	else
+		player_n_other_map_content(p, x, y, p_count);
+}
+
+void	check_map_content(t_pars *p)
 {
 	int	x;
 	int	y;
 	int	player_count;
-	
+
 	y = -1;
 	player_count = 0;
 	while (p->map[++y])
@@ -91,30 +113,13 @@ void	check_map_surrounding(t_pars *p)
 		x = -1;
 		while (p->map[y][++x])
 		{
-			if ((!y || !x || x == (int)ft_strlen(p->map[y]) - 1 || !p->map[y + 1]) && (p->map[y][x] != '1' && p->map[y][x] != ' '))
-				p->map_error = true;
-			else if (((p->map[y + 1] && x >= (int)ft_strlen(p->map[y + 1])) || (y && x >= (int)ft_strlen(p->map[y - 1]))) && (p->map[y][x] != '1' && p->map[y][x] != ' '))
-				p->map_error = true;
-			else if (p->map[y][x] == ' ')
-			{
-				if (x && p->map[y][x - 1] != '1' && p->map[y][x - 1] != ' ')
-						p->map_error = true;
-				else if (p->map[y][x + 1] && p->map[y][x + 1] != '1' && p->map[y][x + 1] != ' ')
-					p->map_error = true;
-				else if (y && x < (int)ft_strlen(p->map[y - 1]) && p->map[y - 1][x] != '1' && p->map[y - 1][x] != ' ')
-					p->map_error = true;
-				else if (p->map[y + 1] && x < (int)ft_strlen(p->map[y + 1]) && p->map[y + 1][x] != '1' && p->map[y + 1][x] != ' ')
-					p->map_error = true;
-			}
-			else if (p->map[y][x] == 'N' || p->map[y][x] == 'S' || p->map[y][x] == 'E' || p->map[y][x] == 'W')
-				player_count++;
-			else if (p->map[y][x] != '1' && p->map[y][x] != '0' && p->map[y][x] != ' ' && p->map[y][x] != 'N' && p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W')
-				p->map_error = true;
+			must_be_sp_or_1(p, x, y, &player_count);
 			if (p->map_error)
 				return ;
 		}
+		if (!x && !p->map[y][x])
+			p->map_error = true;
 	}
-	printf("%d\n", player_count);
 	if (player_count != 1)
 		p->map_error = true;
 }
@@ -130,8 +135,7 @@ int	main(int argc, char **argv)
 	rgb_to_hex(p.f_color_rgb_int, p.f_color_hex);
 	rgb_to_hex(p.c_color_rgb_int, p.c_color_hex);
 	p.map = &p.full_file[p.map_starting_i];
-	get_map_x_y(&p);
-	check_map_surrounding(&p);
+	check_map_content(&p);
 	if (p.map_error)
 	{
 		printf("%soooi .. fix your shit%s\n", RED, RESET);
@@ -147,7 +151,7 @@ int	main(int argc, char **argv)
 
 	printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
 	printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
-	for (int i = 0; i < p.map_h; i++)
+	for (int i = 0; p.map[i]; i++)
 		printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
 	// printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
 	// printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
