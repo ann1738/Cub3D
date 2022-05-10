@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 15:27:49 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:36:48 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,17 @@ void	movement(double move_amount, double change_angle, t_main *s)
 
 void	rotate(double change_angle, t_main *s)
 {
+	double	temp_angle;
+	double	temp_len;
+
 	rotate_coor(&s->camera_plane.x, &s->camera_plane.y, change_angle);
+	temp_angle = atan2(s->camera_plane.y, s->camera_plane.x) + change_angle;
+	temp_len = sqrt(s->camera_plane.y * s->camera_plane.y + s->camera_plane.x * s->camera_plane.x);
+	s->camera_plane.x = temp_len * cos(temp_angle);
+	s->camera_plane.y = temp_len * sin(temp_angle);
 	// rotate_coor(&s->player_direction.x, &s->player_direction.y, change_angle);
 	s->player_angle += change_angle;
+	printf("angle: %lf\n", s->player_angle);
 	redraw_window(s);
 }
 
@@ -94,9 +102,9 @@ int	key_hooks(int keycode, t_main *s)
 	else if (keycode == D_KEY)
 		movement(MOVEMENT_AMOUNT, M_PI_2, s);
 	else if (keycode == LEFT_KEY)
-		rotate(ROTATION_AMOUNT, s);
-	else if (keycode == RIGHT_KEY)
 		rotate(-ROTATION_AMOUNT, s);
+	else if (keycode == RIGHT_KEY)
+		rotate(ROTATION_AMOUNT, s);
 	else if (keycode == M_KEY)
 	{
 		s->minimap_on = !s->minimap_on;

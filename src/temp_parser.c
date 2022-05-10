@@ -6,13 +6,13 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 20:25:26 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 12:56:22 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 16:41:35 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**save_map(char **map, char *file, int x)
+char	**save_map(char **map, char *file, int y)
 {
 	int	i;
 	int	fd;
@@ -23,27 +23,20 @@ char	**save_map(char **map, char *file, int x)
 		printf("%sError: invalid file%s\n", RED, RESET);
 		exit(1);
 	}
-	map = (char **)malloc((x + 1) * sizeof(char *));
+	map = (char **)malloc((y + 1) * sizeof(char *));
 	if (!map)
 		exit(1);
 	i = 0;
-	while (i < x)
+	while (i < y)
 		map[i++] = get_next_line(fd);
 	map[i] = 0;
 	close(fd);
 	return (map);
 }
 
-int	get_y(char **map)
+int	get_y(char *file)
 {
-	int count = -1;
-	while (map[++count]);
-	return (count);
-}
-
-int	get_x(char *file)
-{
-	int		x;
+	int		y;
 	int		fd;
 	char	*line;
 
@@ -61,12 +54,15 @@ int	get_x(char *file)
 		exit(1);
 	}
 	line = get_next_line(fd);
-	x = 0;
-	while (line[x] && line[x] != '\n')
-		x++;
-	free(line);
+	y = 0;
+	while (line)
+	{	
+		y++;
+		free(line);
+		line = get_next_line(fd);
+	}
 	close(fd);
-	return (x);
+	return (y);
 }
 
 // int	main(int argc, char **argv)

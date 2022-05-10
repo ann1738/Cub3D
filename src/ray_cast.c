@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 15:35:26 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:02:41 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	draw_wall(t_main *s)
 	else
 		s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
 	s->wall_height = WINDOW_Y / s->perpend_wall_dist;
-	printf("height: %d*****************\n", s->wall_height);
+	// printf("height: %d*****************\n", s->wall_height);
 	//calculate the start and the end of the vertical strip drawing
 	origin.x = s->place_wall_at_x;
 	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2);
@@ -104,10 +104,10 @@ void	cast_rays(t_main *s)
 	{
 		calc_ray_dir_n_delta_dist(s, i);
 		calc_inital_side_len(s);
-		printf("START RAY (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+		// printf("START RAY (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 		while (s->map[s->ray_map_position.y][s->ray_map_position.x] != '1')
 		{
-			printf("I AM IN side.x = %lf, side.y = %lf\n", s->side_length_x, s->side_length_y);
+			// printf("I AM IN side.x = %lf , side.y = %lf\n", s->side_length_x, s->side_length_y);
 			if (s->side_length_x < s->side_length_y)
 			{
 				s->final_side_length = s->side_length_x;
@@ -122,9 +122,12 @@ void	cast_rays(t_main *s)
 				s->ray_map_position.y += s->step.y;
 				s->side_hit = SIDE_Y;
 			}
-			if (s->final_side_length > 1900)
-				break;
-			printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+			// printf("HULU!!!!\nfinal_side_length = %lf\n", s->final_side_length);
+			// if (s->side_hit == SIDE_Y && ((s->final_side_length - s->delta_distance_y) > 6.0 || s->final_side_length < 0.05))
+			// 	break ;
+			// else if (s->side_hit == SIDE_X && ((s->final_side_length - s->delta_distance_x) > 6 || s->final_side_length < 0.05))
+			// 	break ;
+			// printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 		}
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 		draw_wall(s);

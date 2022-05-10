@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 15:01:54 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 17:24:01 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@
 # define SIDE_Y false
 
 # define MOVEMENT_AMOUNT 0.5
-# define ROTATION_AMOUNT 0.2
+# define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 5
 # define INCREMENT_RAY_CASTING 0.01
 
@@ -215,8 +215,7 @@ char	*get_next_line(int fd);
 
 /* -------------- ** temp parse ** -------------- */
 
-int		get_y(char **map);
-int		get_x(char *file);
+int		get_y(char *file);
 char	**save_map(char **map, char *file, int x);
 
 /* --------------- ** drawing ** ---------------- */

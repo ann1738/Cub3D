@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 00:31:35 by ann               #+#    #+#             */
-/*   Updated: 2022/05/08 17:44:45 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/10 17:23:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	rotate_coor(double *x, double *y, double angle)
 {
-	*x = (*x * cos(angle)) - (*y * sin(angle));
-	*y = (*x * sin(angle)) + (*y * cos(angle));
+	*x = (*x * cos(angle)) + (*y * sin(angle));
+	*y = (*x * sin(angle)) - (*y * cos(angle));
 }
