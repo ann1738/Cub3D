@@ -17,7 +17,7 @@ endif
 MLX_STATIC_LIB = $(MLX_LIB)/libmlx.a
 LIBFT_STATIC_LIB = $(LIBFT_LIB)/libft.a
 
-SRC = cub3d.c get_next_line.c temp_parser.c drawing.c minimap.c check_user_input.c full_map_save.c rgb_to_hex.c save_check_map.c pars_utils.c
+SRC = cub3d.c get_next_line.c temp_parser.c drawing.c minimap.c check_user_input.c full_map_save.c rgb_to_hex.c map_checks.c pars_utils.c
 OBJ = $(SRC:%.c=%.o)
 DEP = $(SRC:%.c=%.d)
 
