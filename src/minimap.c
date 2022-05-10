@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 19:44:04 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:32:16 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ void	update_minimap(t_main *s)
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
 	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
+	// cast_rays(s);
 	// s->player_map_position.x = (int)s->player_position.x;
 	// s->player_map_position.y = (int)s->player_position.y;
-	cast_rays(s);
 	// s->player_map_position.x = (int)s->player_position.x;
 	// s->player_map_position.y = (int)s->player_position.y;
 }

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 19:44:47 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:01:54 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,14 @@
 # define BUFFER_SIZE 1
 # define FOV_DEG 66
 
+# define SIDE_X true
+# define SIDE_Y false
+
+# define MOVEMENT_AMOUNT 0.5
+# define ROTATION_AMOUNT 0.2
+# define MINI_PLAYER_ICON_SIZE 5
+# define INCREMENT_RAY_CASTING 0.01
+
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
 #ifdef linux
@@ -121,10 +129,6 @@
 	# define ESC_KEY 53
 	# define M_KEY 46
 #endif
-
-# define MOVEMENT_AMOUNT 0.5
-# define ROTATION_AMOUNT 0.2
-# define MINI_PLAYER_ICON_SIZE 5
 
 /* ----------------------- > >> Struct << < ----------------------- */
 
@@ -180,13 +184,19 @@ typedef struct s_main
 	//player direction from the player position
 	double		player_angle;
 	// t_vector	player_direction;
-	// distance of the ray (accounting for its direction) to traverse one x and y unit
-	double	delta_distance_x;
-	double	delta_distance_y;
-	// side length: the length of the ray to hit the x or y side of a wall
-	double	side_length_x;
-	double	side_length_y;
-	double	final_side_length;
+	//distance of the ray (accounting for its direction) to traverse one x and y unit
+	double		delta_distance_x;
+	double		delta_distance_y;
+	//side length: the length of the ray to hit the x or y side of a wall
+	double		side_length_x;
+	double		side_length_y;
+	double		final_side_length;
+	//calculate the perpendicular wall distance (will be used to draw the vertical wall strips)
+	double		perpend_wall_dist;
+	//where to draw the vertical strip walls
+	int			place_wall_at_x;
+	int			wall_height;
+	int			wall_width;
 	
 	t_vector	camera_plane;
 
@@ -194,6 +204,7 @@ typedef struct s_main
 	t_vector	ray_direction;
 
 	bool	minimap_on;
+	bool	side_hit;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -214,6 +225,7 @@ void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
 void	draw_border(int width, int height, t_coord const *origin, t_main *s);
 void	draw_circle(int radius, t_coord const *origin, t_main *s);
+void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
 

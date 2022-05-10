@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 19:49:41 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 15:35:26 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,28 @@ void	calc_inital_side_len(t_main *s)
 		s->final_side_length = s->side_length_x;
 	else
 		s->final_side_length = s->side_length_y;
-	printf("step_x = %d, step_y = %d\n", s->step.x, s->step.y);
+	// printf("step_x = %d, step_y = %d\n", s->step.x, s->step.y);
+}
+
+void	draw_wall(t_main *s)
+{
+	t_coord	origin;
+
+	//calculate the perpendicular wall distance (to avoid fisheye)
+	if (s->side_hit == SIDE_X)
+		s->perpend_wall_dist = s->side_length_x - s->delta_distance_x;
+	else
+		s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
+	s->wall_height = WINDOW_Y / s->perpend_wall_dist;
+	printf("height: %d*****************\n", s->wall_height);
+	//calculate the start and the end of the vertical strip drawing
+	origin.x = s->place_wall_at_x;
+	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2);
+	if (s->side_hit == SIDE_X)
+		origin.color = HX_BLUE;
+	else
+		origin.color = 0x86c5da;
+	draw_vertical_strip(origin, s->wall_width, s->wall_height, s);
 }
 
 void	cast_rays(t_main *s)
@@ -77,6 +98,8 @@ void	cast_rays(t_main *s)
 	double i;
 
 	i = -1;
+	s->place_wall_at_x = 0;
+	s->wall_width = WINDOW_X / (2.0 / INCREMENT_RAY_CASTING) + 1; //WINDOW_X divided by the number of rays casted (plus one bec the condition of the loop is >= not >.. actually idk why?!)
 	while (i <= 1)
 	{
 		calc_ray_dir_n_delta_dist(s, i);
@@ -90,16 +113,21 @@ void	cast_rays(t_main *s)
 				s->final_side_length = s->side_length_x;
 				s->side_length_x += s->delta_distance_x;
 				s->ray_map_position.x += s->step.x;
+				s->side_hit = SIDE_X;
 			}
 			else
 			{
 				s->final_side_length = s->side_length_y;
 				s->side_length_y += s->delta_distance_y;
 				s->ray_map_position.y += s->step.y;
+				s->side_hit = SIDE_Y;
 			}
+			if (s->final_side_length > 1900)
+				break;
 			printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 		}
-		printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+		draw_wall(s);
 		//start point
 		temp_start.x = s->player_position.x * s->mini_width_unit; 
 		temp_start.y = s->player_position.y * s->mini_height_unit; 
@@ -110,7 +138,8 @@ void	cast_rays(t_main *s)
 		// printf("start(%d, %d), end(%d, %d)\n", temp_start.x, temp_start.y, temp_end.x, temp_end.y);
 		if (s->minimap_on)
 			draw_line(temp_start, temp_end, s);
-		i += 0.1;
+		i += INCREMENT_RAY_CASTING;
+		s->place_wall_at_x += s->wall_width;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/09 18:57:17 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/10 14:50:22 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,19 @@ void	draw_circle(int radius, t_coord const *origin, t_main *s)
 			angle += 0.05;
 		}
 		--radius;
+	}
+}
+
+void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s)
+{
+	int width_index;
+	int height_index;
+
+	width_index = -1;
+	while (++width_index < width)
+	{
+		height_index = -1;
+		while (++height_index < height)
+			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
 	}
 }
