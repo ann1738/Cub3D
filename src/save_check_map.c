@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/09 21:25:56 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:52:21 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void	check_map_surrounding(t_pars *p)
 {
 	int	x;
 	int	y;
+	int	player_count;
 	
 	y = -1;
+	player_count = 0;
 	while (p->map[++y])
 	{
 		x = -1;
@@ -104,10 +106,17 @@ void	check_map_surrounding(t_pars *p)
 				else if (p->map[y + 1] && x < (int)ft_strlen(p->map[y + 1]) && p->map[y + 1][x] != '1' && p->map[y + 1][x] != ' ')
 					p->map_error = true;
 			}
+			else if (p->map[y][x] == 'N' || p->map[y][x] == 'S' || p->map[y][x] == 'E' || p->map[y][x] == 'W')
+				player_count++;
+			else if (p->map[y][x] != '1' && p->map[y][x] != '0' && p->map[y][x] != ' ' && p->map[y][x] != 'N' && p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W')
+				p->map_error = true;
 			if (p->map_error)
 				return ;
 		}
 	}
+	printf("%d\n", player_count);
+	if (player_count != 1)
+		p->map_error = true;
 }
 
 int	main(int argc, char **argv)
