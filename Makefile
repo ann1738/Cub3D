@@ -52,7 +52,7 @@ clean:
 	@printf "\e[93mCleaning..\e[0m\n"
 	@make -sC $(LIBFT_LIB) clean
 	@make -sC $(MLX_LIB) clean
-	@rm -f $(addprefix obj/,$(OBJ)) $(addprefix dep/,$(DEP))
+	@rm -rf $(addprefix obj/,$(OBJ)) $(addprefix dep/,$(DEP)) dep obj
 
 fclean: clean
 	@printf "\e[92mCleaning..\e[0m\n"
