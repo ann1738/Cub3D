@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/10 15:34:25 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:46:55 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	check_map_content(t_pars *p)
 
 	y = -1;
 	player_count = 0;
+	p->map_h = p->file_h - p->map_starting_i;
 	while (p->map[++y])
 	{
 		x = -1;
@@ -119,6 +120,8 @@ void	check_map_content(t_pars *p)
 		}
 		if (!x && !p->map[y][x])
 			p->map_error = true;
+		else if (p->map_w < x)
+			p->map_w = x;
 	}
 	if (player_count != 1)
 		p->map_error = true;
@@ -144,15 +147,18 @@ int	main(int argc, char **argv)
 		exit(0);
 	}
 	/* ----------------------- testing ---------------------- */
-	printf("%syaaaay! no errors%s\n", GREEN1, RESET);
+	// printf("%syaaaay! no errors%s\n", GREEN1, RESET);
 
-	printf("%sint: %d,%d,%d%s\n", YELLOW1, p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2], RESET);
-	printf("%schar: %s%s\n", LIGHT_BLUE1, p.f_color_hex, RESET);
+	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2], RESET);
+	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.f_color_hex, RESET);
 
-	printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
-	printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
-	for (int i = 0; p.map[i]; i++)
-		printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
+	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
+	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
+	// for (int i = 0; p.map[i]; i++)
+	// 	printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
+
+	// printf("%smap h = %d%s\n", YELLOW1, p.map_h, RESET);
+	// printf("%smap w = %d%s\n", YELLOW1, p.map_w, RESET);
 	// printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
 	// printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
 	// printf("%s*%s*%s\n", GREEN1, p.s_texture, RESET);

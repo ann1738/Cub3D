@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 15:33:08 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:40:56 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_coord
 
 typedef struct s_pars
 {
+	int		map_w;
+	int		map_h;
 	int		file_w;
 	int		file_h;
 

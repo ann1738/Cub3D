@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:48:06 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/09 12:44:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:51:29 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,10 @@ bool	has_dot_cub(char *file_path)
 	i = -1;
 	while (file_path[++i])
 	{
-		if (file_path[i] == '.')
-		{
-			if (file_path[i + 1] == 'c')
-			{
-				if (file_path[i + 2] == 'u')
-				{
-					if (file_path[i + 3] == 'b')
-					{
-						if (!file_path[i + 4])
-							return (true);
-					}
-				}
-			}
-		}
+		if (file_path[i] == '.' && file_path[i + 1] == 'c' && \
+		file_path[i + 2] == 'u' && file_path[i + 3] == 'b' && \
+		!file_path[i + 4])
+			return (true);
 	}
 	return (false);
 }
