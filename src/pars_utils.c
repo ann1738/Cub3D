@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:31:26 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/09 13:54:13 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:05:59 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,9 @@ void	get_max_x_y(char *file_path, t_pars *p)
 		temp = get_next_line(fd);
 	}
 	close(fd);
+}
+
+int	rgb_to_uint(int transp, int red, int green, int blue)
+{
+	return (transp << 24 | red << 16 | green << 8 | blue);
 }

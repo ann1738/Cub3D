@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 18:01:24 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 19:11:59 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 # define HX_OFF_WHITE 0xBEBEBE
 # define HX_PASTEL_PINK 0xF8C8DC
 # define HX_PASTEL_GREEN 0xC1E1C1
-# define HX_GRASS_GREEN 0x7CFC00
+# define HX_GRASS_GREEN 0x567d46
 # define HX_GREEN 0x86DC3D
 # define HX_BLACK 0x000000
 # define HX_RED 0xFF0000
@@ -257,6 +257,10 @@ typedef struct s_main
 	clock_t	frame1;
 	clock_t	frame2;
 	double	fps;
+
+	//colors
+	unsigned int	ceiling_color;
+	unsigned int	floor_color;
 	
 }	t_main;
 
@@ -266,6 +270,7 @@ typedef struct s_main
 void	remove_nl(char *str);
 void	free_char_double_pointer(char **str);
 void	get_max_x_y(char *file_path, t_pars *p);
+int		rgb_to_uint(int transp, int red, int green, int blue);
 
 /* ----------- ** check user input ** ------------ */
 void	user_input_check(int argc, char **argv);

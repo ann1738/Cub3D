@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 18:15:18 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:45:43 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->map = p->map;
 	s->map_height = p->map_h;
 	s->map_width_max = p->map_w;
+	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
+	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
 }
 
 /* to do:
@@ -65,7 +67,6 @@ int main(int argc, char **argv)
 
 	/* initiate struct */
 	initiate_main_struct(&s, &p);
-
 
 	/* initiate player info after parsing */
 	initiate_player_info(&s);
