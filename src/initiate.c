@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 19:12:30 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/12 17:24:48 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:02:01 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static void	specific_player_info(int x, int y, double start_angle, t_main *s)
 	//cos() and sin() are flipped bec camera_plane is perpendicular to the player_direction vector
 
 	/* for minimap */
-	if (s->map_width >= MINIMAP_X / 2 || s->map_height >= MINIMAP_Y / 2) //if map is too big (this will be updated later)
+	if (s->map_width_max >= MINIMAP_X / 2 || s->map_height >= MINIMAP_Y / 2) //if map is too big (this will be updated later)
 		exit(write(STDERR_FILENO, "Error: Map is too big to be rendered\n", 37));
-	s->mini_width_unit = round((double)MINIMAP_X / s->map_width);
+	s->mini_width_unit = round((double)MINIMAP_X / s->map_width_max);
 	s->mini_height_unit = round((double)MINIMAP_Y / s->map_height);
 }
 
@@ -48,7 +48,7 @@ void	initiate_player_info(t_main *s)
 	while (++y < s->map_height)
 	{
 		x = -1;
-		while (++x < s->map_width && s->map[y][x])
+		while (++x < s->map_width_max && s->map[y][x])
 		{
 			if (s->map[y][x] == 'N' && (check++) >= 0)
 				specific_player_info(x, y, NORTH, s);

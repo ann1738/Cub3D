@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 17:36:11 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:09:53 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static void	ray_casting_loop(t_main *s)
 		// printf("HULU!!!!\nfinal_side_length = %lf -- ", s->final_side_length);
 
 		/* protection for when there is no wall / wall is too far */
-		if (s->ray_map_position.y > s->map_height - 1 || s->ray_map_position.x > s->map_width - 1)
+		if (s->ray_map_position.y > s->map_height - 1 || s->ray_map_position.x > s->map_width_max - 1)
 		{
 			s->final_side_length = s->depth;
 			break ;

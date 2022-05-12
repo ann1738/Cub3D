@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 17:56:19 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:01:24 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ typedef struct s_main
 	int		size_line;
 	//parse
 	char	**map;
-	int		map_width;
+	int		map_width_max;
 	int		map_height;
 	//minimap
 	int		mini_width_unit;

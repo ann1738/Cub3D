@@ -6,13 +6,32 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 17:55:08 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:15:18 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_struct(t_main *s)
+static void	parse(int argc, char **argv, t_pars *p)
+{
+	ft_bzero(p, sizeof(t_pars));
+	user_input_check(argc, argv);
+	init_map_save(argv[1], p);
+	check_file_validity(p);
+	rgb_to_hex(p->f_color_rgb_int, p->f_color_hex);
+	rgb_to_hex(p->c_color_rgb_int, p->c_color_hex);
+	p->map = &p->full_file[p->map_starting_i];
+	check_map_content(p);
+	if (p->map_error)
+	{
+		printf("%soooi .. fix your shit%s\n", RED, RESET);
+		// printf("%sError: check map%s\n", RED, RESET);
+		free_char_double_pointer(p->full_file);
+		exit(0);
+	}
+}
+
+static void	initiate_main_struct(t_main *s, t_pars *p)
 {	
 	ft_bzero(s, sizeof(t_main));
 
@@ -26,15 +45,10 @@ static void	init_struct(t_main *s)
 	s->depth = VISION_DEPTH;
 	s->frame1 = clock();
 	// s->dist_to_projection_plane = (WINDOW_X / 2) / tan(deg_to_rad(FOV_DEG / 2));
-}
-
-void	temp_parse(char *path, t_main *s)
-{
-	s->map_height = get_y(path);
-	s->map = save_map(s->map, path, s->map_height);
-	int i = -1;
-	while (s->map[0][++i] && s->map[0][i] != '\n')
-		s->map_width++;
+	/* taking things from parser to main struct */
+	s->map = p->map;
+	s->map_height = p->map_h;
+	s->map_width_max = p->map_w;
 }
 
 /* to do:
@@ -44,15 +58,14 @@ void	temp_parse(char *path, t_main *s)
 int main(int argc, char **argv)
 {
 	t_main	s;
-
-	if (argc != 2)
-		return (write(2, "Invalid\n", 8));
-
-	/* initiate struct */
-	init_struct(&s);
+	t_pars	p;
 
 	/* parse map */
-	temp_parse(argv[1], &s);
+	parse(argc, argv, &p);
+
+	/* initiate struct */
+	initiate_main_struct(&s, &p);
+
 
 	/* initiate player info after parsing */
 	initiate_player_info(&s);

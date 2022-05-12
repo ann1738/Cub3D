@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/12 17:46:55 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/12 18:08:54 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,43 +127,43 @@ void	check_map_content(t_pars *p)
 		p->map_error = true;
 }
 
-int	main(int argc, char **argv)
-{
-	t_pars	p;
+// int	main(int argc, char **argv)
+// {
+// 	t_pars	p;
 
-	ft_bzero(&p, sizeof(t_pars));
-	user_input_check(argc, argv);
-	init_map_save(argv[1], &p);
-	check_file_validity(&p);
-	rgb_to_hex(p.f_color_rgb_int, p.f_color_hex);
-	rgb_to_hex(p.c_color_rgb_int, p.c_color_hex);
-	p.map = &p.full_file[p.map_starting_i];
-	check_map_content(&p);
-	if (p.map_error)
-	{
-		printf("%soooi .. fix your shit%s\n", RED, RESET);
-		// printf("%sError: check map%s\n", RED, RESET);
-		free_char_double_pointer(p.full_file);
-		exit(0);
-	}
-	/* ----------------------- testing ---------------------- */
-	// printf("%syaaaay! no errors%s\n", GREEN1, RESET);
+// 	ft_bzero(&p, sizeof(t_pars));
+// 	user_input_check(argc, argv);
+// 	init_map_save(argv[1], &p);
+// 	check_file_validity(&p);
+// 	rgb_to_hex(p.f_color_rgb_int, p.f_color_hex);
+// 	rgb_to_hex(p.c_color_rgb_int, p.c_color_hex);
+// 	p.map = &p.full_file[p.map_starting_i];
+// 	check_map_content(&p);
+// 	if (p.map_error)
+// 	{
+// 		printf("%soooi .. fix your shit%s\n", RED, RESET);
+// 		// printf("%sError: check map%s\n", RED, RESET);
+// 		free_char_double_pointer(p.full_file);
+// 		exit(0);
+// 	}
+// 	/* ----------------------- testing ---------------------- */
+// 	// printf("%syaaaay! no errors%s\n", GREEN1, RESET);
 
-	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2], RESET);
-	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.f_color_hex, RESET);
+// 	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.f_color_rgb_int[0], p.f_color_rgb_int[1], p.f_color_rgb_int[2], RESET);
+// 	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.f_color_hex, RESET);
 
-	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
-	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
-	// for (int i = 0; p.map[i]; i++)
-	// 	printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
+// 	// printf("%sint: %d,%d,%d%s\n", YELLOW1, p.c_color_rgb_int[0], p.c_color_rgb_int[1], p.c_color_rgb_int[2], RESET);
+// 	// printf("%schar: %s%s\n", LIGHT_BLUE1, p.c_color_hex, RESET);
+// 	// for (int i = 0; p.map[i]; i++)
+// 	// 	printf("%s.%s.%s\n", PURPLE1, p.map[i], RESET);
 
-	// printf("%smap h = %d%s\n", YELLOW1, p.map_h, RESET);
-	// printf("%smap w = %d%s\n", YELLOW1, p.map_w, RESET);
-	// printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
-	// printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
-	// printf("%s*%s*%s\n", GREEN1, p.s_texture, RESET);
-	// printf("%s*%s*%s\n", GREEN1, p.n_texture, RESET);
-	// printf("%s*%s*%s\n", GREEN1, p.w_texture, RESET);
-	// printf("%s*%s*%s\n", GREEN1, p.e_texture, RESET);
+// 	// printf("%smap h = %d%s\n", YELLOW1, p.map_h, RESET);
+// 	// printf("%smap w = %d%s\n", YELLOW1, p.map_w, RESET);
+// 	// printf("%s*%s*%s\n", BLUE1, p.f_color_rgb, RESET);
+// 	// printf("%s*%s*%s\n", BLUE1, p.c_color_rgb, RESET);
+// 	// printf("%s*%s*%s\n", GREEN1, p.s_texture, RESET);
+// 	// printf("%s*%s*%s\n", GREEN1, p.n_texture, RESET);
+// 	// printf("%s*%s*%s\n", GREEN1, p.w_texture, RESET);
+// 	// printf("%s*%s*%s\n", GREEN1, p.e_texture, RESET);
 
-}
+// }

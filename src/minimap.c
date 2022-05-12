@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 15:28:33 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 18:20:38 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	draw_player_icon(t_main *s)
 	temp.y = s->player_position.y * s->mini_height_unit;
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
-	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
+	// printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
 	
 	/* temporary line to show the player's direction */
 	t_coord end;
@@ -44,7 +44,7 @@ void	draw_minimap(t_main *s)
 	while(++y < s->map_height)
 	{
 		x = -1;
-		while (++x < s->map_width && s->map[y][x])
+		while (++x < s->map_width_max && s->map[y][x])
 		{
 			temp.x = x * s->mini_width_unit;
 			temp.y = y * s->mini_height_unit;
