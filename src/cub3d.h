@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 17:28:21 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 17:56:19 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,42 @@ typedef struct s_bresenham{
 	int	p;
 }	t_bresenham;
 
+typedef struct s_pars
+{
+	int		map_w;
+	int		map_h;
+	int		file_w;
+	int		file_h;
+
+	int		map_starting_i;
+	
+	bool	map_error;
+	bool	map_time;
+	bool	extra;
+	bool	n;
+	bool	s;
+	bool	w;
+	bool	e;
+	bool	f;
+	bool	c;
+
+	char	*n_texture;
+	char	*s_texture;
+	char	*w_texture;
+	char	*e_texture;
+
+	char	**map;
+
+	char	*f_color_rgb;
+	char	*c_color_rgb;
+	int		f_color_rgb_int[3];
+	int		c_color_rgb_int[3];
+	char	f_color_hex[7];
+	char	c_color_hex[7];
+
+	char	**full_file;
+}	t_pars;
+
 typedef struct s_main
 {
 	//mlx info
@@ -226,8 +262,26 @@ typedef struct s_main
 
 /* --------------------- > >> Prototypes << < --------------------- */
 
-/* ----------------- ** gnl ** ------------------ */
+/* ----------- ** pars utils ** ------------ */
+void	remove_nl(char *str);
+void	free_char_double_pointer(char **str);
+void	get_max_x_y(char *file_path, t_pars *p);
 
+/* ----------- ** check user input ** ------------ */
+void	user_input_check(int argc, char **argv);
+
+/* -------------- ** map checks ** --------------- */
+void	check_map_content(t_pars *p);
+void	check_file_validity(t_pars *p);
+
+/* ----------- ** full map save ** ------------- */
+void	init_map_save(char *file_path, t_pars *p);
+
+/* ------------- ** rgb to hex ** -------------- */
+void	rgb_char_to_int(char *char_rgb, int int_rgb[3]);
+void	rgb_to_hex(int rgb_int[3], char *hex);
+
+/* ----------------- ** gnl ** ------------------ */
 char	*get_next_line(int fd);
 
 /* -------------- ** temp parse ** -------------- */
@@ -236,7 +290,6 @@ int		get_y(char *file);
 char	**save_map(char **map, char *file, int x);
 
 /* --------------- ** drawing ** ---------------- */
-
 void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
 void	draw_border(int width, int height, t_coord const *origin, t_main *s);
