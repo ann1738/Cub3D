@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 17:24:01 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/11 19:58:47 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+
+#include <time.h>
 
 /* ----------------------- > >> Colors << < ----------------------- */
 
@@ -89,21 +91,24 @@
 # define MINIMAP_X 420
 # define MINIMAP_Y 210
 
-# define SOUTH -M_PI_2
-# define NORTH M_PI_2
+# define SOUTH M_PI_2
+# define NORTH -M_PI_2
 # define WEST M_PI
 # define EAST 0
 
 # define BUFFER_SIZE 1
 # define FOV_DEG 66
+# define VISION_DEPTH 10.0
 
 # define SIDE_X true
 # define SIDE_Y false
 
-# define MOVEMENT_AMOUNT 0.5
-# define ROTATION_AMOUNT 0.1
+# define ACTUAL_WALL_HEIGHT 1
+
+# define MOVEMENT_AMOUNT 0.25
+# define ROTATION_AMOUNT 0.1963495
 # define MINI_PLAYER_ICON_SIZE 5
-# define INCREMENT_RAY_CASTING 0.01
+# define INCREMENT_RAY_CASTING 0.0048
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -113,9 +118,10 @@
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
-# define LEFT_KEY 65363
-# define RIGHT_KEY 65361
+# define LEFT_KEY 65361
+# define RIGHT_KEY 65363
 # define ESC_KEY 65307
+# define M_KEY 109
 
 #endif
 
@@ -197,7 +203,10 @@ typedef struct s_main
 	int			place_wall_at_x;
 	int			wall_height;
 	int			wall_width;
-	
+	//depth of the player's vision
+	double		depth;
+	//projection plane
+	double	dist_to_projection_plane;
 	t_vector	camera_plane;
 
 	t_coord		step;
@@ -205,6 +214,12 @@ typedef struct s_main
 
 	bool	minimap_on;
 	bool	side_hit;
+
+	//fps
+	clock_t	frame1;
+	clock_t	frame2;
+	double	fps;
+	
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -262,6 +277,11 @@ void	redraw_window(t_main *s);
 
 void	initiate_player_info(t_main *s);
 
+/* ---------------- ** math ** ------------------ */
+
 double	deg_to_rad(double deg);
+double	rad_to_deg(double rad);
+
+void	fps(t_main *s);
 
 #endif

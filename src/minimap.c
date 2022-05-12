@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 16:31:15 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/11 19:00:54 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-double	deg_to_rad(double deg)
-{
-	return(deg * (M_PI / 180.0));
-}
 
 void	draw_minimap(t_main *s)
 {
@@ -49,8 +44,8 @@ void	draw_minimap(t_main *s)
 			{
 				temp.color = HX_WHITE;
 				draw_rect(s->mini_width_unit, s->mini_height_unit, &temp, s);
-				temp.color = MINI_WALL_BORDER;
-				draw_border(s->mini_width_unit, s->mini_height_unit, &temp, s);
+				// temp.color = MINI_WALL_BORDER;
+				// draw_border(s->mini_width_unit, s->mini_height_unit, &temp, s);
 			}
 			// if (s->map[y][x] == 'N')
 			// 	init_n_draw_player(x, y, NORTH, s);
@@ -99,9 +94,11 @@ void	update_minimap(t_main *s)
 			else if (s->map[y][x] != ' ')
 			{
 				temp.color = HX_WHITE;
+				++temp.x;
+				++temp.y;
 				draw_rect(s->mini_width_unit, s->mini_height_unit, &temp, s);
-				temp.color = MINI_WALL_BORDER;
-				draw_border(s->mini_width_unit, s->mini_height_unit, &temp, s);
+				// temp.color = MINI_WALL_BORDER;
+				// draw_border(s->mini_width_unit, s->mini_height_unit, &temp, s);
 			}
 		}
 	}
@@ -111,6 +108,12 @@ void	update_minimap(t_main *s)
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
 	printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
+	t_coord end;
+
+	end.x = temp.x + (10 * cos(s->player_angle));
+	end.y = temp.y + (10 * sin(s->player_angle));
+	temp.color = RAY_COLOR;
+	draw_line(temp, end, s);
 	// cast_rays(s);
 	// s->player_map_position.x = (int)s->player_position.x;
 	// s->player_map_position.y = (int)s->player_position.y;

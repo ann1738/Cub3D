@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 16:44:50 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 12:58:27 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	init_struct(t_main *s)
 	s->mlx_window = mlx_new_window(s->mlx, WINDOW_X, WINDOW_Y, "cub3d");
 	s->mlx_image = mlx_new_image(s->mlx, WINDOW_X, WINDOW_Y);
 	s->image_address = mlx_get_data_addr(s->mlx_image, &s->bpp, &s->size_line, &s->endian);
+	s->depth = VISION_DEPTH;
+	s->frame1 = clock();
+	s->dist_to_projection_plane = (WINDOW_X / 2) / tan(deg_to_rad(FOV_DEG / 2));
+	printf("PROJECTION -> %lf\n", s->dist_to_projection_plane);
 }
 
 void	temp_parse(char *path, t_main *s)
@@ -60,6 +64,7 @@ int main(int argc, char **argv)
 	// s.player_map_position.x = (int)s.player_position.x;
 	// s.player_map_position.y = (int)s.player_position.y;
 	mlx_put_image_to_window(s.mlx, s.mlx_window, s.mlx_image, 0, 0);
+	// mlx_key_hook(s.mlx_window, key_hooks, &s);
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
 	mlx_loop(s.mlx);

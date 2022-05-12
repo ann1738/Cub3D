@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initiate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 19:12:30 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/09 19:53:21 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/11 16:41:59 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	initiate_player_info(t_main *s)
 				specific_player_info(x, y, NORTH, s);
 			else if (s->map[y][x] == 'S' && (check++) >= 0)
 				specific_player_info(x, y, SOUTH, s);
-			else if (s->map[y][x] == 'W' && (check++) >= 0)
+			else if (s->map[y][x] == 'W' && (check++) >= 0) //west and east mess up the arrow keys rotations
 				specific_player_info(x, y, WEST, s);
 			else if (s->map[y][x] == 'E' && (check++) >= 0)
 				specific_player_info(x, y, EAST, s);
