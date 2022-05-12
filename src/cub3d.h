@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/11 19:58:47 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/12 17:28:21 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,13 @@
 # define HX_GREEN 0x86DC3D
 # define HX_BLACK 0x000000
 # define HX_RED 0xFF0000
+# define HX_YELLOW 0xFFFF00
 # define HX_BLUE 0x0000FF
+# define HX_PURPLE 0x9932CC
 # define HX_SKY_BLUE 0x87CEEB
 
-# define MINI_BG_COLOR HX_GREEN
-# define MINI_PLAYER_COLOR HX_BLUE
+
+# define MINI_PLAYER_COLOR HX_GRASS_GREEN
 # define MINI_WALL_COLOR HX_PASTEL_PINK
 # define MINI_WALL_BORDER HX_BLACK
 
@@ -244,7 +246,6 @@ void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
 /* --------------- ** minimap ** ---------------- */
 
 void	draw_minimap(t_main *s);
-void	update_minimap(t_main *s);
 
 /* ---------------- ** hooks ** ----------------- */
 

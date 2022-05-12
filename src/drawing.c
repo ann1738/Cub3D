@@ -6,11 +6,13 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/10 14:50:22 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 15:27:31 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/* function to put pixels on the current image buffer */
 
 void	put_pixel(int x, int y, unsigned int color, t_main *s)
 {
@@ -20,6 +22,9 @@ void	put_pixel(int x, int y, unsigned int color, t_main *s)
 		(y * s->size_line))) = color;
 	}
 }
+
+/* draws filled rectangle with given width and height starting from a set of */
+/* coordinates */
 
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s)
 {
@@ -35,6 +40,9 @@ void	draw_rect(int width, int height, t_coord const *origin, t_main *s)
 			origin->color, s);
 	}
 }
+
+/* draws hollow rectangle with given width and height starting from a set of */
+/* coordinates to act as a border */
 
 void	draw_border(int width, int height, t_coord const *origin, t_main *s)
 {
@@ -59,6 +67,8 @@ void	draw_border(int width, int height, t_coord const *origin, t_main *s)
 	}
 }
 
+/* draws filled circle with given radius starting from a set of coordinates */
+
 void	draw_circle(int radius, t_coord const *origin, t_main *s)
 {
 	double	angle;
@@ -76,10 +86,13 @@ void	draw_circle(int radius, t_coord const *origin, t_main *s)
 	}
 }
 
+/* draws filled vertical rectangle with given width and height starting from */
+/* a set of coordinates */
+
 void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s)
 {
-	int width_index;
-	int height_index;
+	int	width_index;
+	int	height_index;
 
 	width_index = -1;
 	while (++width_index < width)

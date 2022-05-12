@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 12:58:53 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/12 17:35:42 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*still trial*/
+/*still trial (make static)*/
+
 bool	check_collision(double move_amount, double change_angle, t_main *s)
 {
 	double		offset;
@@ -25,8 +26,8 @@ bool	check_collision(double move_amount, double change_angle, t_main *s)
 	{
 		temp_pos.x = s->player_position.x;
 		temp_pos.y = s->player_position.y;
-		temp_pos.x += move_amount/* * s->fps */* cos(s->player_angle + change_angle + (0.1 * i)) + offset;
-		temp_pos.y += move_amount/* * s->fps */* sin(s->player_angle + change_angle) + (0.1 * i) + offset;
+		temp_pos.x += move_amount * s->fps * cos(s->player_angle + change_angle + (0.05 * i)) + offset;
+		temp_pos.y += move_amount * s->fps * sin(s->player_angle + change_angle) + (0.05 * i) + offset;
 		if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
 			return (true);
 		i += 1;
@@ -36,17 +37,18 @@ bool	check_collision(double move_amount, double change_angle, t_main *s)
 
 void	movement(double move_amount, double change_angle, t_main *s)
 {
-	if (check_collision(move_amount, change_angle, s))
-		return ;
+	// if (check_collision(move_amount, change_angle, s))
+	// 	return ;
 	t_vector	save;
+
 	save.x = s->player_position.x;
 	save.y = s->player_position.y;
-	s->player_position.x += move_amount/* * s->fps */* cos(s->player_angle + change_angle);
-	s->player_position.y += move_amount/** s->fps */* sin(s->player_angle + change_angle);
+	s->player_position.x += move_amount * cos(s->player_angle + change_angle);
+	s->player_position.y += move_amount * sin(s->player_angle + change_angle);
 	s->player_map_position.x = (int)s->player_position.x;
 	s->player_map_position.y = (int)s->player_position.y;
-	// i was trying to make this work
-	printf("player's angle is <%lf> ---- changed angle is <%lf>\n", s->player_angle, s->player_angle + change_angle);
+	/* i am still trying to make this work */
+	// printf("player's angle is <%lf> ---- changed angle is <%lf>\n", s->player_angle, s->player_angle + change_angle);
 	// printf("map placeholder is <%c>\n", s->map[s->player_map_position.y][s->player_map_position.x]);
 	if (s->map[s->player_map_position.y][s->player_map_position.x] == '1' || s->map[s->player_map_position.y][s->player_map_position.x] == ' ')
 	{
@@ -63,14 +65,12 @@ void	rotate(double change_angle, t_main *s)
 {
 	rotate_coor(&s->camera_plane.x, &s->camera_plane.y, change_angle);
 	s->player_angle += change_angle;
-	printf("angle: %lf\n", s->player_angle);
 	redraw_window(s);
 }
 
 int	key_hooks(int keycode, t_main *s)
 {
 	(void)s;
-	printf("hi 1\n");
 	if (keycode == W_KEY)
 		movement(MOVEMENT_AMOUNT, 0,s);
 	else if (keycode == S_KEY)
@@ -90,7 +90,6 @@ int	key_hooks(int keycode, t_main *s)
 	}
 	else if (keycode == ESC_KEY)
 		close_x(0, s);
-	printf("%d \n", keycode); 	
 	return (1);
 }
 

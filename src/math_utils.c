@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 16:45:41 by ann               #+#    #+#             */
-/*   Updated: 2022/05/11 16:46:51 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/12 15:02:48 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 double	deg_to_rad(double deg)
 {
-	return(deg * (M_PI / 180.0));
+	return (deg * (M_PI / 180.0));
 }
 
 double	rad_to_deg(double rad)
 {
-	return(rad * (180.0 / M_PI));
+	return (rad * (180.0 / M_PI));
 }

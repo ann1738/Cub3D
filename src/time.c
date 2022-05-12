@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:29:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/11 19:44:41 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/12 15:41:32 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/* when frames per second (fps) is to be included just involve it in the */
+/* movement formula */
 
 void	fps(t_main *s)
 {
