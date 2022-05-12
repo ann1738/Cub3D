@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 19:11:59 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 20:04:48 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,9 @@ typedef struct s_main
 	//colors
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
+
+	//texture
+	int	offset;
 	
 }	t_main;
 

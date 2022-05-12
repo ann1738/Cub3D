@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 18:09:53 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/12 20:09:16 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ static void	draw_wall(t_main *s)
 	// 	s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	s->wall_height = WINDOW_Y / s->perpend_wall_dist;
+	/*I am working here*/
+	// if (s->side_hit == SIDE_X)
+		// s->offset = s->player_position.y % 64.0;
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
 	// printf("height: %d*****************\n", s->wall_height);
 	//calculate the start and the end of the vertical strip drawing
