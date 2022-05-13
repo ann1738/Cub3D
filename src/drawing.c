@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 15:27:31 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/13 08:59:56 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,23 @@ void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s)
 		height_index = -1;
 		while (++height_index < height)
 			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
+	}
+}
+
+void	draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s) 
+{
+	int	width_index;
+	int	height_index;
+
+	height_index = -1;
+	while (++height_index < height)
+	{
+		width_index = -1;
+		while (++width_index < width)
+		{
+			origin.color =  *((unsigned int *)(tex->image_address + (tex->size_line * s->texture_y) + ((s->texture_x + width_index) * (tex->bpp / 8))));
+			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
+		}
+		s->texture_y += s->step_texture;
 	}
 }

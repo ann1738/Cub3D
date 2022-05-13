@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 20:04:48 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/13 09:05:35 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@
 # define SIDE_Y false
 
 # define ACTUAL_WALL_HEIGHT 1
+# define TEXTURE_HEIGHT 64
+# define TEXTURE_WIDTH 64
 
 # define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1963495
@@ -157,6 +159,19 @@ typedef struct s_vector
 // {
 	
 // }
+
+typedef struct s_texture
+{
+	void	*image;
+	char	*image_address;
+	int		bpp;
+	int		endian;
+	int		size_line;
+	
+	int		width;
+	int		height;
+}	t_texture;
+
 
 typedef struct s_bresenham{
 	int	dy;
@@ -263,7 +278,14 @@ typedef struct s_main
 	unsigned int	floor_color;
 
 	//texture
+	t_texture	texture[6];
+
 	int	offset;
+	double	wall_hit_pos; //will be used for textures
+	int	texture_x;
+	int	texture_y;
+	double	step_texture;
+	
 	
 }	t_main;
 
@@ -303,6 +325,7 @@ void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
 void	draw_border(int width, int height, t_coord const *origin, t_main *s);
 void	draw_circle(int radius, t_coord const *origin, t_main *s);
 void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
+void	draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
 
@@ -343,6 +366,12 @@ void	initiate_player_info(t_main *s);
 
 double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
+
+/* --------------- ** texture ** ---------------- */
+
+void	load_textures(t_pars *p, t_main *s);
+
+/* ---------------- ** math ** ------------------ */
 
 void	fps(t_main *s);
 

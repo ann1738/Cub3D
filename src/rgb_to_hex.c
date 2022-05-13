@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_to_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 18:18:57 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/09 12:36:31 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/13 07:05:18 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	make_hex(unsigned int n, char str[7], int i)
 		else if (temp_num >= 10 && temp_num <= 15)
 			str[i] = temp_num + 87;
 	}
-	else if (n >= 0 && n <= 9)
+	else if (n <= 9)
 	{
 		str[i++] = '0';
 		str[i] = n + 48;

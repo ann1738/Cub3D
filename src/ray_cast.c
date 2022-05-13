@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 20:09:16 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/13 09:02:23 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,34 @@ static void	draw_wall(t_main *s)
 	// 	s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	s->wall_height = WINDOW_Y / s->perpend_wall_dist;
+	
 	/*I am working here*/
-	// if (s->side_hit == SIDE_X)
-		// s->offset = s->player_position.y % 64.0;
+	if (s->side_hit == SIDE_X)
+		s->wall_hit_pos = s->player_position.y + s->perpend_wall_dist * s->ray_direction.y;
+	else
+		s->wall_hit_pos = s->player_position.x + s->perpend_wall_dist * s->ray_direction.x;
+	s->wall_hit_pos = s->wall_hit_pos - floor(s->wall_hit_pos);//to get the fraction
+
+	s->offset = (int)(s->wall_hit_pos * TEXTURE_WIDTH);
+
+	s->texture_x = s->offset;
+	s->step_texture = TEXTURE_HEIGHT / s->wall_height;
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
 	// printf("height: %d*****************\n", s->wall_height);
 	//calculate the start and the end of the vertical strip drawing
 	
-	if (s->perpend_wall_dist <= s->depth / 4.0 && !assign(&origin.color, HX_PURPLE_0))
-		;
-	else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_1))
-		;
-	else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_2))
-		;
-	else if (s->perpend_wall_dist >= s->depth)
-		return ;
+	// if (s->perpend_wall_dist <= s->depth / 4.0 && !assign(&origin.color, HX_PURPLE_0))
+	// 	;
+	// else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_1))
+	// 	;
+	// else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_2))
+	// 	;
+	// else if (s->perpend_wall_dist >= s->depth)
+	// 	return ;
 	origin.x = s->place_wall_at_x;
 	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2);
 	// origin.color = HX_PURPLE;
-	draw_vertical_strip(origin, s->wall_width, s->wall_height, s);
+	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[0], s);
 }
 
 static void	ray_casting_loop(t_main *s)

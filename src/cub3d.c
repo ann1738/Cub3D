@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 18:45:43 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/13 09:06:40 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->map_width_max = p->map_w;
 	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
+
+	load_textures(p, s);
 }
 
 /* to do:
@@ -75,6 +77,7 @@ int main(int argc, char **argv)
 	redraw_window(&s);
 
 	/* hooks and loop */
+	mlx_key_hook(s.mlx_window, key_hooks, &s);
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
 	mlx_loop(s.mlx);
