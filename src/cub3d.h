@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 09:05:35 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/13 18:47:28 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@
 
 # define BUFFER_SIZE 1
 # define FOV_DEG 66
-# define VISION_DEPTH 10.0
+# define VISION_DEPTH 15.0
 
 # define SIDE_X true
 # define SIDE_Y false
@@ -109,8 +109,10 @@
 # define TEXTURE_HEIGHT 64
 # define TEXTURE_WIDTH 64
 
+# define WALL_SCALE_FACTOR 2
+
 # define MOVEMENT_AMOUNT 0.25
-# define ROTATION_AMOUNT 0.1963495
+# define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 5
 # define INCREMENT_RAY_CASTING 0.0048
 
@@ -254,7 +256,7 @@ typedef struct s_main
 	double		perpend_wall_dist;
 	//where to draw the vertical strip walls
 	int			place_wall_at_x;
-	int			wall_height;
+	unsigned int	wall_height;
 	int			wall_width;
 	//depth of the player's vision
 	double		depth;
@@ -280,10 +282,13 @@ typedef struct s_main
 	//texture
 	t_texture	texture[6];
 
+	//
+	bool	dont_draw;
+
 	int	offset;
 	double	wall_hit_pos; //will be used for textures
 	int	texture_x;
-	int	texture_y;
+	double	texture_y;
 	double	step_texture;
 	
 	

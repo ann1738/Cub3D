@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 08:59:56 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/13 17:41:18 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	put_pixel(int x, int y, unsigned int color, t_main *s)
 {
-	if (x > 0 && x < WINDOW_X && y > 0 && y < WINDOW_Y)
+	if (x >= 0 && x <= WINDOW_X && y >= 0 && y <= WINDOW_Y)
 	{
 		*((unsigned int *)(s->image_address + (x * (s->bpp / 8)) + \
 		(y * s->size_line))) = color;
@@ -114,8 +114,12 @@ void	draw_vertical_texture(t_coord origin, int width, int height, t_texture cons
 		width_index = -1;
 		while (++width_index < width)
 		{
-			origin.color =  *((unsigned int *)(tex->image_address + (tex->size_line * s->texture_y) + ((s->texture_x + width_index) * (tex->bpp / 8))));
+			origin.color =  *((unsigned int *)(tex->image_address + (tex->size_line * (int)s->texture_y) + \
+							(((s->texture_x + width_index) & tex->width - 1) * (tex->bpp / 8))));
+			if (s->side_hit == SIDE_X)
+				origin.color = (origin.color >> 1) & 8355711;
 			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
+			// printf("texture.x = %d -- texture.y = %d\n", s->texture_x + width_index, s->texture_y);
 		}
 		s->texture_y += s->step_texture;
 	}

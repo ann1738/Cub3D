@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 09:02:23 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/13 18:46:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,14 @@ static void	draw_wall(t_main *s)
 	// else
 	// 	s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
-	s->wall_height = WINDOW_Y / s->perpend_wall_dist;
+	if (s->perpend_wall_dist > s->depth)
+		return ;
+	if (s->perpend_wall_dist < 2.0)	
+		s->wall_height = WINDOW_Y;
+	else
+		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
+	
+	printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
 	
 	/*I am working here*/
 	if (s->side_hit == SIDE_X)
@@ -87,10 +94,17 @@ static void	draw_wall(t_main *s)
 		s->wall_hit_pos = s->player_position.x + s->perpend_wall_dist * s->ray_direction.x;
 	s->wall_hit_pos = s->wall_hit_pos - floor(s->wall_hit_pos);//to get the fraction
 
-	s->offset = (int)(s->wall_hit_pos * TEXTURE_WIDTH);
-
+	s->offset = (int)(s->wall_hit_pos * s->texture[0].width);
+	printf("hit pos: %lf\n", s->wall_hit_pos);
 	s->texture_x = s->offset;
-	s->step_texture = TEXTURE_HEIGHT / s->wall_height;
+	//understand the math here please
+	if (s->side_hit == SIDE_X && s->ray_direction.x > 0)
+		s->texture_x = s->texture[0].width - s->texture_x - 1;
+	else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
+		s->texture_x = s->texture[0].width - s->texture_x - 1;
+	
+	s->step_texture = s->texture[0].height / (double)s->wall_height;
+	s->texture_y = 0;
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
 	// printf("height: %d*****************\n", s->wall_height);
 	//calculate the start and the end of the vertical strip drawing
@@ -104,14 +118,14 @@ static void	draw_wall(t_main *s)
 	// else if (s->perpend_wall_dist >= s->depth)
 	// 	return ;
 	origin.x = s->place_wall_at_x;
-	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2);
+	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0);
 	// origin.color = HX_PURPLE;
 	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[0], s);
 }
 
 static void	ray_casting_loop(t_main *s)
 {
-	while (s->final_side_length < s->depth && s->map[s->ray_map_position.y][s->ray_map_position.x] != '1')
+	while (s->final_side_length <= s->depth && s->map[s->ray_map_position.y][s->ray_map_position.x] != '1')
 	{
 		// printf("I AM IN side.x = %lf , side.y = %lf\n", s->side_length_x, s->side_length_y);
 		if (s->side_length_x < s->side_length_y)
@@ -138,6 +152,9 @@ static void	ray_casting_loop(t_main *s)
 		}
 		// printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 	}
+	if (s->final_side_length > s->depth)
+		s->dont_draw = true;
+		
 }
 
 void	cast_rays(t_main *s)
@@ -146,6 +163,7 @@ void	cast_rays(t_main *s)
 
 	/* calculating fps */
 	// fps(s);
+	s->dont_draw = false;
 	i = 1;
 	s->place_wall_at_x = 0;
 	s->wall_width = WINDOW_X / (2.0 / INCREMENT_RAY_CASTING) + 1;
@@ -163,7 +181,8 @@ void	cast_rays(t_main *s)
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 	
 		/*drawing the wall*/
-		draw_wall(s);
+		// if (s->dont_draw == false)
+			draw_wall(s);
 
 		/* incrementing loop */
 		i -= INCREMENT_RAY_CASTING;

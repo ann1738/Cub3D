@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 09:06:40 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/13 17:33:38 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	redraw_window(&s);
 
 	/* hooks and loop */
-	mlx_key_hook(s.mlx_window, key_hooks, &s);
+	// mlx_key_hook(s.mlx_window, key_hooks, &s);
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
 	mlx_loop(s.mlx);
