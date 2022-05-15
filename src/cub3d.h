@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 16:59:02 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 19:29:36 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@
 # define TEXTURE_HEIGHT 64
 # define TEXTURE_WIDTH 64
 
-# define WALL_SCALE_FACTOR 2
+# define WALL_SCALE_FACTOR 1.5
 
-# define MOVEMENT_AMOUNT 0.25
+# define MOVEMENT_AMOUNT 0.25 * WALL_SCALE_FACTOR
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 5
 # define INCREMENT_RAY_CASTING 0.0048

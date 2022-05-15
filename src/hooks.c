@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/12 17:35:42 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 19:23:22 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,24 @@
 bool	check_collision(double move_amount, double change_angle, t_main *s)
 {
 	double		offset;
-	int			i;
 	t_vector	temp_pos;
 
-	i = -1;
-	offset = 5.0;
-	while (i <= 1)
-	{
-		temp_pos.x = s->player_position.x;
-		temp_pos.y = s->player_position.y;
-		temp_pos.x += move_amount * s->fps * cos(s->player_angle + change_angle + (0.05 * i)) + offset;
-		temp_pos.y += move_amount * s->fps * sin(s->player_angle + change_angle) + (0.05 * i) + offset;
-		if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
-			return (true);
-		i += 1;
-	}
+	offset = 0.5;
+
+	temp_pos.x = s->player_position.x;
+	temp_pos.y = s->player_position.y;
+	temp_pos.x += (move_amount + offset) * cos(s->player_angle + change_angle);
+	temp_pos.y += (move_amount + offset) * sin(s->player_angle + change_angle);
+	printf("player.x = %lf, player.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
+	if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
+		return (true);
 	return (false);
 }
 
 void	movement(double move_amount, double change_angle, t_main *s)
 {
-	// if (check_collision(move_amount, change_angle, s))
-	// 	return ;
+	if (check_collision(move_amount, change_angle, s))
+		{write(2, "COLLISION\n", 10); return ;}
 	t_vector	save;
 
 	save.x = s->player_position.x;

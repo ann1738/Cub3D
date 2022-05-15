@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 18:14:24 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 19:25:04 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	draw_wall(t_main *s)
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	// if (s->perpend_wall_dist > s->depth)
 	// 	return ;
-	if (s->perpend_wall_dist <= 2.0)
+	if (s->perpend_wall_dist <= WALL_SCALE_FACTOR)
 	{
 		s->perpend_wall_dist = 2.0; //so that it doesnt make the wall stretch in the x direction (this will become better with wall collisions)
 		s->wall_height = WINDOW_Y;
