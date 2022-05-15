@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 14:04:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 18:14:24 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	draw_wall(t_main *s)
 	t_coord	origin;
 	int		texture_index;
 
-
+	texture_index = 0;
 	/* which texture */
 	if (s->ray_direction.x > 0 && s->side_hit == SIDE_X) //EAST
 		texture_index = 3;
@@ -83,23 +83,22 @@ static void	draw_wall(t_main *s)
 		texture_index = 1;
 	else if (s->ray_direction.y < 0 && s->side_hit == SIDE_Y) //NORTH
 		texture_index = 0;
-	
-	//calculate the perpendicular wall distance (to avoid fisheye)
-	// if (s->side_hit == SIDE_X)
-	// 	s->perpend_wall_dist = s->side_length_x - s->delta_distance_x;
-	// else
-	// 	s->perpend_wall_dist = s->side_length_y - s->delta_distance_y;
+
+	/* perpendicular distance instead of euclidean distance to avoid fish eye effect */
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
-	if (s->perpend_wall_dist > s->depth)
-		return ;
-	if (s->perpend_wall_dist < 2.0)	
+	// if (s->perpend_wall_dist > s->depth)
+	// 	return ;
+	if (s->perpend_wall_dist <= 2.0)
+	{
+		s->perpend_wall_dist = 2.0; //so that it doesnt make the wall stretch in the x direction (this will become better with wall collisions)
 		s->wall_height = WINDOW_Y;
+	}
 	else
 		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
 	
 	// printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
 	
-	/*I am working here*/
+	/* calculating the texture x coordinate*/
 	if (s->side_hit == SIDE_X)
 		s->wall_hit_pos = s->player_position.y + s->perpend_wall_dist * s->ray_direction.y;
 	else
@@ -114,23 +113,42 @@ static void	draw_wall(t_main *s)
 		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
 	else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
 		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
-	
+	/* calculating the step_texture used in the drawing part */
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
+
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
-	// printf("height: %d*****************\n", s->wall_height);
-	//calculate the start and the end of the vertical strip drawing
-	
-	// if (s->perpend_wall_dist <= s->depth / 4.0 && !assign(&origin.color, HX_PURPLE_0))
-	// 	;
-	// else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_1))
-	// 	;
-	// else if (s->perpend_wall_dist <= s->depth / 2.0 && !assign(&origin.color, HX_PURPLE_2))
-	// 	;
-	// else if (s->perpend_wall_dist >= s->depth)
-	// 	return ;
+
+	/* shading using fog */	
+	s->fog_intensity = 0; //reset fog_intensity (useless but it looks better with it, for now)
+	if (s->perpend_wall_dist <= s->depth / 2.0)
+		s->fog_intensity = 0;
+	else if (s->perpend_wall_dist <= s->depth / 1.9)
+		s->fog_intensity = 0.1;
+	else if (s->perpend_wall_dist <= s->depth / 1.8)
+		s->fog_intensity = 0.2;
+	else if (s->perpend_wall_dist <= s->depth / 1.7)
+		s->fog_intensity = 0.3;
+	else if (s->perpend_wall_dist <= s->depth / 1.6)
+		s->fog_intensity = 0.4;
+	else if (s->perpend_wall_dist <= s->depth / 1.5)
+		s->fog_intensity = 0.5;
+	else if (s->perpend_wall_dist <= s->depth / 1.4)
+		s->fog_intensity = 0.6;
+	else if (s->perpend_wall_dist <= s->depth / 1.3)
+		s->fog_intensity = 0.7;
+	else if (s->perpend_wall_dist <= s->depth / 1.2)
+		s->fog_intensity = 0.8;
+	else if (s->perpend_wall_dist <= s->depth / 1.1)
+		s->fog_intensity = 0.9;
+	else if (s->perpend_wall_dist <= s->depth / 1.0)
+		s->fog_intensity = 1;
+	else if (s->perpend_wall_dist > s->depth)
+		s->fog_intensity = 1;
+		// return ;
 	origin.x = s->place_wall_at_x;
 	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0);
+	//origin color is not used here (in the draw_vertical_texture())
 	// origin.color = HX_PURPLE;
 	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[texture_index], s);
 }
@@ -157,7 +175,7 @@ static void	ray_casting_loop(t_main *s)
 		// printf("HULU!!!!\nfinal_side_length = %lf -- ", s->final_side_length);
 
 		/* protection for when there is no wall / wall is too far */
-		if (s->ray_map_position.y > s->map_height - 1 || s->ray_map_position.x > s->map_width_max - 1)
+		if (s->ray_map_position.y > s->map_height - 1 || s->ray_map_position.x > s->map_width_max - 1) //protect negative
 		{
 			s->final_side_length = s->depth;
 			break ;

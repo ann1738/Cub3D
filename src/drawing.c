@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 17:41:18 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 18:32:39 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,13 @@ void	draw_vertical_texture(t_coord origin, int width, int height, t_texture cons
 		{
 			origin.color =  *((unsigned int *)(tex->image_address + (tex->size_line * (int)s->texture_y) + \
 							(((s->texture_x + width_index) & tex->width - 1) * (tex->bpp / 8))));
+			/* fog effect */
+			if (s->fog_intensity)
+				origin.color = add_fog_uint(s->fog_intensity, &s->fog, origin.color);
+			/* extra shading */
 			if (s->side_hit == SIDE_X)
 				origin.color = (origin.color >> 1) & 8355711;
 			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
-			// printf("texture.x = %d -- texture.y = %d\n", s->texture_x + width_index, s->texture_y);
 		}
 		s->texture_y += s->step_texture;
 	}

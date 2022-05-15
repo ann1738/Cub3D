@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 13:56:59 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 17:15:57 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
 
-	printf("NO SEGDAULT\n");
+	assign_rgb_color(171, 174, 176, &s->fog);
+	// uint_to_rgb(0xabaeb0, &s->fog);
 	load_textures(p, s);
+	printf("heieheihie\n");
 }
 
 /* to do:

@@ -1,7 +1,7 @@
 NO ./textures/redbrick.xpm
 SO ./textures/wood.xpm
 WE ./textures/metal.xpm
-EA ./textures/tile.xpm
+EA ./textures/wood.xpm
 
 C 86,125,70
 F 135,206,235

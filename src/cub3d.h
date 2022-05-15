@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 18:47:28 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 16:59:02 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,14 @@ typedef struct s_vector
 	
 // }
 
+typedef struct s_color
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t_color;
+
+
 typedef struct s_texture
 {
 	void	*image;
@@ -291,7 +299,9 @@ typedef struct s_main
 	double	texture_y;
 	double	step_texture;
 	
-	
+	//color
+	t_color fog;
+	double	fog_intensity;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -300,7 +310,6 @@ typedef struct s_main
 void	remove_nl(char *str);
 void	free_char_double_pointer(char **str);
 void	get_max_x_y(char *file_path, t_pars *p);
-int		rgb_to_uint(int transp, int red, int green, int blue);
 
 /* ----------- ** check user input ** ------------ */
 void	user_input_check(int argc, char **argv);
@@ -379,5 +388,14 @@ void	load_textures(t_pars *p, t_main *s);
 /* ---------------- ** math ** ------------------ */
 
 void	fps(t_main *s);
+
+/* ---------------- ** color ** ----------------- */
+
+int		rgb_to_uint(int transp, int red, int green, int blue);
+void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
+void	add_fog(double intensity, t_color fog_color, t_color *color);
+void	assign_rgb_color(int red, int green, int blue, t_color *color);
+unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
+
 
 #endif
