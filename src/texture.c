@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 09:05:45 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/15 14:02:25 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ void	load_textures(t_pars *p, t_main *s)
 	/* the count needs to be increased from 4 */
 
 	/*NORTH SOUTH WEST EAST order of array*/
-
+	printf("NORTH: %s\n", p->n_texture);
+	printf("SOUTH: %s\n", p->s_texture);
+	printf("WEST: %s\n", p->w_texture);
+	printf("EAST: %s\n", p->e_texture);
 	load_single_texture(&s->texture[0], p->n_texture, s);
-	// load_single_texture(&s->texture[1], p->s_texture, s);
-	// load_single_texture(&s->texture[2], p->w_texture, s);
-	// load_single_texture(&s->texture[3], p->e_texture, s);
+	load_single_texture(&s->texture[1], p->s_texture, s);
+	load_single_texture(&s->texture[2], p->w_texture, s);
+	load_single_texture(&s->texture[3], p->e_texture, s);
 }

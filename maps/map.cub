@@ -1,7 +1,7 @@
-NO ./big.xpm
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./textures/redbrick.xpm
+SO ./textures/wood.xpm
+WE ./textures/metal.xpm
+EA ./textures/tile.xpm
 
 C 86,125,70
 F 135,206,235

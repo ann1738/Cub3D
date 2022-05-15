@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 18:46:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 14:04:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,19 @@ int	assign(unsigned int *assigned, unsigned int assignee)
 static void	draw_wall(t_main *s)
 {
 	t_coord	origin;
+	int		texture_index;
 
+
+	/* which texture */
+	if (s->ray_direction.x > 0 && s->side_hit == SIDE_X) //EAST
+		texture_index = 3;
+	else if (s->ray_direction.x < 0 && s->side_hit == SIDE_X) //WEST	
+		texture_index = 2;
+	else if (s->ray_direction.y > 0 && s->side_hit == SIDE_Y) //SOUTH
+		texture_index = 1;
+	else if (s->ray_direction.y < 0 && s->side_hit == SIDE_Y) //NORTH
+		texture_index = 0;
+	
 	//calculate the perpendicular wall distance (to avoid fisheye)
 	// if (s->side_hit == SIDE_X)
 	// 	s->perpend_wall_dist = s->side_length_x - s->delta_distance_x;
@@ -85,7 +97,7 @@ static void	draw_wall(t_main *s)
 	else
 		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
 	
-	printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
+	// printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
 	
 	/*I am working here*/
 	if (s->side_hit == SIDE_X)
@@ -94,16 +106,16 @@ static void	draw_wall(t_main *s)
 		s->wall_hit_pos = s->player_position.x + s->perpend_wall_dist * s->ray_direction.x;
 	s->wall_hit_pos = s->wall_hit_pos - floor(s->wall_hit_pos);//to get the fraction
 
-	s->offset = (int)(s->wall_hit_pos * s->texture[0].width);
-	printf("hit pos: %lf\n", s->wall_hit_pos);
+	s->offset = (int)(s->wall_hit_pos * s->texture[texture_index].width);
+	// printf("hit pos: %lf\n", s->wall_hit_pos);
 	s->texture_x = s->offset;
 	//understand the math here please
 	if (s->side_hit == SIDE_X && s->ray_direction.x > 0)
-		s->texture_x = s->texture[0].width - s->texture_x - 1;
+		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
 	else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
-		s->texture_x = s->texture[0].width - s->texture_x - 1;
+		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
 	
-	s->step_texture = s->texture[0].height / (double)s->wall_height;
+	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
 	// printf("height: %d*****************\n", s->wall_height);
@@ -120,7 +132,7 @@ static void	draw_wall(t_main *s)
 	origin.x = s->place_wall_at_x;
 	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0);
 	// origin.color = HX_PURPLE;
-	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[0], s);
+	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[texture_index], s);
 }
 
 static void	ray_casting_loop(t_main *s)
