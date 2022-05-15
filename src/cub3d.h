@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/13 18:47:28 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 18:03:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,16 @@ typedef struct s_main
 	//texture
 	t_texture	texture[6];
 
+	//door
+	int				door_map_x;
+	int				door_map_y;
+	unsigned int	door_height;
+	double			door_final_side_length;
+	double			perpend_door_dist;
+	double			door_hit_pos;
+	bool			there_is_a_door;
+	bool			door_side_hit;
+	
 	//
 	bool	dont_draw;
 
@@ -358,6 +368,10 @@ void	draw_floor(unsigned int color, t_main *s);
 /* ---------------- ** ceiling ** --------------- */
 
 void	draw_ceiling(unsigned int color, t_main *s);
+
+/* ---------------- ** door ** ------------------ */
+
+void	draw_door(t_main *s);
 
 /* ---------------- ** redraw ** ---------------- */
 

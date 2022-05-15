@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 14:04:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 19:08:17 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ static void	draw_wall(t_main *s)
 	// printf("hit pos: %lf\n", s->wall_hit_pos);
 	s->texture_x = s->offset;
 	//understand the math here please
-	if (s->side_hit == SIDE_X && s->ray_direction.x > 0)
-		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
-	else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
+	// if (s->side_hit == SIDE_X && s->ray_direction.x > 0)
+	// 	s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
+	// else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
 		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
 	
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
@@ -156,6 +156,32 @@ static void	ray_casting_loop(t_main *s)
 		}
 		// printf("HULU!!!!\nfinal_side_length = %lf -- ", s->final_side_length);
 
+		/* ****************************** Door attempt ****************************** */
+		if (!s->there_is_a_door && s->map[s->ray_map_position.y][s->ray_map_position.x] == 'D')
+		{
+			// if (s->side_length_y - (s->delta_distance_y / 2) < s->side_length_x)
+			if (s->side_hit == SIDE_Y && s->side_length_y + (s->delta_distance_y / 2) < s->side_length_x + s->delta_distance_x)
+			{
+				s->door_map_x = s->ray_map_position.x;
+				s->door_map_y = s->ray_map_position.y;
+				s->door_final_side_length = (s->final_side_length) + (s->delta_distance_y / 2);;
+				s->there_is_a_door = true;
+				s->door_side_hit = SIDE_Y;
+			}
+			// else if (s->side_length_x - (s->delta_distance_x / 2) < s->side_length_y)
+			else if (s->side_hit == SIDE_X && s->side_length_x + (s->delta_distance_x / 2) < s->side_length_y + s->delta_distance_y)
+			{	
+				s->door_map_x = s->ray_map_position.x;
+				s->door_map_y = s->ray_map_position.y;
+				s->door_final_side_length = (s->final_side_length) + (s->delta_distance_x / 2);
+				s->there_is_a_door = true;
+				s->door_side_hit = SIDE_X;
+			}
+			// else
+			// 	s->there_is_a_door = false;
+		}
+		/* ************************************************************************** */
+
 		/* protection for when there is no wall / wall is too far */
 		if (s->ray_map_position.y > s->map_height - 1 || s->ray_map_position.x > s->map_width_max - 1)
 		{
@@ -195,6 +221,10 @@ void	cast_rays(t_main *s)
 		/*drawing the wall*/
 		// if (s->dont_draw == false)
 			draw_wall(s);
+
+		//door
+		if (s->there_is_a_door == true)
+			draw_door(s);
 
 		/* incrementing loop */
 		i -= INCREMENT_RAY_CASTING;

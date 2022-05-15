@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 14:02:25 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 17:22:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	load_textures(t_pars *p, t_main *s)
 	load_single_texture(&s->texture[1], p->s_texture, s);
 	load_single_texture(&s->texture[2], p->w_texture, s);
 	load_single_texture(&s->texture[3], p->e_texture, s);
+	load_single_texture(&s->texture[4], "textures/temp_door.xpm", s);
 }

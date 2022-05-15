@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/12 18:08:54 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/15 15:02:35 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	player_n_other_map_content(t_pars *p, int x, int y, int *p_count)
 		(*p_count)++;
 	else if (p->map[y][x] != '1' && p->map[y][x] != '0' && \
 	p->map[y][x] != ' ' && p->map[y][x] != 'N' && \
-	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W')
+	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W' && p->map[y][x] != 'D')
 		p->map_error = true;
 }
 
@@ -96,6 +96,7 @@ static void	must_be_sp_or_1(t_pars *p, int x, int y, int *p_count)
 		p->map[y + 1][x] != '1' && p->map[y + 1][x] != ' ')
 			p->map_error = true;
 	}
+	// another if condition for if it was D .. to check if it's beside walls
 	else
 		player_n_other_map_content(p, x, y, p_count);
 }
