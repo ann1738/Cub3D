@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 12:13:44 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:39:35 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ static void	calc_inital_side_len(t_main *s)
 		s->final_side_length = s->side_length_y;
 	// printf("step_x = %d, step_y = %d\n", s->step.x, s->step.y);
 }
-	// if (s->side_hit == SIDE_X)
-	// 	origin.color = HX_BLUE;
-	// else
-	// 	origin.color = 0x86c5da;
-
-# define HX_PURPLE_0 0x9932CC
-# define HX_PURPLE_1 0x9400D3
-# define HX_PURPLE_2 0x4B0082
-// # define HX_PURPLE_3 0x9455f4
-
 
 int	assign(unsigned int *assigned, unsigned int assignee)
 {
@@ -97,12 +87,10 @@ static void	draw_wall(t_main *s)
 	s->texture_y = 0;
 	if (s->wall_height > WINDOW_Y)
 	{
-		s->perpend_wall_dist = WALL_SCALE_FACTOR; //so that it doesnt make the wall stretch in the x direction (this will become better with wall collisions)
 		s->wall_height = WINDOW_Y;
 		s->texture_y = ((s->wall_height - WINDOW_Y) / 2.0) * s->step_texture;
 	}
 	/**/	
-	// printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
 	
 	/* calculating the texture x coordinate*/
 	if (s->side_hit == SIDE_X)
@@ -112,7 +100,7 @@ static void	draw_wall(t_main *s)
 	s->wall_hit_pos = s->wall_hit_pos - floor(s->wall_hit_pos);//to get the fraction
 
 	s->offset = (int)(s->wall_hit_pos * s->texture[texture_index].width);
-	// printf("hit pos: %lf\n", s->wall_hit_pos);
+
 	s->texture_x = s->offset;
 	//understand the math here please
 	if (s->side_hit == SIDE_X && s->ray_direction.x > 0)

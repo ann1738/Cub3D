@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 12:13:53 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 13:33:57 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 /*still trial (make static)*/
 
-bool	check_collision(double move_amount, double change_angle, t_main *s)
+#define NO_COLLISION 0
+#define COLLISION_XY 1
+#define COLLISION_X 2
+#define COLLISION_Y 3
+
+int	check_collision(double move_amount, double change_angle, t_main *s)
 {
 	double		offset;
 	t_vector	temp_pos;
@@ -25,22 +30,32 @@ bool	check_collision(double move_amount, double change_angle, t_main *s)
 	temp_pos.y = s->player_position.y;
 	temp_pos.x += (move_amount + offset) * cos(s->player_angle + change_angle);
 	temp_pos.y += (move_amount + offset) * sin(s->player_angle + change_angle);
-	// printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
+	printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
 	if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
-		return (true);
-	return (false);
+		return (COLLISION_XY);
+	else if (s->map[(int)temp_pos.y][(int)s->player_position.x] == '1')
+		return (COLLISION_Y);
+	if (s->map[(int)s->player_position.y][(int)temp_pos.x] == '1')
+		return (COLLISION_X);
+	return (NO_COLLISION);
 }
 
 void	movement(double move_amount, double change_angle, t_main *s)
 {
-	if (check_collision(move_amount, change_angle, s))
-		{write(2, "COLLISION\n", 10); return ;}
 	t_vector	save;
+	int			collision;
+	
+	collision = check_collision(move_amount, change_angle, s);
+	if (collision == COLLISION_XY)
+		{write(2, "COLLISION\n", 10); return ;}
 
 	save.x = s->player_position.x;
 	save.y = s->player_position.y;
-	s->player_position.x += move_amount * cos(s->player_angle + change_angle);
-	s->player_position.y += move_amount * sin(s->player_angle + change_angle);
+	if(collision != COLLISION_X)
+		s->player_position.x += move_amount * cos(s->player_angle + change_angle);
+	if(collision != COLLISION_Y)
+		s->player_position.y += move_amount * sin(s->player_angle + change_angle);
+	//updating map/grid positions
 	s->player_map_position.x = (int)s->player_position.x;
 	s->player_map_position.y = (int)s->player_position.y;
 	/* i am still trying to make this work */
@@ -61,6 +76,11 @@ void	rotate(double change_angle, t_main *s)
 {
 	rotate_coor(&s->camera_plane.x, &s->camera_plane.y, change_angle);
 	s->player_angle += change_angle;
+	/* Making the player's angle wrap around (2 * PI) */
+	if (s->player_angle > 2 * M_PI)
+		s->player_angle = s->player_angle - (2 * M_PI);
+	else if (s->player_angle < 0)
+		s->player_angle = s->player_angle + (2 * M_PI);
 	redraw_window(s);
 }
 

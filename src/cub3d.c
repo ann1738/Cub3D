@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 11:58:53 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:47:03 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	assign_rgb_color(171, 174, 176, &s->fog);
 	// uint_to_rgb(0xabaeb0, &s->fog);
 	load_textures(p, s);
-	printf("heieheihie\n");
+
+
+	/* features to start with the game or to be toggled by the player */
+	s->minimap_on = MINIMAP_DEFAULT == 1;
+	s->is_using_mouse = MOUSE_DEFAULT == 1 && !mlx_mouse_hide(); //hehe
 }
 
 /* to do:

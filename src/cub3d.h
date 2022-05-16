@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 12:11:21 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 13:36:12 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,13 @@
 
 # define MOVEMENT_AMOUNT 0.25 * WALL_SCALE_FACTOR
 # define ROTATION_AMOUNT 0.1
-# define MINI_PLAYER_ICON_SIZE 5
+# define MINI_PLAYER_ICON_SIZE 3
 # define INCREMENT_RAY_CASTING 0.0048
+
+/* customizable defaults */
+
+# define MINIMAP_DEFAULT 1
+# define MOUSE_DEFAULT 1
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
