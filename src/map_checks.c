@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/12 18:08:54 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:56:58 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,57 @@ bool	ft_str_isrgb(char *str)
 	return (true);
 }
 
+void	check_textures_validity(t_pars *p)
+{
+	ft_open(p->n_texture);
+	ft_open(p->s_texture);
+	ft_open(p->e_texture);
+	ft_open(p->w_texture);
+	if (p->f_is_texture)
+		ft_open(p->f_color_rgb);
+	if (p->c_is_texture)
+		ft_open(p->c_color_rgb);
+}
+
 void	check_file_validity(t_pars *p)
 {
+	if (ft_strchr(p->f_color_rgb, '/'))
+		p->f_is_texture = true;
+	if (ft_strchr(p->c_color_rgb, '/'))
+		p->c_is_texture = true;
 	if (!p->n || !p->s || !p->w || !p->e || !p->f || !p->c || p->extra || \
-	ft_str_isrgb(p->f_color_rgb) == false || \
-	ft_str_isrgb(p->c_color_rgb) == false)
+	(!p->f_is_texture && ft_str_isrgb(p->f_color_rgb) == false )|| \
+	(!p->c_is_texture && ft_str_isrgb(p->c_color_rgb) == false))
 	{
 		printf("%soooi .. fix your shit%s\n", RED, RESET);
 		// printf("%sError: check map%s\n", RED, RESET);
 		free_char_double_pointer(p->full_file);
 		exit(0);
 	}
-	rgb_char_to_int(p->f_color_rgb, p->f_color_rgb_int);
-	rgb_char_to_int(p->c_color_rgb, p->c_color_rgb_int);
-	if (p->f_color_rgb_int[0] > 255 || p->f_color_rgb_int[1] > 255 || \
-	p->f_color_rgb_int[2] > 255 || p->c_color_rgb_int[0] > 255 || \
-	p->c_color_rgb_int[1] > 255 || p->c_color_rgb_int[2] > 255)
+	check_textures_validity(p);
+	if (!p->f_is_texture)
 	{
-		printf("%soooi .. fix your shit%s\n", RED, RESET);
-		// printf("%sError: check map%s\n", RED, RESET);
-		free_char_double_pointer(p->full_file);
-		exit(0);
+		rgb_char_to_int(p->f_color_rgb, p->f_color_rgb_int);
+		if (p->f_color_rgb_int[0] > 255 || p->f_color_rgb_int[1] > 255 || \
+		p->f_color_rgb_int[2] > 255)
+		{
+			printf("%soooi .. fix your shit%s\n", RED, RESET);
+			// printf("%sError: check map%s\n", RED, RESET);
+			free_char_double_pointer(p->full_file);
+			exit(0);
+		}
+	}
+	if (!p->c_is_texture)
+	{
+		rgb_char_to_int(p->c_color_rgb, p->c_color_rgb_int);
+		if (p->c_color_rgb_int[0] > 255 || p->c_color_rgb_int[1] > 255 || \
+		p->c_color_rgb_int[2] > 255)
+		{
+			printf("%soooi .. fix your shit%s\n", RED, RESET);
+			// printf("%sError: check map%s\n", RED, RESET);
+			free_char_double_pointer(p->full_file);
+			exit(0);
+		}
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_to_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 18:18:57 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/13 07:05:18 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/16 13:01:20 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,41 +55,4 @@ void	rgb_char_to_int(char *char_rgb, int int_rgb[3])
 	rgb_part = get_rgb_part(char_rgb, i);
 	int_rgb[2] = ft_atoi(rgb_part);
 	free(rgb_part);
-}
-
-void	make_hex(unsigned int n, char str[7], int i)
-{
-	int	temp_num;
-
-	if (n > 15)
-	{
-		temp_num = n / 16;
-		if (temp_num >= 0 && temp_num <= 9)
-			str[i++] = temp_num + 48;
-		else if (temp_num >= 10 && temp_num <= 15)
-			str[i++] = temp_num + 87;
-		temp_num = n % 16;
-		if (temp_num >= 0 && temp_num <= 9)
-			str[i] = temp_num + 48;
-		else if (temp_num >= 10 && temp_num <= 15)
-			str[i] = temp_num + 87;
-	}
-	else if (n <= 9)
-	{
-		str[i++] = '0';
-		str[i] = n + 48;
-	}
-	else if (n >= 10 && n <= 15)
-	{
-		str[i++] = '0';
-		str[i] = n + 87;
-	}
-}
-
-void	rgb_to_hex(int rgb_int[3], char hex[7])
-{
-	make_hex(rgb_int[0], hex, 0);
-	make_hex(rgb_int[1], hex, 2);
-	make_hex(rgb_int[2], hex, 4);
-	hex[6] = 0;
 }

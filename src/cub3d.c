@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 12:47:03 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 13:39:19 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	parse(int argc, char **argv, t_pars *p)
 	user_input_check(argc, argv);
 	init_map_save(argv[1], p);
 	check_file_validity(p);
-	rgb_to_hex(p->f_color_rgb_int, p->f_color_hex);
-	rgb_to_hex(p->c_color_rgb_int, p->c_color_hex);
 	p->map = &p->full_file[p->map_starting_i];
 	check_map_content(p);
 	if (p->map_error)

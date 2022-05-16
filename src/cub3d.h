@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 13:36:12 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 13:39:05 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,8 @@ typedef struct s_pars
 	bool	e;
 	bool	f;
 	bool	c;
+	bool	f_is_texture;
+	bool	c_is_texture;
 
 	char	*n_texture;
 	char	*s_texture;
@@ -223,8 +225,6 @@ typedef struct s_pars
 	char	*c_color_rgb;
 	int		f_color_rgb_int[3];
 	int		c_color_rgb_int[3];
-	char	f_color_hex[7];
-	char	c_color_hex[7];
 
 	char	**full_file;
 }	t_pars;
@@ -315,11 +315,13 @@ typedef struct s_main
 
 /* ----------- ** pars utils ** ------------ */
 void	remove_nl(char *str);
+void	ft_open(char *file_path);
 void	free_char_double_pointer(char **str);
 void	get_max_x_y(char *file_path, t_pars *p);
 
 /* ----------- ** check user input ** ------------ */
 void	user_input_check(int argc, char **argv);
+void	print_error_n_exit(int flag, char *argv1);
 
 /* -------------- ** map checks ** --------------- */
 void	check_map_content(t_pars *p);
