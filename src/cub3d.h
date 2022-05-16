@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 13:39:05 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 17:48:35 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,31 @@ typedef struct s_pars
 
 	char	**full_file;
 }	t_pars;
+
+typedef struct s_v_cast
+{
+	float	x;
+	float	y;
+
+	float	step_x;
+	float	step_y;
+
+	float	x_direction;
+	float	y_direction;
+
+	float	min_x_ray_dir;
+	float	max_x_ray_dir;
+	float	min_y_ray_dir;
+	float	max_y_ray_dir;
+
+	float	new_y_pos;
+	float	v_camera_pos;
+	float	row_distance;
+
+	int		texture_x;
+	int		texture_y;
+}	t_v_cast;
+
 
 typedef struct s_main
 {
