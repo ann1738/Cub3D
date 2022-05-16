@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:49:10 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/09 13:54:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/16 12:39:59 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,11 @@ void	init_map_save(char *file_path, t_pars *p)
 	get_max_x_y(file_path, p);
 	p->full_file = ft_calloc((p->file_h + 1), sizeof(char **));
 	fd = open(file_path, O_RDONLY);
-	//protect open
+	if (fd == -1)
+	{
+		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
+		exit(1);
+	}
 	i = 0;
 	get_index = false;
 	while (i < p->file_h)
