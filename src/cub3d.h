@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 13:39:05 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 16:54:19 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@
 
 # define WALL_SCALE_FACTOR 1.5
 
-# define MOVEMENT_AMOUNT 0.25 * WALL_SCALE_FACTOR
+# define WALL_COLLISION_OFFSET 0.5
+
+# define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 3
 # define INCREMENT_RAY_CASTING 0.0048
