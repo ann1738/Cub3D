@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 19:25:04 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:13:44 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,20 @@ static void	draw_wall(t_main *s)
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	// if (s->perpend_wall_dist > s->depth)
 	// 	return ;
-	if (s->perpend_wall_dist <= WALL_SCALE_FACTOR)
+
+	/* fixing near wall disturbances */
+	s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
+	if (s->wall_height < 0)
+	{printf("NOOO! NEGATIVE WALL HEIGHT DETECTED! WTF?!\n"); exit (1);}
+	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
+	s->texture_y = 0;
+	if (s->wall_height > WINDOW_Y)
 	{
-		s->perpend_wall_dist = 2.0; //so that it doesnt make the wall stretch in the x direction (this will become better with wall collisions)
+		s->perpend_wall_dist = WALL_SCALE_FACTOR; //so that it doesnt make the wall stretch in the x direction (this will become better with wall collisions)
 		s->wall_height = WINDOW_Y;
+		s->texture_y = ((s->wall_height - WINDOW_Y) / 2.0) * s->step_texture;
 	}
-	else
-		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
-	
+	/**/	
 	// printf("perpendicular-wall-distance: %lf -- wall height: %d\n", s->perpend_wall_dist, s->wall_height);
 	
 	/* calculating the texture x coordinate*/
@@ -114,8 +120,6 @@ static void	draw_wall(t_main *s)
 	else if (s->side_hit == SIDE_Y && s->ray_direction.y < 0)
 		s->texture_x = s->texture[texture_index].width - s->texture_x - 1;
 	/* calculating the step_texture used in the drawing part */
-	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
-	s->texture_y = 0;
 
 	// s->wall_height = (ACTUAL_WALL_HEIGHT / s->perpend_wall_dist) * s->dist_to_projection_plane;
 

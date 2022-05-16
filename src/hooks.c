@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 19:23:22 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:13:53 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	check_collision(double move_amount, double change_angle, t_main *s)
 	temp_pos.y = s->player_position.y;
 	temp_pos.x += (move_amount + offset) * cos(s->player_angle + change_angle);
 	temp_pos.y += (move_amount + offset) * sin(s->player_angle + change_angle);
-	printf("player.x = %lf, player.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
+	// printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
 	if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
 		return (true);
 	return (false);
@@ -84,6 +84,14 @@ int	key_hooks(int keycode, t_main *s)
 		s->minimap_on = !s->minimap_on;
 		redraw_window(s);
 	}
+	else if (keycode == H_KEY)
+	{
+		s->is_using_mouse = !s->is_using_mouse;
+		if (s->is_using_mouse)
+			mlx_mouse_hide();
+		else
+			mlx_mouse_show();
+	}
 	else if (keycode == ESC_KEY)
 		close_x(0, s);
 	return (1);
@@ -97,4 +105,20 @@ int	close_x(int keycode, t_main *s)
 	mlx_destroy_window(s->mlx, s->mlx_window);
 	//free allocations
 	exit(1);
+}
+
+int	mouse_perspective(int x, int y, t_main *s)
+{
+	(void)y;
+	double	change_angle;
+
+	// change_angle = (x - (WINDOW_X / 2)) / 534.760609;
+		// change_angle = (x - (WINDOW_X / 2)) / 2139.042435;
+	if (s->is_using_mouse)
+	{
+		change_angle = (x - (WINDOW_X / 2)) / 1069.521218;
+		rotate(change_angle, s);
+		mlx_mouse_move(s->mlx_window, WINDOW_X / 2, WINDOW_Y / 2);
+	}
+	return 1;
 }

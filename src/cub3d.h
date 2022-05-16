@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/15 19:29:36 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/16 12:11:21 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,27 +119,26 @@
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
 #ifdef linux
-
-# define W_KEY 119
-# define A_KEY 97
-# define S_KEY 115
-# define D_KEY 100
-# define LEFT_KEY 65361
-# define RIGHT_KEY 65363
-# define ESC_KEY 65307
-# define M_KEY 109
-
+#  define W_KEY 119
+#  define A_KEY 97
+#  define S_KEY 115
+#  define D_KEY 100
+#  define LEFT_KEY 65361
+#  define RIGHT_KEY 65363
+#  define ESC_KEY 65307
+#  define M_KEY 109
 #endif
 
 #ifdef __MACH__
-	# define W_KEY 13
-	# define A_KEY 0
-	# define S_KEY 1
-	# define D_KEY 2
-	# define LEFT_KEY 123
-	# define RIGHT_KEY 124
-	# define ESC_KEY 53
-	# define M_KEY 46
+#  define W_KEY 13
+#  define A_KEY 0
+#  define S_KEY 1
+#  define D_KEY 2
+#  define LEFT_KEY 123
+#  define RIGHT_KEY 124
+#  define ESC_KEY 53
+#  define M_KEY 46
+#  define H_KEY 4
 #endif
 
 /* ----------------------- > >> Struct << < ----------------------- */
@@ -293,6 +292,9 @@ typedef struct s_main
 	//
 	bool	dont_draw;
 
+	//mouse usage
+	bool	is_using_mouse;
+
 	int	offset;
 	double	wall_hit_pos; //will be used for textures
 	int	texture_x;
@@ -349,6 +351,7 @@ void	draw_minimap(t_main *s);
 
 int		key_hooks(int keycode, t_main *s);
 int		close_x(int keycode, t_main *s);
+int		mouse_perspective(int x, int y, t_main *s);
 
 void	rotate_coor(double *x, double *y, double angle);
 
