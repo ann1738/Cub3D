@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/13 15:45:59 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 13:49:00 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	redraw_window(t_main *s)
 	ft_bzero(s->image_address, s->size_line * WINDOW_Y);
 
 	/* draw floor and ceiling */
-	draw_floor(s->ceiling_color, s);
-	draw_ceiling(s->floor_color, s);
+	draw_floor(s->ceiling_color, &s->fog, s);
+	draw_ceiling(s->floor_color, &s->fog, s);
 
 	/* cast rays */
 	cast_rays(s);
@@ -29,27 +29,6 @@ void	redraw_window(t_main *s)
 	/* minimap drawing */
 	if (s->minimap_on)
 		draw_minimap(s);
-
-	// int	width, height;
-	// int		bpp;
-	// int		endian;
-	// int		size_line;
-	// void	*image = mlx_xpm_file_to_image(s->mlx, "redbrick.xpm", &width, &height);
-	// char	*new_img_addr = mlx_get_data_addr(image, &bpp, &size_line, &endian);
-	// printf("width: %d -- height: %d\n", width, height);
-	// // ft_bzero(new_img_addr + (s->size_line * 32), 1000);
-	// (void) new_img_addr;
-	// unsigned int color;
-	// double count = 0;
-	// for (int j = 0; j < (64 * 4) - 1; j++)
-	// {
-	// 	for (int i = 0; i < 63; i++)
-	// 	{
-	// 		color =  *((unsigned int *)(new_img_addr + (size_line * (int)count) + (i * (bpp / 8))));
-	// 		put_pixel(i, j, color, s);
-	// 	}
-	// 	count += 0.25;
-	// }
 	
 	/* putting the image to the window */
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);

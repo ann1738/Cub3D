@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 16:05:54 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 13:09:00 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ void	draw_vertical_texture(t_coord origin, int width, int height, t_texture cons
 			/* fog effect */
 			if (s->fog_intensity)
 				origin.color = add_fog_uint(s->fog_intensity, &s->fog, origin.color);
-			/* extra shading */
-			if (s->side_hit == SIDE_X)
-				origin.color = (origin.color >> 1) & 8355711;
+			/* extra shading (i commented it bec it ruined the shade effect) */
+			// if (s->side_hit == SIDE_X)
+			// 	origin.color = (origin.color >> 1) & 8355711;
 			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
 		}
 		s->texture_y += s->step_texture;

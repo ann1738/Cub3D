@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 13:39:19 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 12:31:38 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
 
 	assign_rgb_color(171, 174, 176, &s->fog);
+	assign_rgb_color(0, 0, 0, &s->black);
 	// uint_to_rgb(0xabaeb0, &s->fog);
 	load_textures(p, s);
 

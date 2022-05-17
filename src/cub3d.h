@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 06:02:34 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/17 13:14:35 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@
 /* ----------------------- > >> Macros << < ----------------------- */
 
 # define WINDOW_X 1680
+# define WINDOW_X_2 840
 # define WINDOW_Y 840
+# define WINDOW_Y_2 420
 
 # define MINIMAP_X 420
 # define MINIMAP_Y 210
@@ -121,7 +123,7 @@
 /* customizable defaults */
 
 # define MINIMAP_DEFAULT 1
-# define MOUSE_DEFAULT 1
+# define MOUSE_DEFAULT 0
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -311,6 +313,7 @@ typedef struct s_main
 	
 	//color
 	t_color fog;
+	t_color black;
 	double	fog_intensity;
 }	t_main;
 
@@ -375,11 +378,11 @@ void	draw_line(t_coord start, t_coord end, t_main *s);
 
 /* ---------------- ** floor ** ----------------- */
 
-void	draw_floor(unsigned int color, t_main *s);
+void	draw_floor(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** ceiling ** --------------- */
 
-void	draw_ceiling(unsigned int color, t_main *s);
+void	draw_ceiling(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** redraw ** ---------------- */
 

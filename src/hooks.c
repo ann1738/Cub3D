@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 06:00:39 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/17 13:22:15 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,16 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 	temp_pos.y = s->player_position.y;
 	
 	// this has potential to replace the if conditions
-	int	x_abs = player_direction.x / fabs(player_direction.x);
-	int	y_abs = player_direction.y / fabs(player_direction.y);
-
+	int	x_abs;
+	int	y_abs;
+	if (player_direction.x != 0)
+		x_abs = player_direction.x / fabs(player_direction.x);
+	else
+		x_abs = 0;
+	if (player_direction.y != 0)
+		y_abs = player_direction.y / fabs(player_direction.y);
+	else
+		y_abs = 0;
 	int i = 0;
 	while (i < 10)
 	{

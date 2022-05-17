@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 05:09:16 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/17 13:44:27 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ static void	draw_wall(t_main *s)
 	// 	return ;
 
 	/* fixing near wall disturbances */
-	s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
+	if (s->perpend_wall_dist != 0) //not sure if necessary
+		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
+	else
+		s->wall_height = WINDOW_Y;
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
 	if (s->wall_height > WINDOW_Y)
