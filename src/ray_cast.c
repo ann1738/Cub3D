@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 17:23:40 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 05:09:16 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static void	draw_wall(t_main *s)
 
 	/* fixing near wall disturbances */
 	s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
-	if (s->wall_height < 0)
-	{printf("NOOO! NEGATIVE WALL HEIGHT DETECTED! WTF?!\n"); exit (1);}
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
 	if (s->wall_height > WINDOW_Y)

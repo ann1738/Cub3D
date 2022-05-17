@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 16:54:19 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 06:02:34 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@
 
 # define WALL_SCALE_FACTOR 1.5
 
-# define WALL_COLLISION_OFFSET 0.5
+# define WALL_COLLISION_OFFSET 0.4
 
 # define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1
@@ -134,6 +134,7 @@
 #  define RIGHT_KEY 65363
 #  define ESC_KEY 65307
 #  define M_KEY 109
+#  define H_KEY 104
 #endif
 
 #ifdef __MACH__

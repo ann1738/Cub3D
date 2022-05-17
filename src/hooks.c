@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 17:18:25 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 06:00:39 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*still trial (make static)*/
+/*this works for the most part (there is some ways to surpass it)*/
 
 #define NO_COLLISION 0
 #define COLLISION_XY 1
@@ -21,12 +21,12 @@
 
 int	check_collision(double move_amount, double change_angle, t_main *s)
 {
-	double		offset;
+	// double		offset;
 	t_vector	temp_pos;
 	t_vector	player_direction;
 	bool	collision_x = false;
 	bool	collision_y = false;
-	offset = WALL_COLLISION_OFFSET;
+	// offset = WALL_COLLISION_OFFSET;
 
 	temp_pos.x = s->player_position.x;
 	temp_pos.y = s->player_position.y;
@@ -34,14 +34,16 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 	temp_pos.y += (move_amount) * sin(s->player_angle + change_angle);
 	player_direction.x = cos(s->player_angle + change_angle);
 	player_direction.y = sin(s->player_angle + change_angle);
-	double step_x = (temp_pos.x - s->player_position.x) / 10.0;
-	double step_y = (temp_pos.y - s->player_position.y) / 10.0;
+
+	t_vector	step;
+	step.x = (temp_pos.x - s->player_position.x) / 10.0;
+	step.y = (temp_pos.y - s->player_position.y) / 10.0;
 	temp_pos.x = s->player_position.x;
 	temp_pos.y = s->player_position.y;
 	
 	// this has potential to replace the if conditions
-	int	x_abs = player_direction.x / player_direction.x;
-	int	y_abs = player_direction.x / player_direction.x;
+	int	x_abs = player_direction.x / fabs(player_direction.x);
+	int	y_abs = player_direction.y / fabs(player_direction.y);
 
 	int i = 0;
 	while (i < 10)
@@ -66,54 +68,20 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 			if (s->map[(int)s->player_position.y - 1][(int)s->player_position.x] == '1' && temp_pos.y - floor(s->player_position.y) <= WALL_COLLISION_OFFSET) //wall above
 				collision_y = true;
 		}
-		if ((!collision_x || !collision_y) && s->map[(int)(s->player_position.y + y_abs)][(int)(s->player_position.x + x_abs)] == '1')
+		if ((!collision_x || !collision_y) && s->map[(int)(s->player_position.y + y_abs)][(int)(s->player_position.x + x_abs)] == '1' && s->map[(int)(s->player_position.y + y_abs)][(int)(s->player_position.x)] != '1' && s->map[(int)(s->player_position.y)][(int)(s->player_position.x + x_abs)] != '1')
 		{
-			if (player_direction.y > 0 && ceil(s->player_position.y) - temp_pos.y <= WALL_COLLISION_OFFSET)
+			if ((((player_direction.y > 0 && ceil(s->player_position.y) - temp_pos.y <= WALL_COLLISION_OFFSET - 0.1 )|| (player_direction.y < 0 && temp_pos.y - floor(s->player_position.y) <= WALL_COLLISION_OFFSET - 0.1)))
+			&& ((player_direction.x > 0 && ceil(s->player_position.x) - temp_pos.x <= WALL_COLLISION_OFFSET - 0.1) || (player_direction.x < 0 && temp_pos.x - floor(s->player_position.x) <= WALL_COLLISION_OFFSET - 0.1))) 
+			{	
 				collision_y = true;
-			else if (player_direction.y < 0 && temp_pos.y - floor(s->player_position.y) <= WALL_COLLISION_OFFSET)
-				collision_y = true;
-			if (player_direction.x > 0 && ceil(s->player_position.x) - temp_pos.x <= WALL_COLLISION_OFFSET)
 				collision_x = true;
-			else if (player_direction.x < 0 && temp_pos.x - floor(s->player_position.x) <= WALL_COLLISION_OFFSET)
-				collision_x = true;
+				printf("hey iam here\n");
+			}
 		}
-		temp_pos.x += step_x;
-		temp_pos.y += step_y;
+		temp_pos.x += step.x;
+		temp_pos.y += step.y;
 		i++;
 	}
-	// if (player_direction.x > 0  && player_direction.y < 0) //up and right
-	// {
-	// 	if (s->map[(int)s->player_position.y - 1][(int)s->player_position.x] == '1' && s->player_position.y - floor(s->player_position.y) <= WALL_COLLISION_OFFSET) //wall above
-	// 		collision_y = true;
-	// 	if (s->map[(int)s->player_position.y][(int)s->player_position.x + 1] == '1' && ceil(s->player_position.x) - s->player_position.x <= WALL_COLLISION_OFFSET) //wall right
-	// 		collision_x = true;
-	// 	printf("change_in_x = %lf --- change_in_y = %lf\n", ceil(s->player_position.x) - s->player_position.x, s->player_position.y - floor(s->player_position.y));
-	// }
-	// else if (player_direction.x < 0  && player_direction.y < 0) //up and left
-	// {
-	// 	if (s->map[(int)s->player_position.y - 1][(int)s->player_position.x] == '1' && s->player_position.y - floor(s->player_position.y) <= WALL_COLLISION_OFFSET) //wall above
-	// 		collision_y = true;
-	// 	if (s->map[(int)s->player_position.y][(int)s->player_position.x - 1] == '1' && s->player_position.x - floor(s->player_position.x) <= WALL_COLLISION_OFFSET) //wall left
-	// 		collision_x = true;
-	// 	printf("change_in_x = %lf --- change_in_y = %lf\n", s->player_position.x - floor(s->player_position.x), s->player_position.y - floor(s->player_position.y));
-	// }
-	// else if (player_direction.x < 0  && player_direction.y > 0) //down and left
-	// {
-	// 	if (s->map[(int)s->player_position.y + 1][(int)s->player_position.x] == '1' && ceil(s->player_position.y) - s->player_position.y <= WALL_COLLISION_OFFSET) //wall below
-	// 		collision_y = true;
-	// 	if (s->map[(int)s->player_position.y][(int)s->player_position.x - 1] == '1' && s->player_position.x - floor(s->player_position.x) <= WALL_COLLISION_OFFSET) //wall left
-	// 		collision_x = true;
-	// 	printf("change_in_x = %lf --- change_in_y = %lf\n", s->player_position.x - floor(s->player_position.x), ceil(s->player_position.y) - s->player_position.y);
-	// }
-	// else if (player_direction.x > 0  && player_direction.y > 0) //down and right
-	// {
-	// 	if (s->map[(int)s->player_position.y + 1][(int)s->player_position.x] == '1' && ceil(s->player_position.y) - s->player_position.y <= WALL_COLLISION_OFFSET) //wall below
-	// 		collision_y = true;
-	// 	if (s->map[(int)s->player_position.y][(int)s->player_position.x + 1] == '1' && ceil(s->player_position.x) - s->player_position.x <= WALL_COLLISION_OFFSET) //wall right
-	// 		collision_x = true;
-	// 	printf("change_in_x = %lf --- change_in_y = %lf\n", ceil(s->player_position.x) - s->player_position.x, ceil(s->player_position.y) - s->player_position.y);
-	// }
-	// printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
 	if (collision_x && collision_y)
 		return (COLLISION_XY);
 	else if (collision_x)
@@ -141,9 +109,6 @@ void	movement(double move_amount, double change_angle, t_main *s)
 	//updating map/grid positions
 	s->player_map_position.x = (int)s->player_position.x;
 	s->player_map_position.y = (int)s->player_position.y;
-	/* i am still trying to make this work */
-	// printf("player's angle is <%lf> ---- changed angle is <%lf>\n", s->player_angle, s->player_angle + change_angle);
-	// printf("map placeholder is <%c>\n", s->map[s->player_map_position.y][s->player_map_position.x]);
 	if (s->map[s->player_map_position.y][s->player_map_position.x] == '1' || s->map[s->player_map_position.y][s->player_map_position.x] == ' ')
 	{
 		s->player_position.x = save.x;

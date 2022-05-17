@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:33:14 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/15 18:29:20 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 06:01:28 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int col
 	g = ((char)((((color & 0x0000ff00) >> 8) & 255) * intensity_inverse) + (char)(fog_color->green * intensity)) & 255; // green
 	b = ((char)((color & 0x000000ff) * intensity_inverse) + (char)(fog_color->blue * intensity)) & 255; // blue
 	return (r << 16 | g << 8 | b);
-	// return ((((char)((((color & 0x00ff0000) >> 16) & 255) * intensity_inverse) + (char)(fog_color->red * intensity)) & 255) << 16 | \
-	// (((char)((((color & 0x0000ff00) >> 8) & 255) * intensity_inverse) + (char)(fog_color->green * intensity)) & 255) << 8 | \
-	// (((char)((color & 0x000000ff) * intensity_inverse) + (char)(fog_color->blue * intensity)) & 255));
 }
 
 
