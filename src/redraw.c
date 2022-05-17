@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/13 15:45:59 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 16:21:16 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	redraw_window(t_main *s)
 	/* draw floor and ceiling */
 	draw_floor(s->ceiling_color, s);
 	draw_ceiling(s->floor_color, s);
+	sky_cast(s, &s->texture[4]);
+	ground_cast(s, &s->texture[5]);
 
 	/* cast rays */
 	cast_rays(s);

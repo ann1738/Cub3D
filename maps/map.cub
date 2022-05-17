@@ -3,8 +3,8 @@ SO ./textures/wood.xpm
 WE ./textures/metal.xpm
 EA ./textures/wood.xpm
 
-C 86,125,70
-F 135,206,235
+C ./textures/light_wood_floor.xpm
+F ./textures/cute_grass
 
         1111111111111111111111111 11111
         1000000000110000000000001 11111

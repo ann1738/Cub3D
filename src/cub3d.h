@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 17:48:35 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:06:33 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,5 +432,8 @@ void	add_fog(double intensity, t_color fog_color, t_color *color);
 void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
 
+
+void	sky_cast(t_main *s, t_texture *sky);
+void	ground_cast(t_main *s, t_texture *sky);
 
 #endif

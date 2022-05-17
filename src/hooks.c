@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/16 13:33:57 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 17:20:34 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 	temp_pos.y = s->player_position.y;
 	temp_pos.x += (move_amount + offset) * cos(s->player_angle + change_angle);
 	temp_pos.y += (move_amount + offset) * sin(s->player_angle + change_angle);
-	printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
+	// printf("player.x = %lf, playe /r.y = %lf --- x = %lf, y = %lf\n", s->player_position.x, s->player_position.y, temp_pos.x, temp_pos.y);
 	if (s->map[(int)temp_pos.y][(int)temp_pos.x] == '1')
 		return (COLLISION_XY);
 	else if (s->map[(int)temp_pos.y][(int)s->player_position.x] == '1')
