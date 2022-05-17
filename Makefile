@@ -34,7 +34,7 @@ $(NAME): obj dep $(addprefix obj/,$(OBJ)) $(LIBFT_STATIC_LIB) $(MLX_STATIC_LIB)
 	@printf "\e[92mCompilation and Linking Done!\e[0m\n"
 
 obj/%.o: src/%.c
-	@printf "\e[92mCompiling cub3d..\n\e[94m"
+	@printf "\e[92mCompiling cub3d's $@ ..\n\e[94m"
 	$(CC) $(CFLAGS) $< -o $@ -MMD -MP -MF $(@:obj/%.o=dep/%.d)
 
 $(LIBFT_STATIC_LIB):

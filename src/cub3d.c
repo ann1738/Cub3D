@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 12:31:38 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:09:41 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,16 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->frame1 = clock();
 	// s->dist_to_projection_plane = (WINDOW_X / 2) / tan(deg_to_rad(FOV_DEG / 2));
 	/* taking things from parser to main struct */
+	s->p = p;
 	s->map = p->map;
 	s->map_height = p->map_h;
 	s->map_width_max = p->map_w;
 	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
 
-	assign_rgb_color(171, 174, 176, &s->fog);
-	assign_rgb_color(0, 0, 0, &s->black);
+	assign_rgb_color(0, 171, 174, 176, &s->fog);
+	assign_rgb_color(0, 57,57,57, &s->minimap_color);
+	assign_rgb_color(0, 0, 0, 0, &s->black);
 	// uint_to_rgb(0xabaeb0, &s->fog);
 	load_textures(p, s);
 

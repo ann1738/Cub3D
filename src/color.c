@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:33:14 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/17 06:01:28 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/17 14:31:02 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int col
 }
 
 
-void	assign_rgb_color(int red, int green, int blue, t_color *color)
+void	assign_rgb_color(int tr, int red, int green, int blue, t_color *color)
 {
+	color->transparency = tr & 255;
 	color->blue = blue & 255;
 	color->green = green & 255;
 	color->red = red & 255;

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/17 13:49:00 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 16:06:33 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	redraw_window(t_main *s)
 	/* minimap drawing */
 	if (s->minimap_on)
 		draw_minimap(s);
-	
+
 	/* putting the image to the window */
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 13:22:15 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:12:11 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,25 @@ int	key_hooks(int keycode, t_main *s)
 	return (1);
 }
 
+void	free_double_char(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+	array = 0;
+	return ;
+}
+
 int	close_x(int keycode, t_main *s)
 {
 	(void)keycode;
 	(void)s;
 	mlx_destroy_image(s->mlx, s->mlx_image);
 	mlx_destroy_window(s->mlx, s->mlx_window);
+	free_double_char(s->p->full_file);
 	//free allocations
 	exit(1);
 }

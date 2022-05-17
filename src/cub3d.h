@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 13:14:35 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 18:16:45 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@
 
 
 # define MINI_PLAYER_COLOR HX_GRASS_GREEN
-# define MINI_WALL_COLOR HX_PASTEL_PINK
+# define MINI_WALL_COLOR 0xe0e0e0
 # define MINI_WALL_BORDER HX_BLACK
 
 # define RAY_COLOR HX_RED
@@ -94,6 +94,12 @@
 
 # define MINIMAP_X 420
 # define MINIMAP_Y 210
+
+# define MINI_OFFSET_X 10
+# define MINI_OFFSET_Y 5
+
+# define MINI_BLOCK_SIZE_X 20
+# define MINI_BLOCK_SIZE_Y 20
 
 # define SOUTH M_PI_2
 # define NORTH -M_PI_2
@@ -173,6 +179,7 @@ typedef struct s_vector
 
 typedef struct s_color
 {
+	int	transparency;
 	int	red;
 	int	green;
 	int	blue;
@@ -245,6 +252,7 @@ typedef struct s_main
 	int		endian;
 	int		size_line;
 	//parse
+	t_pars	*p;
 	char	**map;
 	int		map_width_max;
 	int		map_height;
@@ -314,6 +322,7 @@ typedef struct s_main
 	//color
 	t_color fog;
 	t_color black;
+	t_color minimap_color;
 	double	fog_intensity;
 }	t_main;
 
@@ -410,7 +419,7 @@ void	fps(t_main *s);
 int		rgb_to_uint(int transp, int red, int green, int blue);
 void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void	add_fog(double intensity, t_color fog_color, t_color *color);
-void	assign_rgb_color(int red, int green, int blue, t_color *color);
+void	assign_rgb_color(int tr, int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
 
 
