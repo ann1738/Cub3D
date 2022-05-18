@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 21:12:56 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/18 14:32:03 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,9 +186,15 @@ void	free_double_char(char **array)
 int	close_x(int keycode, t_main *s)
 {
 	(void)keycode;
-	(void)s;
-	mlx_destroy_image(s->mlx, s->mlx_image);
-	mlx_destroy_window(s->mlx, s->mlx_window);
+	mlx_destroy_image(s->mlx, s->texture[0].image);
+	mlx_destroy_image(s->mlx, s->texture[1].image);
+	mlx_destroy_image(s->mlx, s->texture[2].image);
+	mlx_destroy_image(s->mlx, s->texture[3].image);
+	//destroy ceiling and floor with if condition ( and door if used)
+	if (s->mlx && s->mlx_image)
+		mlx_destroy_image(s->mlx, s->mlx_image);
+	if (s->mlx && s->mlx_window)
+		mlx_destroy_window(s->mlx, s->mlx_window);
 	free_double_char(s->p->full_file);
 	//free allocations
 	exit(1);

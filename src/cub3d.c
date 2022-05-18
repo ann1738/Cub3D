@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 18:09:41 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 14:19:08 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int main(int argc, char **argv)
 	// mlx_key_hook(s.mlx_window, key_hooks, &s);
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 6, 0, mouse_perspective, &s);
-	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
+	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
 	mlx_loop(s.mlx);
 }

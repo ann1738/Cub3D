@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 12:29:18 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/18 18:35:34 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@
 # define HX_PURPLE 0x9932CC
 # define HX_SKY_BLUE 0x87CEEB
 
-
 # define MINI_PLAYER_COLOR HX_GRASS_GREEN
 # define MINI_WALL_COLOR 0x808080
 # define MINI_WALL_BORDER HX_BLACK
@@ -118,7 +117,7 @@
 # define TEXTURE_HEIGHT 64
 # define TEXTURE_WIDTH 64
 
-# define WALL_SCALE_FACTOR 1.5
+# define WALL_SCALE_FACTOR 1.0
 
 # define WALL_COLLISION_OFFSET 0.4
 
@@ -130,7 +129,7 @@
 /* customizable defaults */
 
 # define MINIMAP_DEFAULT 1
-# define MOUSE_DEFAULT 0
+# define MOUSE_DEFAULT 1
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 

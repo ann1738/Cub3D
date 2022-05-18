@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 23:21:07 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/18 18:39:14 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	calc_ray_dir_n_delta_dist(t_main *s, double i)
 	//calculate ray direction and initialize s->ray_map_position with the player map position
 	s->ray_direction.x = cos(s->player_angle) + (s->camera_plane.x * i);
 	s->ray_direction.y = sin(s->player_angle) + (s->camera_plane.y * i);
-	// if (!i || i == -1.0 || i == 1.0)
-	// 	printf("**********<%lf>************\n", rad_to_deg(atan2(s->ray_direction.y, s->ray_direction.x)));
 	s->ray_map_position.x = s->player_map_position.x;
 	s->ray_map_position.y = s->player_map_position.y;
 	//calculate delta distances *

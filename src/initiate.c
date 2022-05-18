@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 19:12:30 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/12 18:02:01 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 18:34:15 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,8 @@ static void	specific_player_info(int x, int y, double start_angle, t_main *s)
 
 	/* intialize camera plane */
 	s->camera_plane.x = tan(deg_to_rad(FOV_DEG / 2.0)) * sin(s->player_angle);
-	s->camera_plane.y = tan(deg_to_rad(FOV_DEG / 2.0)) * cos(s->player_angle);
+	s->camera_plane.y = tan(deg_to_rad(FOV_DEG / 2.0)) * (-cos(s->player_angle));
 	//cos() and sin() are flipped bec camera_plane is perpendicular to the player_direction vector
-
-	/* for minimap */
-	if (s->map_width_max >= MINIMAP_X / 2 || s->map_height >= MINIMAP_Y / 2) //if map is too big (this will be updated later)
-		exit(write(STDERR_FILENO, "Error: Map is too big to be rendered\n", 37));
-	s->mini_width_unit = round((double)MINIMAP_X / s->map_width_max);
-	s->mini_height_unit = round((double)MINIMAP_Y / s->map_height);
 }
 
 /* initiate the orientation and position of the player from the map */
