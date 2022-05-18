@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 18:16:45 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 12:29:18 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@
 
 
 # define MINI_PLAYER_COLOR HX_GRASS_GREEN
-# define MINI_WALL_COLOR 0xe0e0e0
+# define MINI_WALL_COLOR 0x808080
 # define MINI_WALL_BORDER HX_BLACK
 
-# define RAY_COLOR HX_RED
+# define RAY_COLOR HX_WHITE
 
 // # define FLOOR_COLOR 0x8b5a2b
 # define FLOOR_COLOR HX_PASTEL_GREEN
@@ -98,8 +98,9 @@
 # define MINI_OFFSET_X 10
 # define MINI_OFFSET_Y 5
 
-# define MINI_BLOCK_SIZE_X 20
-# define MINI_BLOCK_SIZE_Y 20
+# define MINI_BLOCK_SIZE_X 30
+# define MINI_BLOCK_SIZE_Y 30
+# define MINI_BLOCKS_AROUND 8.0
 
 # define SOUTH M_PI_2
 # define NORTH -M_PI_2
@@ -367,6 +368,7 @@ void	draw_vertical_texture(t_coord origin, int width, int height, t_texture cons
 
 /* --------------- ** minimap ** ---------------- */
 
+bool	check_outside_minimap(int x, int y);
 void	draw_minimap(t_main *s);
 
 /* ---------------- ** hooks ** ----------------- */

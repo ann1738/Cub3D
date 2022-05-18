@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 18:12:11 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 21:12:56 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 			{	
 				collision_y = true;
 				collision_x = true;
-				printf("hey iam here\n");
 			}
 		}
 		temp_pos.x += step.x;

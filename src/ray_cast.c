@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 13:44:27 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 23:21:07 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ static void	ray_casting_loop(t_main *s)
 void	cast_rays(t_main *s)
 {
 	double i;
+	t_coord temp_start, temp_end;
 
 	/* calculating fps */
 	// fps(s);
@@ -203,6 +204,28 @@ void	cast_rays(t_main *s)
 
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 	
+
+		if (s->minimap_on)
+		{
+			//start point
+			temp_start.x = MINIMAP_X / 2 + MINI_OFFSET_X; 
+			temp_start.y = MINIMAP_Y / 2 + MINI_OFFSET_Y; 
+			//end point
+			temp_end.x = temp_start.x + (s->final_side_length * MINI_BLOCK_SIZE_X * cos(atan2(s->ray_direction.y, s->ray_direction.x)));
+			temp_end.y = temp_start.y + (s->final_side_length * MINI_BLOCK_SIZE_Y * sin(atan2(s->ray_direction.y, s->ray_direction.x)));
+	
+			// if (temp_end.x >= MINIMAP_X + MINI_OFFSET_X)
+			// 	temp_end.x = MINIMAP_X + MINI_OFFSET_X - 1;
+			// else if (temp_end.x <= MINI_OFFSET_X)
+			// 	temp_end.x = MINI_OFFSET_X + 1;
+		
+			// if (temp_end.y >= MINIMAP_Y + MINI_OFFSET_Y)
+			// 	temp_end.y = MINIMAP_Y + MINI_OFFSET_Y - 1;
+			// else if (temp_end.y <= MINI_OFFSET_Y)
+			// 	temp_end.y = MINI_OFFSET_Y + 1;
+			
+			draw_line(temp_start, temp_end, s);
+		}
 		/*drawing the wall*/
 		// if (s->dont_draw == false)
 			draw_wall(s);
@@ -214,17 +237,6 @@ void	cast_rays(t_main *s)
 }
 
 /* code for drawing lines to represent the rays casted */
-
-	// //start point
-	// temp_start.x = s->player_position.x * s->mini_width_unit; 
-	// temp_start.y = s->player_position.y * s->mini_height_unit; 
-	// //end point
-	// // printf("final ray length %lf\n", s->final_side_length);
-	// temp_end.x = temp_start.x + (s->final_side_length * s->mini_width_unit * cos(atan2(s->ray_direction.y, s->ray_direction.x)));
-	// temp_end.y = temp_start.y + (s->final_side_length * s->mini_height_unit * sin(atan2(s->ray_direction.y, s->ray_direction.x)));
-	// // printf("start(%d, %d), end(%d, %d)\n", temp_start.x, temp_start.y, temp_end.x, temp_end.y);
-	// if (s->minimap_on && false == true)
-	// 	draw_line(temp_start, temp_end, s);
 		
 /*******************************************************/
 

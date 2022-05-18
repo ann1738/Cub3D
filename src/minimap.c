@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 18:14:17 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/17 23:30:57 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@ static void	draw_player_icon(t_main *s)
 	t_coord temp;
 
 	/* draw player icon */
-	temp.x = (s->player_position.x * s->mini_width_unit) + MINI_OFFSET_X; 
-	temp.y = (s->player_position.y * s->mini_height_unit) + MINI_OFFSET_Y;
+	temp.x = MINIMAP_X / 2 + MINI_OFFSET_X; 
+	temp.y = MINIMAP_Y / 2 + MINI_OFFSET_Y;
 	temp.color = MINI_PLAYER_COLOR;
 	draw_circle(MINI_PLAYER_ICON_SIZE, &temp, s);
 	// printf("PLAYER(%d, %d)\n", 	s->player_map_position.x, s->player_map_position.y);
 	
 	/* temporary line to show the player's direction */
-	t_coord end;
-	end.x = temp.x + (10 * cos(s->player_angle));
-	end.y = temp.y + (10 * sin(s->player_angle));
-	temp.color = RAY_COLOR;
-	draw_line(temp, end, s);
+	// t_coord end;
+	// end.x = temp.x + (30 * cos(s->player_angle + deg_to_rad(FOV_DEG / 2)));
+	// end.y = temp.y + (30 * sin(s->player_angle + deg_to_rad(FOV_DEG / 2)));
+	// temp.color = RAY_COLOR;
+	// draw_line(temp, end, s);
+	// end.x = temp.x + (30 * cos(s->player_angle - deg_to_rad(FOV_DEG / 2)));
+	// end.y = temp.y + (30 * sin(s->player_angle - deg_to_rad(FOV_DEG / 2)));
+	// draw_line(temp, end, s);
 }
 
 
@@ -52,6 +55,32 @@ static void	make_rect_trans(int width, int height, t_coord const *origin, t_colo
 	}
 }
 
+bool	check_outside_minimap(int x, int y)
+{
+	if (x >= MINIMAP_X + MINI_OFFSET_X || x <= MINI_OFFSET_X || y >= MINIMAP_Y + MINI_OFFSET_Y || y <= MINI_OFFSET_Y)
+		return (true);
+	return (false);
+}
+
+void	draw_mini_rect(int width, int height, t_coord const *origin, t_main *s)
+{
+	int	width_index;
+	int	height_index;
+
+	height_index = -1;
+	while (++height_index < height)
+	{
+		width_index = -1;
+		while (++width_index < width)
+		{
+			if (origin->x + width_index >= MINIMAP_X + MINI_OFFSET_X || origin->x + width_index <= MINI_OFFSET_X || origin->y + height_index >= MINIMAP_Y + MINI_OFFSET_Y || origin->y + height_index <= MINI_OFFSET_Y)
+				continue ;
+			put_pixel(origin->x + width_index, origin->y + height_index, \
+			origin->color, s);
+		}
+	}
+}
+
 /* function to draw minimap */
 
 void	draw_minimap(t_main *s)
@@ -64,7 +93,7 @@ void	draw_minimap(t_main *s)
 	temp.x = MINI_OFFSET_X;
 	temp.y = MINI_OFFSET_Y;
 	make_rect_trans(MINIMAP_X, MINIMAP_Y, &temp, &s->minimap_color, s);
-	
+	int i = 0;
 	/* draw rectangles of specific color for each number in the map */
 	y = -1;
 	while(++y < s->map_height)
@@ -72,24 +101,35 @@ void	draw_minimap(t_main *s)
 		x = -1;
 		while (/*++x < s->map_width_max &&*/ s->map[y][++x])
 		{
-			temp.x = (x * s->mini_width_unit) + MINI_OFFSET_X;
-			temp.y = (y * s->mini_height_unit) + MINI_OFFSET_Y;
-			temp.color = MINI_WALL_COLOR;
-			if (s->map[y][x] == '1')
+			if (s->map[y][x] == '1' 
+			&& ((fabs(s->player_position.x - x) <= MINI_BLOCKS_AROUND + 1) && (fabs(s->player_position.y - y) <= MINI_BLOCKS_AROUND + 1)))
 			{
-				draw_rect(s->mini_width_unit, s->mini_height_unit, &temp, s);
-				// temp.color = MINI_WALL_BORDER;
-				// draw_border(s->mini_width_unit, s->mini_height_unit, &temp, s);
-			}
-			// else if (s->map[y][x] != ' ')
-			// {
-				// temp.color = HX_WHITE;
-				// ++temp.x; //for borders
-				// ++temp.y; //for borders
-				// draw_rect(s->mini_width_unit, s->mini_height_unit, &temp, s);
-			// }
+				printf("minimap %d\n", i++);
+				temp.x = ((((MINIMAP_X / 2) + MINI_OFFSET_X) + ((x - s->player_position.x) * MINI_BLOCK_SIZE_X))) + 1;
+				temp.y = (((MINIMAP_Y / 2) + MINI_OFFSET_Y) + ((y - s->player_position.y) * MINI_BLOCK_SIZE_Y)) + 1;
+				temp.color = MINI_WALL_COLOR;
+				draw_mini_rect(MINI_BLOCK_SIZE_X - 1, MINI_BLOCK_SIZE_Y - 1, &temp, s);	
+			}		
 		}
 	}
+	// 	y = -7;
+	// 	x = -6;
+	// while(++y < 7 && s->map[s->player_map_position.y + y][x + s->player_map_position.x])
+	// {
+	// 	x = -7;
+	// 	while (++x < 7 && s->map[s->player_map_position.y + y][x + s->player_map_position.x])
+	// 	{
+	// 		if (s->map[s->player_map_position.y + y][s->player_map_position.x + x] == '1') /*
+	// 		&& ((fabs(s->player_position.x - x) <= MINI_BLOCKS_AROUND + 1) && (fabs(s->player_position.y - y) <= MINI_BLOCKS_AROUND + 1)))*/
+	// 		{
+	// 			printf("minimap %d\n", i++);
+	// 			temp.x = (((MINIMAP_X / 2) + MINI_OFFSET_X) + (x * MINI_BLOCK_SIZE_X));
+	// 			temp.y = (((MINIMAP_Y / 2) + MINI_OFFSET_Y) + (y * MINI_BLOCK_SIZE_Y));
+	// 			temp.color = MINI_WALL_COLOR;
+	// 			draw_rect(MINI_BLOCK_SIZE_X, MINI_BLOCK_SIZE_Y, &temp, s);	
+	// 		}		
+	// 	}
+	// }
 	draw_player_icon(s);
 	temp.x = MINI_OFFSET_X;
 	temp.y = MINI_OFFSET_Y;
