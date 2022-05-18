@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 18:35:34 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 19:49:45 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,14 @@
 # define MINI_PLAYER_ICON_SIZE 3
 # define INCREMENT_RAY_CASTING 0.0048
 
+# define PITCH_AMOUNT 100
+
 /* customizable defaults */
 
 # define MINIMAP_DEFAULT 1
 # define MOUSE_DEFAULT 1
+# define UP_DOWN_DEFAULT 0
+# define JUMP_CROUCH_DEFAULT 1
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -152,9 +156,13 @@
 #  define D_KEY 2
 #  define LEFT_KEY 123
 #  define RIGHT_KEY 124
+#  define UP_KEY 126
+#  define DOWN_KEY 125
 #  define ESC_KEY 53
 #  define M_KEY 46
 #  define H_KEY 4
+#  define C_KEY 8
+#  define SPACE_KEY 49
 #endif
 
 /* ----------------------- > >> Struct << < ----------------------- */
@@ -324,6 +332,13 @@ typedef struct s_main
 	t_color black;
 	t_color minimap_color;
 	double	fog_intensity;
+
+	//looking up and down
+	int		pitch;
+	//jump
+	int		position_z;
+	bool	jump;
+	bool	crouch;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */

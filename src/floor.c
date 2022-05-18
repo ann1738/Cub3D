@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:32:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/17 13:09:56 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 19:11:11 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	draw_floor(unsigned int color, t_color *fog_color, t_main *s)
 	intensity = 0;
 	step = 1.0 / WINDOW_Y_2;
 	new_color = color;
-	height_index = -1;
-	while (++height_index < WINDOW_Y_2)
+	height_index = 0;
+	while (++height_index <= WINDOW_Y_2)
 	{
 		width_index = -1;
 		while (++width_index < WINDOW_X)

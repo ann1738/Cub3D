@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 14:32:03 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 20:08:26 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,31 @@ void	rotate(double change_angle, t_main *s)
 	redraw_window(s);
 }
 
+// int	jump_n_crouch(t_main *s)
+// {
+// 	if (s->jump)
+// 	{
+// 		int i = 0;
+// 		while (i <= 400)
+// 		{
+// 			i += 10;
+// 			s->position_z = i;
+// 			redraw_window(s);
+// 			usleep(10000);
+// 		}
+// 		while (i >= 0)
+// 		{
+// 			i -= 10;
+// 			s->position_z = i;
+// 			redraw_window(s);
+// 			usleep(10000);
+// 		}
+// 		s->jump = false;
+// 	}
+// 	return (0);
+// }
+
+
 int	key_hooks(int keycode, t_main *s)
 {
 	(void)s;
@@ -153,6 +178,23 @@ int	key_hooks(int keycode, t_main *s)
 		rotate(-ROTATION_AMOUNT, s);
 	else if (keycode == RIGHT_KEY)
 		rotate(ROTATION_AMOUNT, s);
+	else if (UP_DOWN_DEFAULT && keycode == UP_KEY && s->pitch < PITCH_AMOUNT && (s->pitch += PITCH_AMOUNT) >= 0)
+		redraw_window(s);
+	else if (UP_DOWN_DEFAULT && keycode == DOWN_KEY && s->pitch > -PITCH_AMOUNT && (s->pitch -= PITCH_AMOUNT) <= 0)
+		redraw_window(s);
+	// else if (JUMP_CROUCH_DEFAULT && keycode == SPACE_KEY)
+	// {
+	// 	s->jump = true;
+	// 	jump_n_crouch(s);
+		// s->position_z = 400;
+		// redraw_window(s);
+		// usleep(20000);
+		// s->position_z = 0;
+		// redraw_window(s);
+		// s->jump = false;
+	// }
+	// else if (JUMP_CROUCH_DEFAULT && keycode == C_KEY)
+	// 	s->crouch = true;
 	else if (keycode == M_KEY)
 	{
 		s->minimap_on = !s->minimap_on;

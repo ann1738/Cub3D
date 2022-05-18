@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 18:39:14 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 19:52:17 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ static void	draw_wall(t_main *s)
 		s->wall_height = WINDOW_Y;
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
-	if (s->wall_height > WINDOW_Y)
+	if (s->wall_height + s->pitch > WINDOW_Y)
 	{
-		s->wall_height = WINDOW_Y;
 		s->texture_y = ((s->wall_height - WINDOW_Y) / 2.0) * s->step_texture;
+		s->wall_height = WINDOW_Y;
 	}
 	/**/	
 	
@@ -138,7 +138,8 @@ static void	draw_wall(t_main *s)
 		s->fog_intensity = 1;
 		// return ;
 	origin.x = s->place_wall_at_x;
-	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0);
+	//start of where to draw
+	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0) + s->pitch + (s->position_z / s->perpend_wall_dist);
 	//origin color is not used here (in the draw_vertical_texture())
 	// origin.color = HX_PURPLE;
 	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[texture_index], s);

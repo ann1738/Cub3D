@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/17 16:06:33 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 19:13:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	redraw_window(t_main *s)
 	ft_bzero(s->image_address, s->size_line * WINDOW_Y);
 
 	/* draw floor and ceiling */
-	draw_floor(s->ceiling_color, &s->fog, s);
-	draw_ceiling(s->floor_color, &s->fog, s);
+	draw_ceiling(s->ceiling_color, &s->fog, s);
+	draw_floor(s->floor_color, &s->fog, s);
 
 	/* cast rays */
 	cast_rays(s);

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 14:19:08 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/18 20:04:56 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,29 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 /* to do:
 	- change the player icon size to scale with the map
 	- change the players movement to change with the map too */
+// int	jump_n_crouch(t_main *s)
+// {
+// 	if (s->jump)
+// 	{
+// 		int i = 0;
+// 		while (i <= 400)
+// 		{
+// 			i += 50;
+// 			s->position_z = i;
+// 			redraw_window(s);
+// 			usleep(1000);
+// 		}
+// 		while (i >= 0)
+// 		{
+// 			i -= 50;
+// 			s->position_z = i;
+// 			redraw_window(s);
+// 			usleep(1000);
+// 		}
+// 		s->jump = false;
+// 	}
+// 	return (0);
+// }
 
 int main(int argc, char **argv)
 {
@@ -89,5 +112,6 @@ int main(int argc, char **argv)
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 6, 0, mouse_perspective, &s);
 	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
+	// mlx_loop_hook(s.mlx, jump_n_crouch, &s);
 	mlx_loop(s.mlx);
 }
