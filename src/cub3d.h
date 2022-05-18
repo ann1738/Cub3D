@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 16:06:33 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:02:06 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@
 /* customizable defaults */
 
 # define MINIMAP_DEFAULT 1
-# define MOUSE_DEFAULT 1
+# define MOUSE_DEFAULT 0
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -239,6 +239,9 @@ typedef struct s_v_cast
 
 	float	x_direction;
 	float	y_direction;
+	
+	float	degree;
+	float	ray_fixed;
 
 	float	min_x_ray_dir;
 	float	max_x_ray_dir;
@@ -251,6 +254,9 @@ typedef struct s_v_cast
 
 	int		texture_x;
 	int		texture_y;
+
+	double	ray_angle;
+	// double	player_angle;
 }	t_v_cast;
 
 
