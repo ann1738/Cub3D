@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initiate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 19:12:30 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/12 18:02:01 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/19 14:22:42 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	specific_player_info(int x, int y, double start_angle, t_main *s)
 
 	/* intialize camera plane */
 	s->camera_plane.x = tan(deg_to_rad(FOV_DEG / 2.0)) * sin(s->player_angle);
-	s->camera_plane.y = tan(deg_to_rad(FOV_DEG / 2.0)) * cos(s->player_angle);
+	s->camera_plane.y = tan(deg_to_rad(FOV_DEG / 2.0)) * -cos(s->player_angle);
 	//cos() and sin() are flipped bec camera_plane is perpendicular to the player_direction vector
 
 	/* for minimap */

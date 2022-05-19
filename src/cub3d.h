@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 16:02:06 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:14:28 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@
 # define TEXTURE_HEIGHT 64
 # define TEXTURE_WIDTH 64
 
-# define WALL_SCALE_FACTOR 1.5
+# define WALL_SCALE_FACTOR 1.2
 
 # define MOVEMENT_AMOUNT 0.25 * WALL_SCALE_FACTOR
 # define ROTATION_AMOUNT 0.1
@@ -231,26 +231,26 @@ typedef struct s_pars
 
 typedef struct s_v_cast
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 
-	float	step_x;
-	float	step_y;
+	double	step_x;
+	double	step_y;
 
-	float	x_direction;
-	float	y_direction;
+	double	x_direction;
+	double	y_direction;
 	
-	float	degree;
-	float	ray_fixed;
+	double	degree;
+	double	ray_fixed;
 
-	float	min_x_ray_dir;
-	float	max_x_ray_dir;
-	float	min_y_ray_dir;
-	float	max_y_ray_dir;
+	double	min_x_ray_dir;
+	double	max_x_ray_dir;
+	double	min_y_ray_dir;
+	double	max_y_ray_dir;
 
-	float	new_y_pos;
-	float	v_camera_pos;
-	float	row_distance;
+	double	new_y_pos;
+	double	v_camera_pos;
+	double	row_distance;
 
 	int		texture_x;
 	int		texture_y;
@@ -439,7 +439,7 @@ void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
 
 
-void	sky_cast(t_main *s, t_texture *sky);
-void	ground_cast(t_main *s, t_texture *sky);
+// void	sky_cast(t_main *s, t_texture *sky);
+void	sky_ground_cast(t_main *s, t_texture *texture, int y);
 
 #endif
