@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:31:26 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/16 12:53:26 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:16:34 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ void	get_max_x_y(char *file_path, t_pars *p)
 	}
 	close(fd);
 }
-

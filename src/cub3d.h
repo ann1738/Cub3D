@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 19:49:45 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/19 17:45:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@
 
 # define MINIMAP_DEFAULT 1
 # define MOUSE_DEFAULT 1
-# define UP_DOWN_DEFAULT 0
-# define JUMP_CROUCH_DEFAULT 1
+# define UP_DOWN_DEFAULT 1
+# define JUMP_CROUCH_DEFAULT 0
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -314,6 +314,7 @@ typedef struct s_main
 
 	//texture
 	t_texture	texture[6];
+	t_texture	wand;
 
 	//
 	bool	dont_draw;
@@ -338,7 +339,9 @@ typedef struct s_main
 	//jump
 	int		position_z;
 	bool	jump;
+	bool	jump_now;
 	bool	crouch;
+	bool	crouch_now;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -435,8 +438,11 @@ void	fps(t_main *s);
 int		rgb_to_uint(int transp, int red, int green, int blue);
 void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void	add_fog(double intensity, t_color fog_color, t_color *color);
-void	assign_rgb_color(int tr, int red, int green, int blue, t_color *color);
+void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
+
+int	jump_n_crouch(t_main *s);
+int	activate_jump(int button, int x, int y, t_main *s);
 
 
 #endif

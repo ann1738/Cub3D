@@ -17,10 +17,10 @@ endif
 MLX_STATIC_LIB = $(MLX_LIB)/libmlx.a
 LIBFT_STATIC_LIB = $(LIBFT_LIB)/libft.a
 
-SRC = cub3d.c get_next_line.c temp_parser.c drawing.c minimap.c \
+SRC = cub3d.c get_next_line.c drawing.c minimap.c \
     hooks.c rotation.c line.c ray_cast.c floor.c ceiling.c redraw.c \
 	initiate.c math_utils.c time.c check_user_input.c full_map_save.c \
-	rgb_to_hex.c map_checks.c pars_utils.c texture.c color.c
+	rgb_to_hex.c map_checks.c pars_utils.c texture.c color.c jump_n_look.c
 OBJ = $(SRC:%.c=%.o)
 DEP = $(SRC:%.c=%.d)
 

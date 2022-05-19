@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 20:04:56 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/19 17:56:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	/* other initialization */
 	s->depth = VISION_DEPTH;
 	s->frame1 = clock();
-	// s->dist_to_projection_plane = (WINDOW_X / 2) / tan(deg_to_rad(FOV_DEG / 2));
+
 	/* taking things from parser to main struct */
 	s->p = p;
 	s->map = p->map;
@@ -51,44 +51,16 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
 
-	assign_rgb_color(0, 171, 174, 176, &s->fog);
-	assign_rgb_color(0, 57,57,57, &s->minimap_color);
-	assign_rgb_color(0, 0, 0, 0, &s->black);
-	// uint_to_rgb(0xabaeb0, &s->fog);
+	/* defining useful colors */
+	assign_rgb_color(171, 174, 176, &s->fog);
+	assign_rgb_color(57,57,57, &s->minimap_color);
+	assign_rgb_color(0, 0, 0, &s->black);
 	load_textures(p, s);
-
 
 	/* features to start with the game or to be toggled by the player */
 	s->minimap_on = MINIMAP_DEFAULT == 1;
 	s->is_using_mouse = MOUSE_DEFAULT == 1 && !mlx_mouse_hide(); //hehe
 }
-
-/* to do:
-	- change the player icon size to scale with the map
-	- change the players movement to change with the map too */
-// int	jump_n_crouch(t_main *s)
-// {
-// 	if (s->jump)
-// 	{
-// 		int i = 0;
-// 		while (i <= 400)
-// 		{
-// 			i += 50;
-// 			s->position_z = i;
-// 			redraw_window(s);
-// 			usleep(1000);
-// 		}
-// 		while (i >= 0)
-// 		{
-// 			i -= 50;
-// 			s->position_z = i;
-// 			redraw_window(s);
-// 			usleep(1000);
-// 		}
-// 		s->jump = false;
-// 	}
-// 	return (0);
-// }
 
 int main(int argc, char **argv)
 {
@@ -112,6 +84,8 @@ int main(int argc, char **argv)
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 6, 0, mouse_perspective, &s);
 	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
-	// mlx_loop_hook(s.mlx, jump_n_crouch, &s);
+	// jumping and crouching
+	mlx_loop_hook(s.mlx, jump_n_crouch, &s);
+	// mlx_mouse_hook(s.mlx_window, activate_jump, &s);
 	mlx_loop(s.mlx);
 }

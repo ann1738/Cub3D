@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 19:12:30 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/18 18:34:15 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/19 16:13:14 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	initiate_player_info(t_main *s)
 				specific_player_info(x, y, NORTH, s);
 			else if (s->map[y][x] == 'S' && (check++) >= 0)
 				specific_player_info(x, y, SOUTH, s);
-			else if (s->map[y][x] == 'W' && (check++) >= 0) //west and east mess up the arrow keys rotations
+			else if (s->map[y][x] == 'W' && (check++) >= 0)
 				specific_player_info(x, y, WEST, s);
 			else if (s->map[y][x] == 'E' && (check++) >= 0)
 				specific_player_info(x, y, EAST, s);

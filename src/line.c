@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:52:46 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 23:35:09 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/19 16:15:09 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ t_coord *temp, t_main *s)
 	s->draw->p = (2 * abs(s->draw->dy) - abs(s->draw->dx));
 	while (start->x <= end->x)
 	{
-		if (s->draw->dy < 0 && !check_outside_minimap(start->x, start->y - (2 * (start->y - temp->y))))
+		if (s->draw->dy < 0 && !check_outside_minimap(start->x, \
+		start->y - (2 * (start->y - temp->y))))
 			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), \
 			RAY_COLOR, s);
-		else if (s->draw->dx < 0 && !check_outside_minimap(start->x - (2 * (start->x - temp->x)), start->y))
+		else if (s->draw->dx < 0 && !check_outside_minimap(start->x - \
+		(2 * (start->x - temp->x)), start->y))
 			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, \
 			RAY_COLOR, s);
 		else if (!check_outside_minimap(start->x, start->y))
@@ -44,10 +46,12 @@ t_coord *temp, t_main *s)
 	s->draw->p = (2 * abs(s->draw->dx)) - abs(s->draw->dy);
 	while (start->y <= end->y)
 	{
-		if (s->draw->dy < 0 && !check_outside_minimap(start->x, start->y - (2 * (start->y - temp->y))))
+		if (s->draw->dy < 0 && !check_outside_minimap(start->x, \
+		start->y - (2 * (start->y - temp->y))))
 			put_pixel(start->x, start->y - (2 * (start->y - temp->y)), \
 			RAY_COLOR, s);
-		else if (s->draw->dx < 0 && !check_outside_minimap(start->x - (2 * (start->x - temp->x)), start->y))
+		else if (s->draw->dx < 0 && !check_outside_minimap(start->x - \
+		(2 * (start->x - temp->x)), start->y))
 			put_pixel(start->x - (2 * (start->x - temp->x)), start->y, \
 			RAY_COLOR, s);
 		else if (!check_outside_minimap(start->x, start->y))
