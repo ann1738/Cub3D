@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 19:52:17 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/20 19:00:23 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ static void	draw_wall(t_main *s)
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	// if (s->perpend_wall_dist > s->depth)
 	// 	return ;
-
+	
+	/* !!! seg fault is here !!! */
+	/* !!! seg fault is here !!! */
+	for (int i = 0; i < s->wall_width; i++)
+		s->sprite->z_buffer[s->place_wall_at_x + i] = s->perpend_wall_dist;
+	/* !!! seg fault is here !!! */
+	/* !!! seg fault is here !!! */
+		
 	/* fixing near wall disturbances */
 	if (s->perpend_wall_dist != 0) //not sure if necessary
 		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
@@ -173,6 +180,16 @@ static void	ray_casting_loop(t_main *s)
 			break ;
 		}
 		// printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+
+		/* sprite count */
+		if (s->map[s->ray_map_position.y][s->ray_map_position.x] == 'L' && !check_if_coord_exist(s, s->ray_map_position.x, s->ray_map_position.y))
+		{
+			printf("%shiii %d%s\n", GREEN1, s->sprite->in_screen_count, RESET);
+			s->sprite->position[s->sprite->in_screen_count].x = s->ray_map_position.x;
+			s->sprite->position[s->sprite->in_screen_count].y = s->ray_map_position.y;
+			s->sprite->in_screen_count += 1;
+			printf("%shiii %d%s\n", BLUE1, s->sprite->in_screen_count, RESET);
+		}
 	}
 	if (s->final_side_length > s->depth)
 		s->dont_draw = true;
@@ -233,6 +250,7 @@ void	cast_rays(t_main *s)
 		i -= INCREMENT_RAY_CASTING;
 		s->place_wall_at_x += s->wall_width;
 	}
+
 }
 
 /* code for drawing lines to represent the rays casted */

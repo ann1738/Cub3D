@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/16 12:56:58 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:54:49 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ static void	player_n_other_map_content(t_pars *p, int x, int y, int *p_count)
 	if (p->map[y][x] == 'N' || p->map[y][x] == 'S' || \
 	p->map[y][x] == 'E' || p->map[y][x] == 'W')
 		(*p_count)++;
+	else if (p->map[y][x] == 'L')
+		p->full_sprite_count++;
 	else if (p->map[y][x] != '1' && p->map[y][x] != '0' && \
 	p->map[y][x] != ' ' && p->map[y][x] != 'N' && \
-	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W')
+	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W' && p->map[y][x] != 'L')
 		p->map_error = true;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/19 16:16:47 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/20 18:54:05 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,29 @@
 
 void	redraw_window(t_main *s)
 {
+
 	/* clear window */
 	ft_bzero(s->image_address, s->size_line * WINDOW_Y);
 
+	// printf("%shiii %d%s\n", PURPLE1, s->sprite->in_screen_count, RESET);
 	/* draw floor and ceiling */
 	draw_ceiling(s->ceiling_color, &s->fog, s);
 	draw_floor(s->floor_color, &s->fog, s);
+	// printf("%shiii %d%s\n", BLUE1, s->sprite->in_screen_count, RESET);
 
+	// printf("BEFORE RAYCAST\n");
+
+	// printf("BEFORE HAHAHAHAH, %d \n", s->sprite->in_screen_count);
 	/* cast rays */
 	cast_rays(s);
+	// printf("AFTER RAYCAST\n");
+	// printf("HAHAHAHAH, %d \n", s->sprite->in_screen_count);
+
+	// printf("%shiii%s\n", PURPLE1, RESET);
+	// printf("%shiii%s\n", BLUE1, RESET);
+	/* sprite */
+	// if (s->p->full_sprite_count)
+	// 	sprite_cast(s);
 
 	/* minimap drawing */
 	if (s->minimap_on)

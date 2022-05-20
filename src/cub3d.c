@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 17:56:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/20 18:48:41 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ static void	parse(int argc, char **argv, t_pars *p)
 }
 
 static void	initiate_main_struct(t_main *s, t_pars *p)
-{	
+{
+	t_sprite	sprite;
+
 	ft_bzero(s, sizeof(t_main));
+	ft_bzero(&sprite, sizeof(t_sprite));
 
 	/* mlx initialization */
 	s->mlx = mlx_init();
@@ -56,6 +59,14 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	assign_rgb_color(57,57,57, &s->minimap_color);
 	assign_rgb_color(0, 0, 0, &s->black);
 	load_textures(p, s);
+
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MALLOC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	printf("count -> %d\n",s->p->full_sprite_count);
+	sprite.position = ft_calloc(s->p->full_sprite_count, sizeof(t_coord));
+	s->sprite = &sprite;
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 	/* features to start with the game or to be toggled by the player */
 	s->minimap_on = MINIMAP_DEFAULT == 1;
@@ -86,6 +97,9 @@ int main(int argc, char **argv)
 	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
 	// jumping and crouching
 	mlx_loop_hook(s.mlx, jump_n_crouch, &s);
+
+	// mlx_loop_hook(s.mlx, animation, &s);
+
 	// mlx_mouse_hook(s.mlx_window, activate_jump, &s);
 	mlx_loop(s.mlx);
 }
