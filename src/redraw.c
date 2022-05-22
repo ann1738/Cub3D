@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/20 18:54:05 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:32:24 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	redraw_window(t_main *s)
 	// printf("%shiii%s\n", PURPLE1, RESET);
 	// printf("%shiii%s\n", BLUE1, RESET);
 	/* sprite */
-	// if (s->p->full_sprite_count)
-	// 	sprite_cast(s);
+	if (s->sprite->in_screen_count)
+		sprite_cast(s);
 
 	/* minimap drawing */
 	if (s->minimap_on)

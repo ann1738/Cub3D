@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/20 18:48:41 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:29:38 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ static void	parse(int argc, char **argv, t_pars *p)
 	}
 }
 
-static void	initiate_main_struct(t_main *s, t_pars *p)
+static void	initiate_main_struct(t_main *s, t_pars *p, t_sprite *sprite)
 {
-	t_sprite	sprite;
-
+	
 	ft_bzero(s, sizeof(t_main));
-	ft_bzero(&sprite, sizeof(t_sprite));
+	ft_bzero(sprite, sizeof(t_sprite));
 
 	/* mlx initialization */
 	s->mlx = mlx_init();
@@ -64,8 +63,8 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MALLOC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 	printf("count -> %d\n",s->p->full_sprite_count);
-	sprite.position = ft_calloc(s->p->full_sprite_count, sizeof(t_coord));
-	s->sprite = &sprite;
+	sprite->position = ft_calloc(s->p->full_sprite_count, sizeof(t_coord));
+	s->sprite = sprite;
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 	/* features to start with the game or to be toggled by the player */
@@ -75,14 +74,15 @@ static void	initiate_main_struct(t_main *s, t_pars *p)
 
 int main(int argc, char **argv)
 {
-	t_main	s;
-	t_pars	p;
+	t_sprite	sprite;
+	t_main		s;
+	t_pars		p;
 
 	/* parse map */
 	parse(argc, argv, &p);
 
 	/* initiate struct */
-	initiate_main_struct(&s, &p);
+	initiate_main_struct(&s, &p, &sprite);
 
 	/* initiate player info after parsing */
 	initiate_player_info(&s);

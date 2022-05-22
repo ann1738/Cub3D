@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/20 19:00:23 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:30:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ void	cast_rays(t_main *s)
 	s->dont_draw = false;
 	i = 1;
 	s->place_wall_at_x = 0;
-	s->wall_width = WINDOW_X / (2.0 / INCREMENT_RAY_CASTING) + 1;
+	s->wall_width = WINDOW_X / (2.0 / INCREMENT_RAY_CASTING)/* + 1*/;
 	//WINDOW_X divided by the number of rays casted (plus one bec the condition of the loop is >= not >.. actually idk why?!)
 	while (i >= -1)
 	{

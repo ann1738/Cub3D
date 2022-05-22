@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/20 18:43:43 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/22 18:36:29 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	sprite_cast(t_main *s)
 	double		*s_distance;
 	t_vector	current_sprite_pos;
 
-	i = -1;
 	printf("CAST, %d \n", s->sprite->in_screen_count);
 	s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
 	if (!s_order)
@@ -98,40 +97,50 @@ void	sprite_cast(t_main *s)
 		printf("%sError: fatal error%s\n", RED2, RESET);
 		exit(1);
 	}
+	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{
 		s_order[i] = i;
-		s_distance[i] = ((s->player_position.x - s->sprite->position[i].x) * (s->player_position.x - s->sprite->position[i].x)) + ((s->player_position.y - s->sprite->position[i].y) * (s->player_position.y - s->sprite->position[i].y));
+		s_distance[i] = ((s->player_position.x - s->sprite->position[i].x) * (s->player_position.x - s->sprite->position[i].x) + (s->player_position.y - s->sprite->position[i].y) * (s->player_position.y - s->sprite->position[i].y));
 	}
 	sort_sprite_order(s_order, s_distance, s->sprite->in_screen_count);
 	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{
-		current_sprite_pos.x = s->sprite->position[i].x - s->player_position.x;
-		current_sprite_pos.y = s->sprite->position[i].y - s->player_position.y;
+		// current_sprite_pos.x = s->player_position.x - s->sprite->position[s_order[i]].x;
+		// current_sprite_pos.y = s->player_position.y - s->sprite->position[s_order[i]].y;
+		current_sprite_pos.x = s->sprite->position[s_order[i]].x - s->player_position.x;
+		current_sprite_pos.y = s->sprite->position[s_order[i]].y - s->player_position.y;
+		printf("current x: %f *** current y: %f\n", current_sprite_pos.x, current_sprite_pos.y);
 
-		s->sprite->invdet = 1.0 / ((s->camera_plane.x * s->ray_direction.y) - (s->ray_direction.x * s->camera_plane.y));
+		s->sprite->invdet = 1.0 / (s->camera_plane.x * s->ray_direction.y - s->ray_direction.x * s->camera_plane.y);
 
 		s->sprite->trans_x = s->sprite->invdet * (s->ray_direction.y * current_sprite_pos.x - s->ray_direction.x * current_sprite_pos.y);
 		s->sprite->trans_y = s->sprite->invdet * (-s->camera_plane.y * current_sprite_pos.x + s->camera_plane.x * current_sprite_pos.y);
+		printf("trans x: %f *** trans y: %f\n", s->sprite->trans_x, s->sprite->trans_y);
 
 		s->sprite->sprite_screen_x = (int)((WINDOW_X / 2) * (1 + s->sprite->trans_x / s->sprite->trans_y));
+		printf("**** %d ****\n", s->sprite->sprite_screen_x);
 
 		s->sprite->sprite_h = abs((int)(WINDOW_Y / (s->sprite->trans_y)));
-		s->sprite->y_start_draw = -s->sprite->sprite_h / 2 + WINDOW_Y / 2;
+		printf("**** h= %d ****\n", s->sprite->sprite_h);
+		s->sprite->y_start_draw = -(s->sprite->sprite_h / 2) + (WINDOW_Y / 2);
 		if (s->sprite->y_start_draw < 0)
 			s->sprite->y_start_draw = 0;
-		s->sprite->y_end_draw = s->sprite->sprite_h / 2 + WINDOW_Y / 2;
+		s->sprite->y_end_draw = (s->sprite->sprite_h / 2) + (WINDOW_Y / 2);
 		if (s->sprite->y_end_draw >= WINDOW_Y)
 			s->sprite->y_end_draw = WINDOW_Y - 1;
-		
-		s->sprite->sprite_w = abs((int)(WINDOW_X / (s->sprite->trans_x)));
+		printf("y start: %d *** y end: %d\n", s->sprite->y_start_draw, s->sprite->y_end_draw);
+
+		s->sprite->sprite_w = abs((int)(WINDOW_Y / (s->sprite->trans_y)));
+		printf("**** w= %d ****\n", s->sprite->sprite_w);
 		s->sprite->x_start_draw = -s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x;
 		if (s->sprite->x_start_draw < 0)
 			s->sprite->x_start_draw = 0;
 		s->sprite->x_end_draw = s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x;
 		if (s->sprite->x_end_draw >= WINDOW_X)
 			s->sprite->x_end_draw = WINDOW_X - 1;
+		printf("x start: %d *** x end: %d\n", s->sprite->x_start_draw, s->sprite->x_end_draw);
 
 		draw_sprite(s);
 		
