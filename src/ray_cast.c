@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/22 17:30:12 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:10:43 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,11 @@ static void	ray_casting_loop(t_main *s)
 		/* sprite count */
 		if (s->map[s->ray_map_position.y][s->ray_map_position.x] == 'L' && !check_if_coord_exist(s, s->ray_map_position.x, s->ray_map_position.y))
 		{
-			printf("%shiii %d%s\n", GREEN1, s->sprite->in_screen_count, RESET);
+			// printf("%shiii %d%s\n", GREEN1, s->sprite->in_screen_count, RESET);
 			s->sprite->position[s->sprite->in_screen_count].x = s->ray_map_position.x;
 			s->sprite->position[s->sprite->in_screen_count].y = s->ray_map_position.y;
 			s->sprite->in_screen_count += 1;
-			printf("%shiii %d%s\n", BLUE1, s->sprite->in_screen_count, RESET);
+			// printf("%shiii %d%s\n", BLUE1, s->sprite->in_screen_count, RESET);
 		}
 	}
 	if (s->final_side_length > s->depth)

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/22 18:26:03 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:46:34 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	load_textures(t_pars *p, t_main *s)
 	load_single_texture(&s->texture[2], p->w_texture, s);
 	load_single_texture(&s->texture[3], p->e_texture, s);
 	if (s->p->full_sprite_count)
-		load_single_texture(&s->texture[4], "./textures/Leaf_Dude.xpm", s);		
+		load_single_texture(&s->texture[4], "./textures/Leaf_Dude2.xpm", s);		
 }

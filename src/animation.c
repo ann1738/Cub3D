@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/22 18:36:29 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:46:39 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,18 @@ void	draw_sprite(t_main *s)
 	x = s->sprite->x_start_draw - 1;
 	while (++x < s->sprite->x_end_draw)
 	{
-		texture.x = (int)(x - (-s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x)) * s->texture[4].width / s->sprite->sprite_w;
+		texture.x = (int)(256 * (x - (-s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x)) * s->texture[4].width / s->sprite->sprite_w) / 256;
+		// printf("\nTextureX -> %d , width %d\n", texture.x, s->texture[4].height);
 		if (s->sprite->trans_y > 0 && x > 0 && x < WINDOW_X && s->sprite->trans_y < s->sprite->z_buffer[x])
 		{
 			y = s->sprite->y_start_draw - 1;
 			while (++y < s->sprite->y_end_draw)
 			{
-				d = y - WINDOW_Y + s->sprite->sprite_h;
-				texture.y = (d * s->texture[4].height) / s->sprite->sprite_h;
+				d = (y) * 256 - WINDOW_Y * 128 + s->sprite->sprite_h * 128;
+				texture.y = ((d * s->texture[4].height) / s->sprite->sprite_h) / 256;
 				texture.color = *((unsigned int *)(s->texture[4].image_address + (s->texture[4].size_line * texture.y) + (texture.x * (s->texture[4].bpp / 8))));
-				put_pixel(x, y, texture.color, s);
+				if((texture.color & 0x00FFFFFF) != 0)
+					put_pixel(x, y, texture.color, s);
 			}
 		}
 	}
@@ -83,8 +85,9 @@ void	sprite_cast(t_main *s)
 	int			*s_order;
 	double		*s_distance;
 	t_vector	current_sprite_pos;
+	t_vector	player_direction;
 
-	printf("CAST, %d \n", s->sprite->in_screen_count);
+	// printf("CAST, %d \n", s->sprite->in_screen_count);
 	s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
 	if (!s_order)
 	{
@@ -104,46 +107,39 @@ void	sprite_cast(t_main *s)
 		s_distance[i] = ((s->player_position.x - s->sprite->position[i].x) * (s->player_position.x - s->sprite->position[i].x) + (s->player_position.y - s->sprite->position[i].y) * (s->player_position.y - s->sprite->position[i].y));
 	}
 	sort_sprite_order(s_order, s_distance, s->sprite->in_screen_count);
+	player_direction.x = cos(s->player_angle);
+	player_direction.y = sin(s->player_angle);
 	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{
-		// current_sprite_pos.x = s->player_position.x - s->sprite->position[s_order[i]].x;
-		// current_sprite_pos.y = s->player_position.y - s->sprite->position[s_order[i]].y;
-		current_sprite_pos.x = s->sprite->position[s_order[i]].x - s->player_position.x;
-		current_sprite_pos.y = s->sprite->position[s_order[i]].y - s->player_position.y;
-		printf("current x: %f *** current y: %f\n", current_sprite_pos.x, current_sprite_pos.y);
+		current_sprite_pos.x = (s->sprite->position[s_order[i]].x + 0.5) - s->player_position.x;
+		current_sprite_pos.y = (s->sprite->position[s_order[i]].y + 0.5) - s->player_position.y;
 
-		s->sprite->invdet = 1.0 / (s->camera_plane.x * s->ray_direction.y - s->ray_direction.x * s->camera_plane.y);
+		s->sprite->invdet = 1 / (s->camera_plane.x * player_direction.y - player_direction.x * s->camera_plane.y);
 
-		s->sprite->trans_x = s->sprite->invdet * (s->ray_direction.y * current_sprite_pos.x - s->ray_direction.x * current_sprite_pos.y);
+		s->sprite->trans_x = s->sprite->invdet * (-player_direction.y * current_sprite_pos.x + player_direction.x * current_sprite_pos.y); // this is the fix
 		s->sprite->trans_y = s->sprite->invdet * (-s->camera_plane.y * current_sprite_pos.x + s->camera_plane.x * current_sprite_pos.y);
-		printf("trans x: %f *** trans y: %f\n", s->sprite->trans_x, s->sprite->trans_y);
 
 		s->sprite->sprite_screen_x = (int)((WINDOW_X / 2) * (1 + s->sprite->trans_x / s->sprite->trans_y));
-		printf("**** %d ****\n", s->sprite->sprite_screen_x);
 
-		s->sprite->sprite_h = abs((int)(WINDOW_Y / (s->sprite->trans_y)));
-		printf("**** h= %d ****\n", s->sprite->sprite_h);
-		s->sprite->y_start_draw = -(s->sprite->sprite_h / 2) + (WINDOW_Y / 2);
+		s->sprite->sprite_h = abs((int)((WINDOW_Y) / (s->sprite->trans_y)));
+		s->sprite->y_start_draw = (-s->sprite->sprite_h / 2) + (WINDOW_Y / 2);
 		if (s->sprite->y_start_draw < 0)
 			s->sprite->y_start_draw = 0;
 		s->sprite->y_end_draw = (s->sprite->sprite_h / 2) + (WINDOW_Y / 2);
 		if (s->sprite->y_end_draw >= WINDOW_Y)
 			s->sprite->y_end_draw = WINDOW_Y - 1;
-		printf("y start: %d *** y end: %d\n", s->sprite->y_start_draw, s->sprite->y_end_draw);
 
 		s->sprite->sprite_w = abs((int)(WINDOW_Y / (s->sprite->trans_y)));
-		printf("**** w= %d ****\n", s->sprite->sprite_w);
 		s->sprite->x_start_draw = -s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x;
 		if (s->sprite->x_start_draw < 0)
 			s->sprite->x_start_draw = 0;
 		s->sprite->x_end_draw = s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x;
 		if (s->sprite->x_end_draw >= WINDOW_X)
 			s->sprite->x_end_draw = WINDOW_X - 1;
-		printf("x start: %d *** x end: %d\n", s->sprite->x_start_draw, s->sprite->x_end_draw);
 
 		draw_sprite(s);
-		
+
 	}
 
 	// at the end
