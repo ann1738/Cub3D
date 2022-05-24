@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 16:28:26 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 17:18:42 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@
 # define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 3
-# define INCREMENT_RAY_CASTING 0.0048
+# define NUMBER_OF_RAYS 420
 
 # define PITCH_AMOUNT 100
 

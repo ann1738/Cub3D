@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 19:52:17 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 17:07:06 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ static void	ray_casting_loop(t_main *s)
 void	cast_rays(t_main *s)
 {
 	double i;
+	double step;
 	t_coord temp_start, temp_end;
 
 	/* calculating fps */
@@ -189,7 +190,8 @@ void	cast_rays(t_main *s)
 	s->dont_draw = false;
 	i = 1;
 	s->place_wall_at_x = 0;
-	s->wall_width = WINDOW_X / (2.0 / INCREMENT_RAY_CASTING) + 1;
+	s->wall_width = WINDOW_X / NUMBER_OF_RAYS;
+	step = 2.0 / NUMBER_OF_RAYS;
 	//WINDOW_X divided by the number of rays casted (plus one bec the condition of the loop is >= not >.. actually idk why?!)
 	while (i >= -1)
 	{
@@ -202,7 +204,7 @@ void	cast_rays(t_main *s)
 		ray_casting_loop(s);
 
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
-	
+		printf("place at wall: %d\n", s->place_wall_at_x);
 
 		if (s->minimap_on)
 		{
@@ -230,7 +232,7 @@ void	cast_rays(t_main *s)
 			draw_wall(s);
 
 		/* incrementing loop */
-		i -= INCREMENT_RAY_CASTING;
+		i -= step;
 		s->place_wall_at_x += s->wall_width;
 	}
 }
