@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 16:26:29 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 16:31:17 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,7 @@ void	load_textures(t_pars *p, t_main *s)
 	load_single_texture(&s->texture[1], p->s_texture, s);
 	load_single_texture(&s->texture[2], p->w_texture, s);
 	load_single_texture(&s->texture[3], p->e_texture, s);
+	/* start and end screen images */
+	load_single_texture(&s->start_screen, START_SCREEN_PATH, s);
+	load_single_texture(&s->end_screen, END_SCREEN_PATH, s);
 }

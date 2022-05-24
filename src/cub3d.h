@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 17:45:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 16:28:26 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,6 @@
 
 # define RAY_COLOR HX_WHITE
 
-// # define FLOOR_COLOR 0x8b5a2b
-# define FLOOR_COLOR HX_PASTEL_GREEN
-# define CEILING_COLOR HX_SKY_BLUE
-
 /* ----------------------- > >> Macros << < ----------------------- */
 
 # define WINDOW_X 1680
@@ -128,12 +124,14 @@
 
 # define PITCH_AMOUNT 100
 
+# define START_SCREEN_PATH "images/start_screen.xpm"
+# define END_SCREEN_PATH "images/end_screen.xpm"
+
 /* customizable defaults */
 
 # define MINIMAP_DEFAULT 1
-# define MOUSE_DEFAULT 1
+# define MOUSE_DEFAULT 0
 # define UP_DOWN_DEFAULT 1
-# define JUMP_CROUCH_DEFAULT 0
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -179,11 +177,6 @@ typedef struct s_vector
 	double			x;
 	double			y;
 }	t_vector;
-
-// typedef struct s_player
-// {
-	
-// }
 
 typedef struct s_color
 {
@@ -314,7 +307,8 @@ typedef struct s_main
 
 	//texture
 	t_texture	texture[6];
-	t_texture	wand;
+	t_texture	start_screen;
+	t_texture	end_screen;
 
 	//
 	bool	dont_draw;
@@ -342,6 +336,9 @@ typedef struct s_main
 	bool	jump_now;
 	bool	crouch;
 	bool	crouch_now;
+	
+	bool	start_screen_done;
+
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
@@ -370,11 +367,6 @@ void	rgb_to_hex(int rgb_int[3], char *hex);
 /* ----------------- ** gnl ** ------------------ */
 char	*get_next_line(int fd);
 
-/* -------------- ** temp parse ** -------------- */
-
-int		get_y(char *file);
-char	**save_map(char **map, char *file, int x);
-
 /* --------------- ** drawing ** ---------------- */
 void	put_pixel(int x, int y, unsigned int color, t_main *s);
 void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
@@ -384,14 +376,12 @@ void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
 void	draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
-
 bool	check_outside_minimap(int x, int y);
 void	draw_minimap(t_main *s);
 
 /* ---------------- ** hooks ** ----------------- */
-
 int		key_hooks(int keycode, t_main *s);
-int		close_x(int keycode, t_main *s);
+int		close_x(t_main *s);
 int		mouse_perspective(int x, int y, t_main *s);
 
 void	rotate_coor(double *x, double *y, double angle);
@@ -435,14 +425,10 @@ void	fps(t_main *s);
 
 /* ---------------- ** color ** ----------------- */
 
-int		rgb_to_uint(int transp, int red, int green, int blue);
+unsigned int		rgb_to_uint(int transp, int red, int green, int blue);
 void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void	add_fog(double intensity, t_color fog_color, t_color *color);
 void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
-
-int	jump_n_crouch(t_main *s);
-int	activate_jump(int button, int x, int y, t_main *s);
-
 
 #endif

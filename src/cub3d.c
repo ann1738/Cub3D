@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 17:56:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 16:27:43 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,14 @@ int main(int argc, char **argv)
 	/* initiate player info after parsing */
 	initiate_player_info(&s);
 
-	/* draw whatever is in the window */
-	redraw_window(&s);
+	/* start screen */
+	mlx_put_image_to_window(s.mlx, s.mlx_window, s.start_screen.image, 0, 0);
 
 	/* hooks and loop */
 	// mlx_key_hook(s.mlx_window, key_hooks, &s);
 	mlx_hook(s.mlx_window, 2, 0, key_hooks, &s);
 	mlx_hook(s.mlx_window, 6, 0, mouse_perspective, &s);
-	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
+	mlx_hook(s.mlx_window, 17, 0, close_x, &s);
 	// jumping and crouching
-	mlx_loop_hook(s.mlx, jump_n_crouch, &s);
-	// mlx_mouse_hook(s.mlx_window, activate_jump, &s);
 	mlx_loop(s.mlx);
 }

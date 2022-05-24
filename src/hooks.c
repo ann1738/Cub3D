@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 17:56:04 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 16:26:04 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,22 +138,15 @@ void	rotate(double change_angle, t_main *s)
 	redraw_window(s);
 }
 
-void	go_back(t_main *s)
-{
-		s->position_z = 0;
-		// while (i >= 0)
-		// {
-		// 	i -= 10;
-		// 	s->position_z = i;
-		// 	redraw_window(s);
-		// 	usleep(10000);
-		// }
-}
-
 int	key_hooks(int keycode, t_main *s)
 {
 	(void)s;
-	if (keycode == W_KEY)
+	if (!s->start_screen_done && keycode != ESC_KEY)
+	{
+		s->start_screen_done = true;
+		redraw_window(s);
+	}
+	else if (keycode == W_KEY)
 		movement(MOVEMENT_AMOUNT, 0,s);
 	else if (keycode == S_KEY)
 		movement(MOVEMENT_AMOUNT, M_PI, s);
@@ -169,16 +162,6 @@ int	key_hooks(int keycode, t_main *s)
 		redraw_window(s);
 	else if (UP_DOWN_DEFAULT && keycode == DOWN_KEY && s->pitch > -PITCH_AMOUNT && (s->pitch -= PITCH_AMOUNT) <= 0)
 		redraw_window(s);
-	else if (JUMP_CROUCH_DEFAULT && keycode == SPACE_KEY)
-	{
-		s->jump = true;
-		s->jump_now = true;
-	}
-	else if (JUMP_CROUCH_DEFAULT && keycode == C_KEY)
-	{
-		s->crouch = true;
-		s->crouch_now = true;
-	}
 	else if (keycode == M_KEY)
 	{
 		s->minimap_on = !s->minimap_on;
@@ -193,7 +176,7 @@ int	key_hooks(int keycode, t_main *s)
 			mlx_mouse_show();
 	}
 	else if (keycode == ESC_KEY)
-		close_x(0, s);
+		close_x(s);
 	return (1);
 }
 
@@ -209,9 +192,8 @@ void	free_double_char(char **array)
 	return ;
 }
 
-int	close_x(int keycode, t_main *s)
+int	close_x(t_main *s)
 {
-	(void)keycode;
 	mlx_destroy_image(s->mlx, s->texture[0].image);
 	mlx_destroy_image(s->mlx, s->texture[1].image);
 	mlx_destroy_image(s->mlx, s->texture[2].image);
