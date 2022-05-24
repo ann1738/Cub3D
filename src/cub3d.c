@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/22 17:29:38 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:54:45 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static void	initiate_main_struct(t_main *s, t_pars *p, t_sprite *sprite)
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MALLOC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-	printf("count -> %d\n",s->p->full_sprite_count);
 	sprite->position = ft_calloc(s->p->full_sprite_count, sizeof(t_coord));
 	s->sprite = sprite;
 	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -96,10 +95,11 @@ int main(int argc, char **argv)
 	mlx_hook(s.mlx_window, 6, 0, mouse_perspective, &s);
 	mlx_hook(s.mlx_window, 17, (1L<<1), close_x, &s);
 	// jumping and crouching
-	mlx_loop_hook(s.mlx, jump_n_crouch, &s);
+	// mlx_loop_hook(s.mlx, jump_n_crouch, &s);
 
-	// mlx_loop_hook(s.mlx, animation, &s);
 
 	// mlx_mouse_hook(s.mlx_window, activate_jump, &s);
+	// if (s.sprite->in_screen_count)
+	mlx_loop_hook(s.mlx, animation, &s);
 	mlx_loop(s.mlx);
 }

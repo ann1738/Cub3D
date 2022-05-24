@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/20 18:57:08 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:07:33 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,6 +336,8 @@ typedef struct s_main
 
 	//texture
 	t_texture	texture[6];
+	t_texture	leaf_dude[8];
+	int			leaf_index;
 	t_texture	wand;
 
 	//
@@ -469,8 +471,8 @@ unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int col
 int				jump_n_crouch(t_main *s);
 int				activate_jump(int button, int x, int y, t_main *s);
 
-// int				animation(t_main *s);
+int				animation(t_main *s);
 bool			check_if_coord_exist(t_main *s, int x, int y);
-void			sprite_cast(t_main *s);
+void			sprite_cast(t_main *s, t_texture *tex);
 
 #endif

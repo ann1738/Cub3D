@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 17:56:04 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 19:01:49 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,12 @@ void	movement(double move_amount, double change_angle, t_main *s)
 		s->player_map_position.x = (int)save.x;
 		s->player_map_position.y = (int)save.y;
 		return ;
+	}
+	if (s->map[s->player_map_position.y][s->player_map_position.x] == 'L')
+	{
+		s->map[s->player_map_position.y][s->player_map_position.x] = '0';
+		s->p->full_sprite_count--;
+		printf("leaf = %d\n", s->p->full_sprite_count);
 	}
 	redraw_window(s);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 12:37:44 by ann               #+#    #+#             */
-/*   Updated: 2022/05/17 14:09:22 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/24 16:59:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ void	draw_vertical_texture(t_coord origin, int width, int height, t_texture cons
 			/* extra shading (i commented it bec it ruined the shade effect) */
 			// if (s->side_hit == SIDE_X)
 			// 	origin.color = (origin.color >> 1) & 8355711;
-			put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
+			if((origin.color & 0x00FFFFFF) != 0)
+				put_pixel(origin.x + width_index, origin.y + height_index, origin.color, s);
 		}
 		s->texture_y += s->step_texture;
 	}

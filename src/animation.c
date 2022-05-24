@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/23 20:46:39 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:24:02 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ bool	check_if_coord_exist(t_main *s, int x, int y)
 			return (true);
 		}
 	}
-	printf("%shiii %d%s\n", GREEN1, s->sprite->in_screen_count, RESET);
-
 	return (false);
 }
 
@@ -52,7 +50,7 @@ void	sort_sprite_order(int *order, double *distance, int count)
 	}
 }
 
-void	draw_sprite(t_main *s)
+void	draw_sprite(t_main *s, t_texture *tex)
 {
 	int	x;
 	int	y;
@@ -62,16 +60,15 @@ void	draw_sprite(t_main *s)
 	x = s->sprite->x_start_draw - 1;
 	while (++x < s->sprite->x_end_draw)
 	{
-		texture.x = (int)(256 * (x - (-s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x)) * s->texture[4].width / s->sprite->sprite_w) / 256;
-		// printf("\nTextureX -> %d , width %d\n", texture.x, s->texture[4].height);
+		texture.x = (int)(256 * (x - (-s->sprite->sprite_w / 2 + s->sprite->sprite_screen_x)) * tex->width / s->sprite->sprite_w) / 256;
 		if (s->sprite->trans_y > 0 && x > 0 && x < WINDOW_X && s->sprite->trans_y < s->sprite->z_buffer[x])
 		{
 			y = s->sprite->y_start_draw - 1;
 			while (++y < s->sprite->y_end_draw)
 			{
 				d = (y) * 256 - WINDOW_Y * 128 + s->sprite->sprite_h * 128;
-				texture.y = ((d * s->texture[4].height) / s->sprite->sprite_h) / 256;
-				texture.color = *((unsigned int *)(s->texture[4].image_address + (s->texture[4].size_line * texture.y) + (texture.x * (s->texture[4].bpp / 8))));
+				texture.y = ((d * tex->height) / s->sprite->sprite_h) / 256;
+				texture.color = *((unsigned int *)(tex->image_address + (tex->size_line * texture.y) + (texture.x * (tex->bpp / 8))));
 				if((texture.color & 0x00FFFFFF) != 0)
 					put_pixel(x, y, texture.color, s);
 			}
@@ -79,7 +76,7 @@ void	draw_sprite(t_main *s)
 	}
 }
 
-void	sprite_cast(t_main *s)
+void	sprite_cast(t_main *s, t_texture *tex)
 {
 	int			i;
 	int			*s_order;
@@ -87,7 +84,6 @@ void	sprite_cast(t_main *s)
 	t_vector	current_sprite_pos;
 	t_vector	player_direction;
 
-	// printf("CAST, %d \n", s->sprite->in_screen_count);
 	s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
 	if (!s_order)
 	{
@@ -138,17 +134,25 @@ void	sprite_cast(t_main *s)
 		if (s->sprite->x_end_draw >= WINDOW_X)
 			s->sprite->x_end_draw = WINDOW_X - 1;
 
-		draw_sprite(s);
-
+		draw_sprite(s, tex);
 	}
-
-	// at the end
 	free(s_order);
 	free(s_distance);
-	s->sprite->in_screen_count = 0;
+	// s->sprite->in_screen_count = 0;
 }
 
-// int animation(t_main *s)
-// {
-// 	;
-// }
+int animation(t_main *s)
+{
+	static int	i = 0;
+
+	if (!s->sprite->in_screen_count)
+		return (0);
+	s->leaf_index = i;
+	redraw_window(s);
+	// sprite_cast(s, &s->leaf_dude[i]);
+	// mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
+	usleep(100000);
+	if (++i >= 8)
+		i = 0;
+	return (0);
+}
