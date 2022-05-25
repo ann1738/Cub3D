@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/25 14:58:38 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:29:18 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ void	redraw_window(t_main *s)
 	ft_bzero(s->image_address, s->size_line * WINDOW_Y);
 
 	/* draw floor and ceiling */
-	draw_ceiling(s->ceiling_color, &s->fog, s);
-	draw_floor(s->floor_color, &s->fog, s);
+	if (!s->p->f_is_texture)
+		draw_floor(s->floor_color, &s->fog, s);
+	else
+		floor_n_ceiling_cast(s, &s->floor_tex, WINDOW_Y / 2);
+	if (!s->p->c_is_texture)
+		draw_ceiling(s->ceiling_color, &s->fog, s);
+	else
+		floor_n_ceiling_cast(s, &s->ceiling_tex, 0);
 
 	/* cast rays */
 	cast_rays(s);
@@ -36,24 +42,18 @@ void	redraw_window(t_main *s)
 		draw_minimap(s);
 
 	/* info bar */
+
+	/* putting the image to the window */
+	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
+	
+
 	t_coord	temp;
 	temp.x = 520;
 	temp.y = 220;
 	temp.color = HX_BLACK;
 	draw_border(600, 450, &temp, s);
 	make_rect_trans(600, 450, &temp, &s->minimap_color, s);
-
-	/* putting the image to the window */
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
-	
-	if (s->p->leaf_is_here)
-	{
-		mlx_put_image_to_window(s->mlx, s->mlx_window, s->leaf_dude[8].image, 440, 10);
-		mlx_string_put(s->mlx, s->mlx_window, 480, 29, 0x394f51, ft_itoa(s->p->full_sprite_count));
-		// mlx_string_put(s->mlx, s->mlx_window, 440, 30, 0x567d46, "Leaf: ");
-		// mlx_string_put(s->mlx, s->mlx_window, 490, 30, 0x567d46, ft_itoa(s->p->full_sprite_count));
-	}
-
 	mlx_string_put(s->mlx, s->mlx_window, 560, (220 + 50), 0x57d29d, "How to play:"); // green
 	// mlx_string_put(s->mlx, s->mlx_window, 550, (220 + 50), 0xFF6633, "How to play:"); // orange
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + 30)), 0xF9DB24, "        - Use W A S D keys to move."); // yellow
@@ -62,4 +62,11 @@ void	redraw_window(t_main *s)
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + (30 * 7))), 0xF9DB24, "        - Use the M key to show or remove the minimap.");
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + (30 * 9))), 0xF9DB24, "        - Use the I key to show or remove the info panel.");
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + (30 * 11))), 0xF9DB24, "        - Use the ESC key to exit the game.");
+	if (s->p->leaf_is_here)
+	{
+		mlx_put_image_to_window(s->mlx, s->mlx_window, s->leaf_dude[8].image, 440, 10);
+		mlx_string_put(s->mlx, s->mlx_window, 480, 29, 0x394f51, ft_itoa(s->p->full_sprite_count));
+		// mlx_string_put(s->mlx, s->mlx_window, 440, 30, 0x567d46, "Leaf: ");
+		// mlx_string_put(s->mlx, s->mlx_window, 490, 30, 0x567d46, ft_itoa(s->p->full_sprite_count));
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 14:45:00 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:24:21 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,37 @@ typedef	struct s_sprite
 	t_coord	*position;
 } t_sprite;
 
+typedef struct s_v_cast
+{
+	double	x;
+	double	y;
+
+	double	step_x;
+	double	step_y;
+
+	double	x_direction;
+	double	y_direction;
+	
+	double	degree;
+	double	ray_fixed;
+
+	double	min_x_ray_dir;
+	double	max_x_ray_dir;
+	double	min_y_ray_dir;
+	double	max_y_ray_dir;
+
+	double	new_y_pos;
+	double	v_camera_pos;
+	double	row_distance;
+
+	int		texture_x;
+	int		texture_y;
+
+	double	ray_angle;
+	// double	player_angle;
+}	t_v_cast;
+
+
 typedef struct s_main
 {
 	//mlx info
@@ -336,7 +367,9 @@ typedef struct s_main
 	unsigned int	floor_color;
 
 	//texture
-	t_texture	texture[6];
+	t_texture	texture[4];
+	t_texture	floor_tex;
+	t_texture	ceiling_tex;
 	t_texture	leaf_dude[9];
 	int			leaf_index;
 	t_texture	wand;
@@ -475,6 +508,9 @@ int				activate_jump(int button, int x, int y, t_main *s);
 int				animation(t_main *s);
 bool			check_if_coord_exist(t_main *s, int x, int y);
 void			sprite_cast(t_main *s, t_texture *tex);
-void	make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s);
+void			make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s);
+
+// void	sky_cast(t_main *s, t_texture *sky);
+void			floor_n_ceiling_cast(t_main *s, t_texture *texture, int y);
 
 #endif

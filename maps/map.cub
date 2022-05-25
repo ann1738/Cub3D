@@ -4,7 +4,7 @@ WE ./textures/hand_made_fence.xpm
 EA ./textures/hand_made_fence.xpm
 
 C 135,206,235
-F 86,125,70
+F ./textures/grass1.xpm
 
         1111111111111111111111111
         1000000000110000000000001

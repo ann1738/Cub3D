@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 14:32:25 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:22:36 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void	load_textures(t_pars *p, t_main *s)
 	load_single_texture(&s->texture[1], p->s_texture, s);
 	load_single_texture(&s->texture[2], p->w_texture, s);
 	load_single_texture(&s->texture[3], p->e_texture, s);
-	if (s->p->full_sprite_count)
+	if (s->p->f_is_texture)
+		load_single_texture(&s->floor_tex, p->f_color_rgb, s);
+	if (s->p->c_is_texture)
+		load_single_texture(&s->ceiling_tex, p->c_color_rgb, s);
+	if (s->p->leaf_is_here)
 		load_leaf_tex(s);
 }
