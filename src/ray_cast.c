@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 17:07:06 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 17:14:01 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	draw_wall(t_main *s)
 		s->wall_height = WINDOW_Y;
 	s->step_texture = s->texture[texture_index].height / (double)s->wall_height;
 	s->texture_y = 0;
-	if (s->wall_height + s->pitch > WINDOW_Y)
+	if (s->wall_height > WINDOW_Y)
 	{
 		s->texture_y = ((s->wall_height - WINDOW_Y) / 2.0) * s->step_texture;
 		s->wall_height = WINDOW_Y;
@@ -139,7 +139,7 @@ static void	draw_wall(t_main *s)
 		// return ;
 	origin.x = s->place_wall_at_x;
 	//start of where to draw
-	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0) + s->pitch + (s->position_z / s->perpend_wall_dist);
+	origin.y = (WINDOW_Y / 2.0) - (s->wall_height / 2.0);
 	//origin color is not used here (in the draw_vertical_texture())
 	// origin.color = HX_PURPLE;
 	draw_vertical_texture(origin, s->wall_width, s->wall_height, &s->texture[texture_index], s);
@@ -204,7 +204,6 @@ void	cast_rays(t_main *s)
 		ray_casting_loop(s);
 
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
-		printf("place at wall: %d\n", s->place_wall_at_x);
 
 		if (s->minimap_on)
 		{

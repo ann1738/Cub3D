@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 12:33:21 by ann              ###   ########.fr       */
+/*   Updated: 2022/05/25 17:13:40 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,12 @@
 
 # define WALL_SCALE_FACTOR 1.0
 
-# define WALL_COLLISION_OFFSET 0.4
+# define WC_OFFSET 0.4
 
 # define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 3
 # define NUMBER_OF_RAYS 420
-
-# define PITCH_AMOUNT 100
 
 # define START_SCREEN_PATH "images/start_screen.xpm"
 # define END_SCREEN_PATH "images/end_screen.xpm"
@@ -136,7 +134,6 @@
 
 # define MINIMAP_DEFAULT 1
 # define MOUSE_DEFAULT 0
-# define UP_DOWN_DEFAULT 1
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -167,7 +164,7 @@
 #  define M_KEY 46
 #  define H_KEY 4
 #  define C_KEY 8
-#  define SPACE_KEY 49
+#  define I_KEY 34
 #endif
 
 /* ----------------------- > >> Struct << < ----------------------- */
@@ -343,15 +340,6 @@ typedef struct s_main
 	t_color black;
 	t_color minimap_color;
 	double	fog_intensity;
-
-	//looking up and down
-	int		pitch;
-	//jump
-	int		position_z;
-	bool	jump;
-	bool	jump_now;
-	bool	crouch;
-	bool	crouch_now;
 	
 	bool	start_screen_done;
 
@@ -403,44 +391,34 @@ int		mouse_perspective(int x, int y, t_main *s);
 void	rotate_coor(double *x, double *y, double angle);
 
 /* --------------- ** ray cast ** --------------- */
-
 void	cast_rays(t_main *s);
 
 /* ---------------- ** line ** ------------------ */
-
 void	draw_line(t_coord start, t_coord end, t_main *s);
 
 /* ---------------- ** floor ** ----------------- */
-
 void	draw_floor(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** ceiling ** --------------- */
-
 void	draw_ceiling(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** redraw ** ---------------- */
-
 void	redraw_window(t_main *s);
 
 /* --------------- ** initiate ** --------------- */
-
 void	initiate_player_info(t_main *s);
 
 /* ---------------- ** math ** ------------------ */
-
 double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 /* --------------- ** texture ** ---------------- */
-
 void	load_textures(t_pars *p, t_main *s);
 
 /* ---------------- ** math ** ------------------ */
-
 void	fps(t_main *s);
 
 /* ---------------- ** color ** ----------------- */
-
 unsigned int		rgb_to_uint(int transp, int red, int green, int blue);
 void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void	add_fog(double intensity, t_color fog_color, t_color *color);
@@ -448,8 +426,15 @@ void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
 
 /* --------------- ** collision ** -------------- */
+int		check_collision(double move_amount, double change_angle, t_main *s);
 
-int	check_collision(double move_amount, double change_angle, t_main *s);
+/* ---------------- ** toggle ** ---------------- */
+void	toggle_minimap_n_draw(t_main *s);
+void	toggle_mouse(t_main *s);
 
+/* ---------------- ** exit ** ------------------ */
+
+void	free_double_char(char **array);
+int		close_x(t_main *s);
 
 #endif
