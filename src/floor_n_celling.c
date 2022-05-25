@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:32:21 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/19 17:07:26 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 13:29:11 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_line_by_line(int y, t_v_cast *v, t_texture *tex, t_main *s)
 
 		color = *((unsigned int *)(tex->image_address + ((tex->size_line * (v->texture_y))) + (v->texture_x * (tex->bpp / 8))));
 
-		color = (color >> 1) & 8355711;
+		// color = (color >> 1) & 8355711;
 
 		put_pixel(x, y, color, s);
 		v->x += v->step_x;
