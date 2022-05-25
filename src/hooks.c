@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 16:26:04 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 12:52:31 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*this works for the most part (there is some ways to surpass it)*/
-
-#define NO_COLLISION 0
-#define COLLISION_XY 1
-#define COLLISION_X 2
-#define COLLISION_Y 3
 
 int	check_collision(double move_amount, double change_angle, t_main *s)
 {

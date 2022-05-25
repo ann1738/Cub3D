@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ann <ann@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 17:18:42 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 12:33:21 by ann              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,11 @@
 # define FOV_DEG 66
 # define VISION_DEPTH 15.0
 
+#define NO_COLLISION 0
+#define COLLISION_XY 1
+#define COLLISION_X 2
+#define COLLISION_Y 3
+
 # define SIDE_X true
 # define SIDE_Y false
 
@@ -145,6 +150,8 @@
 #  define ESC_KEY 65307
 #  define M_KEY 109
 #  define H_KEY 104
+#  define UP_KEY 65362
+#  define DOWN_KEY 65364
 #endif
 
 #ifdef __MACH__
@@ -198,6 +205,15 @@ typedef struct s_texture
 	int		width;
 	int		height;
 }	t_texture;
+
+typedef struct	s_collision{
+	bool		collision_x;
+	bool		collision_y;
+	t_coord		abs;
+	t_vector	step;
+	t_vector	temp_pos;
+	t_vector	player_direction;
+}	t_collision;
 
 
 typedef struct s_bresenham{
@@ -430,5 +446,10 @@ void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void	add_fog(double intensity, t_color fog_color, t_color *color);
 void	assign_rgb_color(int red, int green, int blue, t_color *color);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
+
+/* --------------- ** collision ** -------------- */
+
+int	check_collision(double move_amount, double change_angle, t_main *s);
+
 
 #endif
