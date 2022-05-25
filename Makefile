@@ -21,7 +21,7 @@ SRC = cub3d.c get_next_line.c drawing.c minimap.c collision.c\
     hooks.c rotation.c line.c ray_cast.c floor.c ceiling.c redraw.c \
 	initiate.c math_utils.c time.c check_user_input.c full_map_save.c \
 	rgb_to_hex.c map_checks.c pars_utils.c texture.c color.c exit.c \
-	toggle.c
+	toggle.c animation.c floor_n_celling.c
 OBJ = $(SRC:%.c=%.o)
 DEP = $(SRC:%.c=%.d)
 
@@ -30,36 +30,36 @@ all: $(NAME)
 -include $(addprefix dep/,$(DEP))
 
 $(NAME): obj dep $(addprefix obj/,$(OBJ)) $(LIBFT_STATIC_LIB) $(MLX_STATIC_LIB)
-	@printf "\e[92mLinking..\n\e[95m"
+	@printf "\x1B[0m\033[1;33mLinking..\n\033[2;33m"
 	$(CC) $(addprefix obj/,$(OBJ)) $(LINK_MLX) $(LINK_LIBFT) -o $(NAME)
-	@printf "\e[92mCompilation and Linking Done!\e[0m\n"
+	@printf "\x1B[0m\033[1;32mCompilation and Linking Done!!\e[0m\n"
 
 obj/%.o: src/%.c
-	@printf "\e[92mCompiling cub3d's $@ ..\n\e[94m"
+	@printf "\033[1;34m\033[2;34m"
 	$(CC) $(CFLAGS) $< -o $@ -MMD -MP -MF $(@:obj/%.o=dep/%.d)
 
 $(LIBFT_STATIC_LIB):
-	@printf "\e[92mCompiling libft..\e[0m\n"
+	@printf "\x1B[0m\033[1;34mCompiling libft..\e[0m\n"
 	@make -sC $(LIBFT_LIB)
 
 $(MLX_STATIC_LIB): 
-	@printf "\e[92mCompiling mlx..\e[0m\n"
+	@printf "\033[1;34mCompiling mlx..\e[0m\n"
 	@make -sC $(MLX_LIB)
 
 obj:
-	mkdir obj
+	@mkdir obj
 
 dep:
-	mkdir dep
+	@printf "\033[1;34mCompiling cub3d..\n\033[2;34m"
+	@mkdir dep
 
 clean:
-	@printf "\e[93mCleaning..\e[0m\n"
+	@printf "\033[1;32mCleaning..\e[0m\n"
 	@make -sC $(LIBFT_LIB) clean
 	@make -sC $(MLX_LIB) clean
 	@rm -rf $(addprefix obj/,$(OBJ)) $(addprefix dep/,$(DEP)) obj dep
 
 fclean: clean
-	@printf "\e[92mCleaning..\e[0m\n"
 	@make -sC $(LIBFT_LIB) fclean
 	@make -sC $(MLX_LIB) clean
 	@rm -f $(NAME)

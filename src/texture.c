@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 16:31:17 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 17:29:09 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ static void	load_single_texture(t_texture *texture, char *tex_file_path, t_main 
 {
 	texture->image = mlx_xpm_file_to_image(s->mlx, tex_file_path, &texture->width, &texture->height);
 	texture->image_address = mlx_get_data_addr(texture->image, &texture->bpp, &texture->size_line, &texture->endian);
+}
+
+static	void	load_leaf_tex(t_main *s)
+{
+	load_single_texture(&s->leaf_dude[0], "./textures/leaf_dude/L1.xpm", s);
+	load_single_texture(&s->leaf_dude[1], "./textures/leaf_dude/L2.xpm", s);
+	load_single_texture(&s->leaf_dude[2], "./textures/leaf_dude/L3.xpm", s);
+	load_single_texture(&s->leaf_dude[3], "./textures/leaf_dude/L4.xpm", s);
+	load_single_texture(&s->leaf_dude[4], "./textures/leaf_dude/L5.xpm", s);
+	load_single_texture(&s->leaf_dude[5], "./textures/leaf_dude/L6.xpm", s);
+	load_single_texture(&s->leaf_dude[6], "./textures/leaf_dude/L7.xpm", s);
+	load_single_texture(&s->leaf_dude[7], "./textures/leaf_dude/L8.xpm", s);
+	load_single_texture(&s->leaf_dude[8], "./textures/small_leaf.xpm", s);
+	s->leaf_dude[8].image = mlx_xpm_file_to_image(s->mlx, "./textures/leaf_c.xpm", &s->leaf_dude[8].width, &s->leaf_dude[8].height);
 }
 
 void	load_textures(t_pars *p, t_main *s)
@@ -32,4 +46,10 @@ void	load_textures(t_pars *p, t_main *s)
 	/* start and end screen images */
 	load_single_texture(&s->start_screen, START_SCREEN_PATH, s);
 	load_single_texture(&s->end_screen, END_SCREEN_PATH, s);
+	if (s->p->f_is_texture)
+		load_single_texture(&s->floor_tex, p->f_color_rgb, s);
+	if (s->p->c_is_texture)
+		load_single_texture(&s->ceiling_tex, p->c_color_rgb, s);
+	if (s->p->leaf_is_here)
+		load_leaf_tex(s);
 }

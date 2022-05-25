@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_cast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:58:18 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 17:14:01 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 18:18:01 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ static void	draw_wall(t_main *s)
 	s->perpend_wall_dist = s->final_side_length * fabs(cos(fabs(s->player_angle - atan2(s->ray_direction.y, s->ray_direction.x))));
 	// if (s->perpend_wall_dist > s->depth)
 	// 	return ;
-
+	
+	/* !!! seg fault is here !!! */
+	/* !!! seg fault is here !!! */
+	for (int i = 0; i < s->wall_width; i++)
+		s->sprite->z_buffer[s->place_wall_at_x + i] = s->perpend_wall_dist;
+	/* !!! seg fault is here !!! */
+	/* !!! seg fault is here !!! */
+		
 	/* fixing near wall disturbances */
 	if (s->perpend_wall_dist != 0) //not sure if necessary
 		s->wall_height = WALL_SCALE_FACTOR * WINDOW_Y / s->perpend_wall_dist;
@@ -173,10 +180,17 @@ static void	ray_casting_loop(t_main *s)
 			break ;
 		}
 		// printf("I AM IN (%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
+
+		/* sprite count */
+		if (s->map[s->ray_map_position.y][s->ray_map_position.x] == 'L' && !check_if_coord_exist(s, s->ray_map_position.x, s->ray_map_position.y))
+		{
+			s->sprite->position[s->sprite->in_screen_count].x = s->ray_map_position.x;
+			s->sprite->position[s->sprite->in_screen_count].y = s->ray_map_position.y;
+			++s->sprite->in_screen_count;
+		}
 	}
 	if (s->final_side_length > s->depth)
 		s->dont_draw = true;
-		
 }
 
 void	cast_rays(t_main *s)
@@ -187,13 +201,14 @@ void	cast_rays(t_main *s)
 
 	/* calculating fps */
 	// fps(s);
+	s->sprite->in_screen_count = 0;
 	s->dont_draw = false;
 	i = 1;
 	s->place_wall_at_x = 0;
 	s->wall_width = WINDOW_X / NUMBER_OF_RAYS;
 	step = 2.0 / NUMBER_OF_RAYS;
 	//WINDOW_X divided by the number of rays casted (plus one bec the condition of the loop is >= not >.. actually idk why?!)
-	while (i >= -1)
+	while (i >= -1 && s->place_wall_at_x < WINDOW_X)
 	{
 		/* calculations before the main ray casting loop */
 		calc_ray_dir_n_delta_dist(s, i);
@@ -202,6 +217,7 @@ void	cast_rays(t_main *s)
 
 		/* main ray casting loop */
 		ray_casting_loop(s);
+
 
 		// printf("ray end(%d, %d)\n", s->ray_map_position.x, s->ray_map_position.y);
 
@@ -213,16 +229,6 @@ void	cast_rays(t_main *s)
 			//end point
 			temp_end.x = temp_start.x + (s->final_side_length * MINI_BLOCK_SIZE_X * cos(atan2(s->ray_direction.y, s->ray_direction.x)));
 			temp_end.y = temp_start.y + (s->final_side_length * MINI_BLOCK_SIZE_Y * sin(atan2(s->ray_direction.y, s->ray_direction.x)));
-	
-			// if (temp_end.x >= MINIMAP_X + MINI_OFFSET_X)
-			// 	temp_end.x = MINIMAP_X + MINI_OFFSET_X - 1;
-			// else if (temp_end.x <= MINI_OFFSET_X)
-			// 	temp_end.x = MINI_OFFSET_X + 1;
-		
-			// if (temp_end.y >= MINIMAP_Y + MINI_OFFSET_Y)
-			// 	temp_end.y = MINIMAP_Y + MINI_OFFSET_Y - 1;
-			// else if (temp_end.y <= MINI_OFFSET_Y)
-			// 	temp_end.y = MINI_OFFSET_Y + 1;
 			
 			draw_line(temp_start, temp_end, s);
 		}
@@ -234,6 +240,7 @@ void	cast_rays(t_main *s)
 		i -= step;
 		s->place_wall_at_x += s->wall_width;
 	}
+
 }
 
 /* code for drawing lines to represent the rays casted */

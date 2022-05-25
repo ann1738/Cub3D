@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toggle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:02:17 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/25 17:10:50 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 18:20:27 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	toggle_minimap_n_draw(t_main *s)
 	redraw_window(s);
 }
 
-
-
 void	toggle_mouse(t_main *s)
 {
 	s->is_using_mouse = !s->is_using_mouse;
@@ -27,4 +25,10 @@ void	toggle_mouse(t_main *s)
 		mlx_mouse_hide();
 	else
 		mlx_mouse_show();
+}
+
+void	toggle_info_n_draw(t_main *s)
+{
+	s->info_panel_on = !s->info_panel_on;
+	redraw_window(s);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 17:12:59 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 18:44:59 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	movement(double move_amount, double change_angle, t_main *s)
 		s->player_map_position.y = (int)save.y;
 		return ;
 	}
+	if (s->map[s->player_map_position.y][s->player_map_position.x] == 'L')
+	{
+		s->map[s->player_map_position.y][s->player_map_position.x] = '0';
+		s->p->full_sprite_count--;
+	}
 	redraw_window(s);
 }
 
@@ -58,6 +63,10 @@ int	key_hooks(int keycode, t_main *s)
 {
 	if (!s->start_screen_done && keycode != ESC_KEY && (++s->start_screen_done)) //check before submission
 		redraw_window(s);
+	else if (keycode == ESC_KEY)
+		close_x(s);
+	else if (s->end_screen_done)
+		return (0);
 	else if (keycode == W_KEY)
 		movement(MOVEMENT_AMOUNT, 0, s);
 	else if (keycode == S_KEY)
@@ -74,10 +83,8 @@ int	key_hooks(int keycode, t_main *s)
 		toggle_minimap_n_draw(s);
 	else if (keycode == H_KEY)
 		toggle_mouse(s);
-	// else if (keycode == I_KEY)
-	// 	toggle_info_n_draw(s);
-	else if (keycode == ESC_KEY)
-		close_x(s);
+	else if (keycode == I_KEY)
+		toggle_info_n_draw(s);
 	return (0);
 }
 

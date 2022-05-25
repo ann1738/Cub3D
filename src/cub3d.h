@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 17:13:40 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 18:35:59 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@
 
 # define MINIMAP_DEFAULT 1
 # define MOUSE_DEFAULT 0
+# define INFO_DEFAULT 1
 
 //YOU CAN OBTAIN THE KEYS BY RUNNING "showkey --ascii"
 
@@ -226,8 +227,11 @@ typedef struct s_pars
 	int		file_w;
 	int		file_h;
 
+	int		full_sprite_count;
+
 	int		map_starting_i;
 	
+	bool	leaf_is_here;
 	bool	map_error;
 	bool	map_time;
 	bool	extra;
@@ -254,6 +258,63 @@ typedef struct s_pars
 
 	char	**full_file;
 }	t_pars;
+
+typedef	struct s_sprite
+{
+	float	z_buffer[WINDOW_X];
+	int		in_screen_count;
+
+	int		*s_order;
+	double	*s_distance;
+
+	double	invdet;
+	double	trans_x;
+	double	trans_y;
+
+	int		sprite_screen_x;
+	int		sprite_w;
+	int		sprite_h;
+	int		y_start_draw;
+	int		y_end_draw;
+	int		x_start_draw;
+	int		x_end_draw;
+
+	t_vector	current_sprite_pos;
+	t_vector	player_direction;
+
+	t_coord	*position;
+} t_sprite;
+
+typedef struct s_v_cast
+{
+	double	x;
+	double	y;
+
+	double	step_x;
+	double	step_y;
+
+	double	x_direction;
+	double	y_direction;
+	
+	double	degree;
+	double	ray_fixed;
+
+	double	min_x_ray_dir;
+	double	max_x_ray_dir;
+	double	min_y_ray_dir;
+	double	max_y_ray_dir;
+
+	double	new_y_pos;
+	double	v_camera_pos;
+	double	row_distance;
+
+	int		texture_x;
+	int		texture_y;
+
+	double	ray_angle;
+	// double	player_angle;
+}	t_v_cast;
+
 
 typedef struct s_main
 {
@@ -319,12 +380,18 @@ typedef struct s_main
 	unsigned int	floor_color;
 
 	//texture
-	t_texture	texture[6];
+	t_texture	texture[4];
 	t_texture	start_screen;
 	t_texture	end_screen;
+	t_texture	floor_tex;
+	t_texture	ceiling_tex;
+	t_texture	leaf_dude[9];
+	int			leaf_index;
+	t_texture	wand;
 
 	//
 	bool	dont_draw;
+	bool	info_panel_on;
 
 	//mouse usage
 	bool	is_using_mouse;
@@ -342,99 +409,111 @@ typedef struct s_main
 	double	fog_intensity;
 	
 	bool	start_screen_done;
+	bool	end_screen_done;
 
+	t_sprite	*sprite;
 }	t_main;
 
 /* --------------------- > >> Prototypes << < --------------------- */
 
 /* ----------- ** pars utils ** ------------ */
-void	remove_nl(char *str);
-void	ft_open(char *file_path);
-void	free_char_double_pointer(char **str);
-void	get_max_x_y(char *file_path, t_pars *p);
+void			remove_nl(char *str);
+void			ft_open(char *file_path);
+void			free_char_double_pointer(char **str);
+void			get_max_x_y(char *file_path, t_pars *p);
 
 /* ----------- ** check user input ** ------------ */
-void	user_input_check(int argc, char **argv);
-void	print_error_n_exit(int flag, char *argv1);
+void			user_input_check(int argc, char **argv);
+void			print_error_n_exit(int flag, char *argv1);
 
 /* -------------- ** map checks ** --------------- */
-void	check_map_content(t_pars *p);
-void	check_file_validity(t_pars *p);
+void			check_map_content(t_pars *p);
+void			check_file_validity(t_pars *p);
 
 /* ----------- ** full map save ** ------------- */
-void	init_map_save(char *file_path, t_pars *p);
+void			init_map_save(char *file_path, t_pars *p);
 
 /* ------------- ** rgb to hex ** -------------- */
-void	rgb_char_to_int(char *char_rgb, int int_rgb[3]);
-void	rgb_to_hex(int rgb_int[3], char *hex);
+void			rgb_char_to_int(char *char_rgb, int int_rgb[3]);
+void			rgb_to_hex(int rgb_int[3], char *hex);
 
 /* ----------------- ** gnl ** ------------------ */
-char	*get_next_line(int fd);
+char			*get_next_line(int fd);
 
 /* --------------- ** drawing ** ---------------- */
-void	put_pixel(int x, int y, unsigned int color, t_main *s);
-void	draw_rect(int width, int height, t_coord const *origin, t_main *s);
-void	draw_border(int width, int height, t_coord const *origin, t_main *s);
-void	draw_circle(int radius, t_coord const *origin, t_main *s);
-void	draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
-void	draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s);
+void			put_pixel(int x, int y, unsigned int color, t_main *s);
+void			draw_rect(int width, int height, t_coord const *origin, t_main *s);
+void			draw_border(int width, int height, t_coord const *origin, t_main *s);
+void			draw_circle(int radius, t_coord const *origin, t_main *s);
+void			draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
+void			draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
-bool	check_outside_minimap(int x, int y);
-void	draw_minimap(t_main *s);
+bool			check_outside_minimap(int x, int y);
+void			make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s);
+void			draw_minimap(t_main *s);
 
 /* ---------------- ** hooks ** ----------------- */
-int		key_hooks(int keycode, t_main *s);
-int		close_x(t_main *s);
-int		mouse_perspective(int x, int y, t_main *s);
+int				key_hooks(int keycode, t_main *s);
+int				close_x(t_main *s);
+int				mouse_perspective(int x, int y, t_main *s);
 
-void	rotate_coor(double *x, double *y, double angle);
+void			rotate_coor(double *x, double *y, double angle);
 
 /* --------------- ** ray cast ** --------------- */
-void	cast_rays(t_main *s);
+void			cast_rays(t_main *s);
 
 /* ---------------- ** line ** ------------------ */
-void	draw_line(t_coord start, t_coord end, t_main *s);
+void			draw_line(t_coord start, t_coord end, t_main *s);
 
 /* ---------------- ** floor ** ----------------- */
-void	draw_floor(unsigned int color, t_color *fog_color, t_main *s);
+void			draw_floor(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** ceiling ** --------------- */
-void	draw_ceiling(unsigned int color, t_color *fog_color, t_main *s);
+void			draw_ceiling(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** redraw ** ---------------- */
-void	redraw_window(t_main *s);
+void			redraw_window(t_main *s);
 
 /* --------------- ** initiate ** --------------- */
-void	initiate_player_info(t_main *s);
+void			initiate_player_info(t_main *s);
 
 /* ---------------- ** math ** ------------------ */
-double	deg_to_rad(double deg);
-double	rad_to_deg(double rad);
+double			deg_to_rad(double deg);
+double			rad_to_deg(double rad);
 
 /* --------------- ** texture ** ---------------- */
-void	load_textures(t_pars *p, t_main *s);
+void			load_textures(t_pars *p, t_main *s);
 
 /* ---------------- ** math ** ------------------ */
-void	fps(t_main *s);
+void			fps(t_main *s);
 
 /* ---------------- ** color ** ----------------- */
-unsigned int		rgb_to_uint(int transp, int red, int green, int blue);
-void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
-void	add_fog(double intensity, t_color fog_color, t_color *color);
-void	assign_rgb_color(int red, int green, int blue, t_color *color);
+void			uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
+void			add_fog(double intensity, t_color fog_color, t_color *color);
+void			assign_rgb_color(int red, int green, int blue, t_color *color);
+unsigned int	rgb_to_uint(int transp, int red, int green, int blue);
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int color);
 
 /* --------------- ** collision ** -------------- */
-int		check_collision(double move_amount, double change_angle, t_main *s);
+int				check_collision(double move_amount, double change_angle, t_main *s);
 
 /* ---------------- ** toggle ** ---------------- */
-void	toggle_minimap_n_draw(t_main *s);
-void	toggle_mouse(t_main *s);
+void			toggle_minimap_n_draw(t_main *s);
+void			toggle_mouse(t_main *s);
+void			toggle_info_n_draw(t_main *s);
 
-/* ---------------- ** exit ** ------------------ */
+/* -------------- ** animation ** --------------- */
+int				animation(t_main *s);
+bool			check_if_coord_exist(t_main *s, int x, int y);
+void			sprite_cast(t_main *s, t_texture *tex);
 
-void	free_double_char(char **array);
-int		close_x(t_main *s);
+/* ------------- ** floor ceiling ** ------------ */
+void			floor_n_ceiling_cast(t_main *s, t_texture *texture, int y);
+
+/* ----------------- ** exit ** ----------------- */
+void			free_double_char(char **array);
+int				close_x(t_main *s);
+
 
 #endif
