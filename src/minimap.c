@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 13:39:15 by ann               #+#    #+#             */
-/*   Updated: 2022/05/18 14:11:58 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/25 14:03:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	draw_player_icon(t_main *s)
 
 /* function to make a section of the screen transparent with a color */
 
-static void	make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s)
+void	make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s)
 {
 	unsigned int	new_color;
 	int				width_index;

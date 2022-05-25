@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:03:03 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 13:42:02 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:32:25 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static	void	load_leaf_tex(t_main *s)
 	load_single_texture(&s->leaf_dude[5], "./textures/leaf_dude/L6.xpm", s);
 	load_single_texture(&s->leaf_dude[6], "./textures/leaf_dude/L7.xpm", s);
 	load_single_texture(&s->leaf_dude[7], "./textures/leaf_dude/L8.xpm", s);
+	load_single_texture(&s->leaf_dude[8], "./textures/small_leaf.xpm", s);
+	s->leaf_dude[8].image = mlx_xpm_file_to_image(s->mlx, "./textures/leaf_c.xpm", &s->leaf_dude[8].width, &s->leaf_dude[8].height);
 }
 
 void	load_textures(t_pars *p, t_main *s)

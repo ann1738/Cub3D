@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/24 15:07:33 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:45:00 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ typedef struct s_pars
 
 	int		map_starting_i;
 	
+	bool	leaf_is_here;
 	bool	map_error;
 	bool	map_time;
 	bool	extra;
@@ -336,7 +337,7 @@ typedef struct s_main
 
 	//texture
 	t_texture	texture[6];
-	t_texture	leaf_dude[8];
+	t_texture	leaf_dude[9];
 	int			leaf_index;
 	t_texture	wand;
 
@@ -474,5 +475,6 @@ int				activate_jump(int button, int x, int y, t_main *s);
 int				animation(t_main *s);
 bool			check_if_coord_exist(t_main *s, int x, int y);
 void			sprite_cast(t_main *s, t_texture *tex);
+void	make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s);
 
 #endif

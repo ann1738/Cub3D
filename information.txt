@@ -1,0 +1,12 @@
+How to play:
+
+		- Use W A S D keys to move.
+
+		- Use < > arrows to turn.
+
+		- Use the H key to use the mouse for turing.
+
+		- Use the M key to remove the minimap.
+
+		- Use the esc key to exit the game.
+
