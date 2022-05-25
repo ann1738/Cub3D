@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/25 14:47:21 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:07:35 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static void	player_n_other_map_content(t_pars *p, int x, int y, int *p_count)
 		p->full_sprite_count++;
 		p->leaf_is_here = true;
 	}
+	// else if (p->map[y][x] == 'B')
+	// 	p->bush_count++;
 	else if (p->map[y][x] != '1' && p->map[y][x] != '0' && \
 	p->map[y][x] != ' ' && p->map[y][x] != 'N' && \
 	p->map[y][x] != 'S' && p->map[y][x] != 'E' && p->map[y][x] != 'W' && p->map[y][x] != 'L')

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 15:24:21 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:14:43 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ typedef struct s_pars
 	int		file_h;
 
 	int		full_sprite_count;
+	// int		bush_count;
 
 	int		map_starting_i;
 	
@@ -257,6 +258,9 @@ typedef	struct s_sprite
 	float	z_buffer[WINDOW_X];
 	int		in_screen_count;
 
+	int		*s_order;
+	double	*s_distance;
+
 	double	invdet;
 	double	trans_x;
 	double	trans_y;
@@ -268,6 +272,9 @@ typedef	struct s_sprite
 	int		y_end_draw;
 	int		x_start_draw;
 	int		x_end_draw;
+
+	t_vector	current_sprite_pos;
+	t_vector	player_direction;
 
 	t_coord	*position;
 } t_sprite;

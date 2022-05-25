@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/24 15:24:02 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:18:09 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,16 @@ void	draw_sprite(t_main *s, t_texture *tex)
 
 void	sprite_cast(t_main *s, t_texture *tex)
 {
-	int			i;
-	int			*s_order;
-	double		*s_distance;
-	t_vector	current_sprite_pos;
-	t_vector	player_direction;
+	int	i;
 
-	s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
-	if (!s_order)
+	s->sprite->s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
+	if (!s->sprite->s_order)
 	{
 		printf("%sError: fatal error%s\n", RED2, RESET);
 		exit(1);
 	}
-	s_distance = ft_calloc(s->sprite->in_screen_count, sizeof(int));
-	if (!s_distance)
+	s->sprite->s_distance = ft_calloc(s->sprite->in_screen_count, sizeof(int));
+	if (!s->sprite->s_distance)
 	{
 		printf("%sError: fatal error%s\n", RED2, RESET);
 		exit(1);
@@ -99,22 +95,25 @@ void	sprite_cast(t_main *s, t_texture *tex)
 	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{
-		s_order[i] = i;
-		s_distance[i] = ((s->player_position.x - s->sprite->position[i].x) * (s->player_position.x - s->sprite->position[i].x) + (s->player_position.y - s->sprite->position[i].y) * (s->player_position.y - s->sprite->position[i].y));
+		s->sprite->s_order[i] = i;
+		s->sprite->s_distance[i] = ((s->player_position.x - s->sprite->position[i].x) \
+		* (s->player_position.x - s->sprite->position[i].x) + \
+		(s->player_position.y - s->sprite->position[i].y) * \
+		(s->player_position.y - s->sprite->position[i].y));
 	}
-	sort_sprite_order(s_order, s_distance, s->sprite->in_screen_count);
-	player_direction.x = cos(s->player_angle);
-	player_direction.y = sin(s->player_angle);
+	sort_sprite_order(s->sprite->s_order, s->sprite->s_distance, s->sprite->in_screen_count);
+	s->sprite->player_direction.x = cos(s->player_angle);
+	s->sprite->player_direction.y = sin(s->player_angle);
 	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{
-		current_sprite_pos.x = (s->sprite->position[s_order[i]].x + 0.5) - s->player_position.x;
-		current_sprite_pos.y = (s->sprite->position[s_order[i]].y + 0.5) - s->player_position.y;
+		s->sprite->current_sprite_pos.x = (s->sprite->position[s->sprite->s_order[i]].x + 0.5) - s->player_position.x;
+		s->sprite->current_sprite_pos.y = (s->sprite->position[s->sprite->s_order[i]].y + 0.5) - s->player_position.y;
 
-		s->sprite->invdet = 1 / (s->camera_plane.x * player_direction.y - player_direction.x * s->camera_plane.y);
+		s->sprite->invdet = 1 / (s->camera_plane.x * s->sprite->player_direction.y - s->sprite->player_direction.x * s->camera_plane.y);
 
-		s->sprite->trans_x = s->sprite->invdet * (-player_direction.y * current_sprite_pos.x + player_direction.x * current_sprite_pos.y); // this is the fix
-		s->sprite->trans_y = s->sprite->invdet * (-s->camera_plane.y * current_sprite_pos.x + s->camera_plane.x * current_sprite_pos.y);
+		s->sprite->trans_x = s->sprite->invdet * (-s->sprite->player_direction.y * s->sprite->current_sprite_pos.x + s->sprite->player_direction.x * s->sprite->current_sprite_pos.y); // this is the fix
+		s->sprite->trans_y = s->sprite->invdet * (-s->camera_plane.y * s->sprite->current_sprite_pos.x + s->camera_plane.x * s->sprite->current_sprite_pos.y);
 
 		s->sprite->sprite_screen_x = (int)((WINDOW_X / 2) * (1 + s->sprite->trans_x / s->sprite->trans_y));
 
@@ -136,9 +135,8 @@ void	sprite_cast(t_main *s, t_texture *tex)
 
 		draw_sprite(s, tex);
 	}
-	free(s_order);
-	free(s_distance);
-	// s->sprite->in_screen_count = 0;
+	free(s->sprite->s_order);
+	free(s->sprite->s_distance);
 }
 
 int animation(t_main *s)
@@ -149,8 +147,6 @@ int animation(t_main *s)
 		return (0);
 	s->leaf_index = i;
 	redraw_window(s);
-	// sprite_cast(s, &s->leaf_dude[i]);
-	// mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
 	usleep(100000);
 	if (++i >= 8)
 		i = 0;
