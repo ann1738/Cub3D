@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floor_n_celling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:32:21 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/25 15:26:51 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:32:24 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,50 @@ void	draw_line_by_line(int y, t_v_cast *v, t_texture *tex, t_main *s)
 // 		draw_line_by_line(y, &v, sky, s);
 // 	}
 // }
+
+void	color_ceiling(unsigned int color, t_color *fog_color, t_main *s)
+{
+	double			step;
+	double			intensity;
+	unsigned int	new_color;
+	int				width_index;
+	int				height_index;
+
+	intensity = 0;
+	step = 1.0 / WINDOW_Y_2;
+	new_color = color;
+	height_index = -1;
+	while (++height_index < WINDOW_Y_2)
+	{
+		width_index = -1;
+		while (++width_index < WINDOW_X)
+			put_pixel(width_index, height_index, new_color, s);
+		new_color = add_fog_uint(intensity, fog_color, color);
+		intensity += step;
+	}
+}
+
+void	color_floor(unsigned int color, t_color *fog_color, t_main *s)
+{
+	double			step;
+	double			intensity;
+	unsigned int	new_color;
+	int				width_index;
+	int				height_index;
+
+	intensity = 0;
+	step = 1.0 / WINDOW_Y_2;
+	new_color = color;
+	height_index = 0;
+	while (++height_index <= WINDOW_Y_2)
+	{
+		width_index = -1;
+		while (++width_index < WINDOW_X)
+			put_pixel(width_index, WINDOW_Y - height_index, new_color, s);
+		new_color = add_fog_uint(intensity, fog_color, color);
+		intensity += step;
+	}
+}
 
 void	floor_n_ceiling_cast(t_main *s, t_texture *texture, int y)
 {

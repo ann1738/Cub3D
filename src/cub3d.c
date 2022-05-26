@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 14:55:13 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:33:13 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	initiate_main_struct(t_main *s, t_pars *p, t_sprite *sprite)
 
 	/* other initialization */
 	s->depth = VISION_DEPTH;
-	s->frame1 = clock();
 
 	/* taking things from parser to main struct */
 	s->p = p;

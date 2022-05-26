@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 18:44:04 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/25 18:37:02 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:31:15 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 static void	show_info_panel(t_main *s)
 {
+	int		width_height[2];
 	t_coord	temp;
 
 	temp.x = 520;
 	temp.y = 220;
+	width_height[0]= 600;
+	width_height[1]= 450;
 	temp.color = HX_BLACK;
 	draw_border(600, 450, &temp, s);
-	make_rect_trans(600, 450, &temp, &s->minimap_color, s);
+	make_rect_trans(width_height, &temp, &s->minimap_color, s);
 	mlx_put_image_to_window(s->mlx, s->mlx_window, s->mlx_image, 0, 0);
 	mlx_string_put(s->mlx, s->mlx_window, 560, (220 + 50), 0x57d29d, \
-	"How to play:"); // green
-	// mlx_string_put(s->mlx, s->mlx_window, 550, (220 + 50), 0xFF6633, "How to play:"); // orange
+	"How to play:");
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + 30)), \
-	0xF9DB24, "        - Use W A S D keys to move."); // yellow
+	0xF9DB24, "        - Use W A S D keys to move.");
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + (30 * 3))), \
 	0xF9DB24, "        - Use right and left arrows to turn.");
 	mlx_string_put(s->mlx, s->mlx_window, 620, (220 + (60 + (30 * 5))), \
@@ -57,11 +59,11 @@ void	redraw_window(t_main *s)
 
 	/* draw floor and ceiling */
 	if (!s->p->f_is_texture)
-		draw_floor(s->floor_color, &s->fog, s);
+		color_floor(s->floor_color, &s->fog, s);
 	else
 		floor_n_ceiling_cast(s, &s->floor_tex, WINDOW_Y / 2);
 	if (!s->p->c_is_texture)
-		draw_ceiling(s->ceiling_color, &s->fog, s);
+		color_ceiling(s->ceiling_color, &s->fog, s);
 	else
 		floor_n_ceiling_cast(s, &s->ceiling_tex, 0);
 	/* cast rays */

@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   toggle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 17:02:17 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/26 14:29:56 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:39:30 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	toggle_start_n_draw(t_main *s)
+{
+	s->start_screen_done = true;
+	redraw_window(s);
+}
 
 void	toggle_minimap_n_draw(t_main *s)
 {

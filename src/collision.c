@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 12:18:31 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 16:41:47 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 16:57:27 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,22 @@ t_collision *c, t_main *s)
 
 static void	check_side_walls(t_collision *c, t_main *s)
 {
-	if (!c->collision_x && c->player_direction.x > 0) //right
-	{
-		if (s->map[(int)s->player_position.y][(int)s->player_position.x + 1] == '1' \
-		&& ceil(s->player_position.x) - c->temp_pos.x <= WC_OFFSET)
-			c->collision_x = true;
-	}
-	else if (!c->collision_x && c->player_direction.x < 0) //left
-	{
-		if (s->map[(int)s->player_position.y][(int)s->player_position.x - 1] == '1' \
-		&& c->temp_pos.x - floor(s->player_position.x) <= WC_OFFSET)
-			c->collision_x = true;
-	}
-	if (!c->collision_y && c->player_direction.y > 0) //down
-	{
-		if (s->map[(int)s->player_position.y + 1][(int)s->player_position.x] == '1' \
-		&& ceil(s->player_position.y) - c->temp_pos.y <= WC_OFFSET)
-			c->collision_y = true;
-	}
-	else if (!c->collision_y && c->player_direction.y < 0) //up
-	{
-		if (s->map[(int)s->player_position.y - 1][(int)s->player_position.x] == '1' \
-		&& c->temp_pos.y - floor(s->player_position.y) <= WC_OFFSET)
-			c->collision_y = true;
-	}
+	if ((!c->collision_x && c->player_direction.x > 0) && \
+	(s->map[(int)s->player_position.y][(int)s->player_position.x + 1] == '1' \
+	&& ceil(s->player_position.x) - c->temp_pos.x <= WC_OFFSET))
+		c->collision_x = true;
+	else if ((!c->collision_x && c->player_direction.x < 0) && \
+	(s->map[(int)s->player_position.y][(int)s->player_position.x - 1] == '1' \
+	&& c->temp_pos.x - floor(s->player_position.x) <= WC_OFFSET))
+		c->collision_x = true;
+	if ((!c->collision_y && c->player_direction.y > 0) && \
+	(s->map[(int)s->player_position.y + 1][(int)s->player_position.x] == '1' \
+	&& ceil(s->player_position.y) - c->temp_pos.y <= WC_OFFSET))
+		c->collision_y = true;
+	else if ((!c->collision_y && c->player_direction.y < 0) && \
+	(s->map[(int)s->player_position.y - 1][(int)s->player_position.x] == '1' \
+	&& c->temp_pos.y - floor(s->player_position.y) <= WC_OFFSET))
+		c->collision_y = true;
 }
 
 static void	check_open_corner(t_collision *c, t_main *s)
@@ -88,11 +80,10 @@ static void	check_open_corner(t_collision *c, t_main *s)
 }
 
 /* function to manage wall collisions */
-
 int	check_collision(double move_amount, double change_angle, t_main *s)
 {
 	int			i;
-	t_collision c;
+	t_collision	c;
 
 	init_collision_struct(move_amount, change_angle, &c, s);
 	i = 0;

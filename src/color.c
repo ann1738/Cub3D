@@ -6,21 +6,19 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 14:33:14 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/24 16:25:20 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 16:24:12 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* function to convert rgb to unsigned int */
-
 unsigned int	rgb_to_uint(int transp, int red, int green, int blue)
 {
 	return (transp << 24 | red << 16 | green << 8 | blue);
 }
 
 /* function to convert unsigned int to rgb */
-
 void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color)
 {
 	rgb_color->blue = (uint_color & 0x000000ff) & 255;
@@ -29,7 +27,6 @@ void	uint_to_rgb(unsigned int uint_color, t_color *rgb_color)
 }
 
 /* function that mixes the given color with fog color with an intensity */
-
 void	add_fog(double intensity, t_color fog_color, t_color *color)
 {
 	if (intensity >= 0 && intensity <= 1)
@@ -47,7 +44,6 @@ void	add_fog(double intensity, t_color fog_color, t_color *color)
 
 /* function that mixes the given color with fog color with an intensity */
 /* but takes the color in the form of an unsigned int */
-
 unsigned int	add_fog_uint(double intensity, t_color *fog_color, \
 unsigned int color)
 {
@@ -67,7 +63,6 @@ unsigned int color)
 }
 
 /* function to assign rgb colors in the color struct */
-
 void	assign_rgb_color(int red, int green, int blue, t_color *color)
 {
 	color->blue = blue & 255;

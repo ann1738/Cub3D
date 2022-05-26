@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 15:04:00 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:38:27 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	restore_position(t_vector *save, t_main *s)
+{
+	s->player_position.x = save->x;
+	s->player_position.y = save->y;
+	s->player_map_position.x = (int)save->x;
+	s->player_map_position.y = (int)save->y;
+	return ;
+}
 
 /* function to manage the player's movement */
 void	movement(double move_amount, double change_angle, t_main *s)
@@ -24,20 +33,16 @@ void	movement(double move_amount, double change_angle, t_main *s)
 	save.x = s->player_position.x;
 	save.y = s->player_position.y;
 	if (collision != COLLISION_X)
-		s->player_position.x += move_amount * cos(s->player_angle + change_angle);
+		s->player_position.x += move_amount * \
+		cos(s->player_angle + change_angle);
 	if (collision != COLLISION_Y)
-		s->player_position.y += move_amount * sin(s->player_angle + change_angle);
+		s->player_position.y += move_amount * \
+		sin(s->player_angle + change_angle);
 	s->player_map_position.x = (int)s->player_position.x;
 	s->player_map_position.y = (int)s->player_position.y;
 	if (s->map[s->player_map_position.y][s->player_map_position.x] == '1' \
 	|| s->map[s->player_map_position.y][s->player_map_position.x] == ' ')
-	{
-		s->player_position.x = save.x;
-		s->player_position.y = save.y;
-		s->player_map_position.x = (int)save.x;
-		s->player_map_position.y = (int)save.y;
-		return ;
-	}
+		return (restore_position(&save, s));
 	if (s->map[s->player_map_position.y][s->player_map_position.x] == 'L')
 	{
 		s->map[s->player_map_position.y][s->player_map_position.x] = '0';
@@ -61,8 +66,8 @@ void	rotate(double change_angle, t_main *s)
 /* function to manage the player's rotation */
 int	key_hooks(int keycode, t_main *s)
 {
-	if (!s->start_screen_done && keycode != ESC_KEY && (++s->start_screen_done)) //check before submission
-		redraw_window(s);
+	if (!s->start_screen_done && keycode != ESC_KEY)
+		toggle_start_n_draw(s);
 	else if (keycode == ESC_KEY)
 		close_x(s);
 	else if (keycode == H_KEY)

@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 16:52:46 by ann               #+#    #+#             */
-/*   Updated: 2022/05/19 16:15:09 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 16:50:53 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ static void	swap_and_abs(t_coord *start, t_coord *end, t_main *s)
 }
 
 /* This function draws a line from start coordinates to the end coordinates */
-/* based on Bresenham's line-drawing algorithm. */
-
+/* based on Bresenham's line-drawing algorithm */
 void	draw_line(t_coord start, t_coord end, t_main *s)
 {
 	t_bresenham		b;

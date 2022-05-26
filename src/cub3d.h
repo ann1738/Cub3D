@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 14:46:33 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:25:28 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-
-#include <time.h>
 
 /* ----------------------- > >> Colors << < ----------------------- */
 
@@ -370,11 +368,6 @@ typedef struct s_main
 	bool	minimap_on;
 	bool	side_hit;
 
-	//fps
-	clock_t	frame1;
-	clock_t	frame2;
-	double	fps;
-
 	//colors
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
@@ -447,32 +440,32 @@ void			put_pixel(int x, int y, unsigned int color, t_main *s);
 void			draw_rect(int width, int height, t_coord const *origin, t_main *s);
 void			draw_border(int width, int height, t_coord const *origin, t_main *s);
 void			draw_circle(int radius, t_coord const *origin, t_main *s);
-void			draw_vertical_strip(t_coord origin, int width, int height, t_main *s);
-void			draw_vertical_texture(t_coord origin, int width, int height, t_texture const *tex, t_main *s);
+void			draw_vertical_texture(t_coord origin, int *width_height, t_texture const *tex, t_main *s);
 
 /* --------------- ** minimap ** ---------------- */
-bool			check_outside_minimap(int x, int y);
-void			make_rect_trans(int width, int height, t_coord const *origin, t_color *color, t_main *s);
 void			draw_minimap(t_main *s);
+
+/* ------------ ** minimap utils ** -------------- */
+bool			check_outside_minimap(int x, int y);
+void			make_rect_trans(int *width_height, t_coord const *origin, t_color *color, t_main *s);
 
 /* ---------------- ** hooks ** ----------------- */
 int				key_hooks(int keycode, t_main *s);
 int				close_x(t_main *s);
 int				mouse_perspective(int x, int y, t_main *s);
 
-void			rotate_coor(double *x, double *y, double angle);
-
 /* --------------- ** ray cast ** --------------- */
 void			cast_rays(t_main *s);
 
+/* ------------- ** ray cast utils ** ----------- */
+void			draw_rays_for_minimap(t_main *s);
+void			select_fog_intensity(t_main *s);
+void			select_correct_texture(int *texture_index, t_main *s);
+void			prepare_to_draw_wall(int texture_index, t_main *s);
+void			check_n_save_leaf_pos(t_main *s);
+
 /* ---------------- ** line ** ------------------ */
 void			draw_line(t_coord start, t_coord end, t_main *s);
-
-/* ---------------- ** floor ** ----------------- */
-void			draw_floor(unsigned int color, t_color *fog_color, t_main *s);
-
-/* ---------------- ** ceiling ** --------------- */
-void			draw_ceiling(unsigned int color, t_color *fog_color, t_main *s);
 
 /* ---------------- ** redraw ** ---------------- */
 void			redraw_window(t_main *s);
@@ -483,12 +476,10 @@ void			initiate_player_info(t_main *s);
 /* ---------------- ** math ** ------------------ */
 double			deg_to_rad(double deg);
 double			rad_to_deg(double rad);
+void			rotate_coor(double *x, double *y, double angle);
 
 /* --------------- ** texture ** ---------------- */
 void			load_textures(t_pars *p, t_main *s);
-
-/* ---------------- ** math ** ------------------ */
-void			fps(t_main *s);
 
 /* ---------------- ** color ** ----------------- */
 void			uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
@@ -501,6 +492,7 @@ unsigned int	add_fog_uint(double intensity, t_color *fog_color, unsigned int col
 int				check_collision(double move_amount, double change_angle, t_main *s);
 
 /* ---------------- ** toggle ** ---------------- */
+void			toggle_start_n_draw(t_main *s);
 void			toggle_minimap_n_draw(t_main *s);
 void			toggle_mouse(t_main *s);
 void			toggle_info_n_draw(t_main *s);
@@ -511,6 +503,8 @@ bool			check_if_coord_exist(t_main *s, int x, int y);
 void			sprite_cast(t_main *s, t_texture *tex);
 
 /* ------------- ** floor ceiling ** ------------ */
+void			color_ceiling(unsigned int color, t_color *fog_color, t_main *s);
+void			color_floor(unsigned int color, t_color *fog_color, t_main *s);
 void			floor_n_ceiling_cast(t_main *s, t_texture *texture, int y);
 
 /* ----------------- ** exit ** ----------------- */
