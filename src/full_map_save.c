@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:49:10 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/26 13:18:15 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:22:02 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,18 +126,13 @@ static void	check_save_texture(char *map_line, t_pars *p)
 
 void	init_map_save(char *file_path, t_pars *p)
 {
-	bool	get_index;
 	int		i;
 	int		fd;
+	bool	get_index;
 
 	get_max_x_y(file_path, p);
 	p->full_file = ft_calloc_p((p->file_h + 1), sizeof(char **));
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
-		exit(1);
-	}
+	fd = ft_open(file_path);
 	i = -1;
 	get_index = false;
 	while (++i < p->file_h)

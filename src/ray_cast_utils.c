@@ -6,7 +6,7 @@
 /*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:37:34 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/26 18:30:22 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 19:08:45 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	prepare_to_draw_wall(int texture_index, t_main *s)
 void	check_n_save_leaf_pos(t_main *s)
 {
 	if (s->map[s->ray_map_position.y][s->ray_map_position.x] == 'L' \
-	&& !check_if_coord_exist(s, s->ray_map_position.x, s->ray_map_position.y))
+	&& !check_sprite_coord(s, s->ray_map_position.x, s->ray_map_position.y))
 	{
 		s->sprite->position[s->sprite->in_screen_count].x = \
 		s->ray_map_position.x;

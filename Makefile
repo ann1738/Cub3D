@@ -18,10 +18,11 @@ MLX_STATIC_LIB = $(MLX_LIB)/libmlx.a
 LIBFT_STATIC_LIB = $(LIBFT_LIB)/libft.a
 
 SRC = cub3d.c get_next_line.c drawing.c minimap.c collision.c\
-    hooks.c line.c ray_cast.c redraw.c \
-	initiate.c math_utils.c check_user_input.c full_map_save.c \
-	rgb_to_hex.c map_checks.c pars_utils.c texture.c color.c exit.c \
-	toggle.c animation.c floor_n_celling.c minimap_utils.c ray_cast_utils.c
+    hooks.c line.c ray_cast.c redraw.c initiate.c \
+	math_utils.c check_user_input.c full_map_save.c \
+	check_map.c pars_utils.c texture.c color.c exit.c \
+	toggle.c animation.c floor_n_celling.c minimap_utils.c \
+	ray_cast_utils.c sprite_cast.c check_file_validity.c
 OBJ = $(SRC:%.c=%.o)
 DEP = $(SRC:%.c=%.d)
 
