@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 14:46:33 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:06:51 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-
-#include <time.h>
 
 /* ----------------------- > >> Colors << < ----------------------- */
 
@@ -370,11 +368,6 @@ typedef struct s_main
 	bool	minimap_on;
 	bool	side_hit;
 
-	//fps
-	clock_t	frame1;
-	clock_t	frame2;
-	double	fps;
-
 	//colors
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
@@ -418,7 +411,7 @@ typedef struct s_main
 
 /* ----------- ** pars utils ** ------------ */
 void			remove_nl(char *str);
-void			ft_open(char *file_path);
+int				ft_open(char *file_path);
 void			free_char_double_pointer(char **str);
 void			get_max_x_y(char *file_path, t_pars *p);
 void			*ft_calloc_p(size_t count, size_t size);
@@ -427,6 +420,7 @@ void			*ft_calloc_p(size_t count, size_t size);
 bool			has_dot_xpm(char *file_path);
 void			user_input_check(int argc, char **argv);
 void			print_error_n_exit(int flag, char *argv1);
+void			rgb_char_to_int(char *char_rgb, int int_rgb[3]);
 
 /* -------------- ** map checks ** --------------- */
 void			check_map_content(t_pars *p);
@@ -435,9 +429,6 @@ void			check_file_validity(t_pars *p);
 /* ----------- ** full map save ** ------------- */
 void			init_map_save(char *file_path, t_pars *p);
 
-/* ------------- ** rgb to hex ** -------------- */
-void			rgb_char_to_int(char *char_rgb, int int_rgb[3]);
-void			rgb_to_hex(int rgb_int[3], char *hex);
 
 /* ----------------- ** gnl ** ------------------ */
 char			*get_next_line(int fd);
@@ -487,9 +478,6 @@ double			rad_to_deg(double rad);
 /* --------------- ** texture ** ---------------- */
 void			load_textures(t_pars *p, t_main *s);
 
-/* ---------------- ** math ** ------------------ */
-void			fps(t_main *s);
-
 /* ---------------- ** color ** ----------------- */
 void			uint_to_rgb(unsigned int uint_color, t_color *rgb_color);
 void			add_fog(double intensity, t_color fog_color, t_color *color);
@@ -507,7 +495,10 @@ void			toggle_info_n_draw(t_main *s);
 
 /* -------------- ** animation ** --------------- */
 int				animation(t_main *s);
+void			draw_sprite(t_main *s, t_texture *tex);
 bool			check_if_coord_exist(t_main *s, int x, int y);
+
+/* -------------- ** sprite cast ** ------------- */
 void			sprite_cast(t_main *s, t_texture *tex);
 
 /* ------------- ** floor ceiling ** ------------ */

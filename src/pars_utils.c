@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:31:26 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 13:17:04 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:50:42 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	remove_nl(char *str)
 	}
 }
 
-void	ft_open(char *file_path)
+int	ft_open(char *file_path)
 {
 	int	fd;
 
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 		print_error_n_exit(3, file_path);
-	close(fd);
+	return (fd);
 }
 
 void	get_max_x_y(char *file_path, t_pars *p)
@@ -55,7 +55,7 @@ void	get_max_x_y(char *file_path, t_pars *p)
 	temp = get_next_line(fd);
 	if (!temp)
 	{
-		close(fd); //close before exit
+		close(fd);
 		exit(1);
 	}
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:48:06 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/26 14:46:08 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:05:05 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ bool	has_dot_xpm(char *file_path)
 			return (true);
 	}
 	return (false);
+}
+
+void	rgb_char_to_int(char *char_rgb, int int_rgb[3])
+{
+	int	i;
+
+	int_rgb[0] = ft_atoi(&char_rgb[0]);
+	i = -1;
+	while (char_rgb[++i] != ',')
+		;
+	int_rgb[1] = ft_atoi(&char_rgb[++i]);
+	while (char_rgb[++i] != ',')
+		;
+	int_rgb[2] = ft_atoi(&char_rgb[++i]);
 }
 
 void	print_error_n_exit(int flag, char *argv1)
