@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:31:27 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 18:52:50 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:52:12 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,6 @@ static void	throw_map_error_n_exit(t_pars *p)
 	printf("%sError: check map%s\n", RED, RESET);
 	free_char_double_pointer(p->full_file);
 	exit(1);
-}
-
-static int	ft_open_n_free(t_pars *p, char *file_path)
-{
-	int	fd;
-
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
-		free_char_double_pointer(p->full_file);
-		exit(1);
-	}
-	return (fd);
 }
 
 static void	check_textures_validity(t_pars *p)

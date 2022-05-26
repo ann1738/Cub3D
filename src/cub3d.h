@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 19:27:37 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 19:52:46 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,7 +394,7 @@ typedef struct s_main
 
 /* ----------- ** pars utils ** ------------ */
 void			remove_nl(char *str);
-int				ft_open(char *file_path);
+int				ft_open_n_free(t_pars *p, char *file_path);
 void			free_char_double_pointer(char **str);
 void			get_max_x_y(char *file_path, t_pars *p);
 void			*ft_calloc_p(size_t count, size_t size);
@@ -402,7 +402,6 @@ void			*ft_calloc_p(size_t count, size_t size);
 /* ----------- ** check user input ** ------------ */
 bool			has_dot_xpm(char *file_path);
 void			user_input_check(int argc, char **argv);
-void			print_error_n_exit(int flag, char *argv1);
 void			rgb_char_to_int(char *char_rgb, int int_rgb[3]);
 
 /* -------------- ** map checks ** --------------- */

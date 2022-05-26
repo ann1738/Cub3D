@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:49:10 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/26 17:22:02 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:52:50 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	init_map_save(char *file_path, t_pars *p)
 
 	get_max_x_y(file_path, p);
 	p->full_file = ft_calloc_p((p->file_h + 1), sizeof(char **));
-	fd = ft_open(file_path);
+	fd = ft_open_n_free(p, file_path);
 	i = -1;
 	get_index = false;
 	while (++i < p->file_h)

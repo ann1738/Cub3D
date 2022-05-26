@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:31:26 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 17:50:42 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:52:36 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ void	remove_nl(char *str)
 	}
 }
 
-int	ft_open(char *file_path)
+int	ft_open_n_free(t_pars *p, char *file_path)
 {
 	int	fd;
 
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
-		print_error_n_exit(3, file_path);
+	{
+		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
+		free_char_double_pointer(p->full_file);
+		exit(1);
+	}
 	return (fd);
 }
 

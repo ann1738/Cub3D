@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 14:48:06 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/26 17:05:05 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:37:23 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	rgb_char_to_int(char *char_rgb, int int_rgb[3])
 	int_rgb[2] = ft_atoi(&char_rgb[++i]);
 }
 
-void	print_error_n_exit(int flag, char *argv1)
+static void	print_error_n_exit(int flag, char *argv1)
 {
 	if (flag == 1)
 	{
