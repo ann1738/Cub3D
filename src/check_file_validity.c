@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:31:27 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 18:49:14 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:52:50 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	throw_map_error_n_exit(t_pars *p)
 	exit(1);
 }
 
-static int ft_open_n_free(t_pars *p, char *file_path)
+static int	ft_open_n_free(t_pars *p, char *file_path)
 {
 	int	fd;
 
@@ -61,6 +61,7 @@ static int ft_open_n_free(t_pars *p, char *file_path)
 	}
 	return (fd);
 }
+
 static void	check_textures_validity(t_pars *p)
 {
 	if (!has_dot_xpm(p->e_texture) || !has_dot_xpm(p->w_texture) \
