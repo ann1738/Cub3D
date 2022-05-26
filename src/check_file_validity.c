@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:31:27 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 17:45:19 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ static void	throw_map_error_n_exit(t_pars *p)
 	exit(1);
 }
 
+static int ft_open_n_free(t_pars *p, char *file_path)
+{
+	int	fd;
+
+	fd = open(file_path, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
+		free_char_double_pointer(p->full_file);
+		exit(1);
+	}
+	return (fd);
+}
 static void	check_textures_validity(t_pars *p)
 {
 	if (!has_dot_xpm(p->e_texture) || !has_dot_xpm(p->w_texture) \
@@ -55,14 +68,14 @@ static void	check_textures_validity(t_pars *p)
 	(p->f_is_texture && !has_dot_xpm(p->f_color_rgb)) || \
 	(p->c_is_texture && !has_dot_xpm(p->f_color_rgb)))
 		throw_map_error_n_exit(p);
-	close(ft_open(p->n_texture));
-	close(ft_open(p->s_texture));
-	close(ft_open(p->e_texture));
-	close(ft_open(p->w_texture));
+	close(ft_open_n_free(p, p->n_texture));
+	close(ft_open_n_free(p, p->s_texture));
+	close(ft_open_n_free(p, p->e_texture));
+	close(ft_open_n_free(p, p->w_texture));
 	if (p->f_is_texture)
-		close(ft_open(p->f_color_rgb));
+		close(ft_open_n_free(p, p->f_color_rgb));
 	if (p->c_is_texture)
-		close(ft_open(p->c_color_rgb));
+		close(ft_open_n_free(p, p->c_color_rgb));
 }
 
 void	check_file_validity(t_pars *p)
