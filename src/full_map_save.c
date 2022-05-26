@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:49:10 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/16 12:39:59 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:18:15 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	save_texture_no_so(char *map_line, t_pars *p, int *i)
 	if (map_line[*i] == 'N' && map_line[*i + 1] == 'O' && \
 	(map_line[*i + 2] == ' ' || map_line[*i + 2] == '\t'))
 	{
+		if (p->n)
+			p->map_error = true;
 		*i += 2;
 		while (ft_isspace(map_line[*i]))
 			(*i)++;
@@ -27,6 +29,8 @@ static int	save_texture_no_so(char *map_line, t_pars *p, int *i)
 	else if (map_line[*i] == 'S' && map_line[*i + 1] == 'O' && \
 	(map_line[*i + 2] == ' ' || map_line[*i + 2] == '\t'))
 	{
+		if (p->s)
+			p->map_error = true;
 		*i += 2;
 		while (ft_isspace(map_line[*i]))
 			(*i)++;
@@ -42,6 +46,8 @@ static int	save_texture_we_ea(char *map_line, t_pars *p, int *i)
 	if (map_line[*i] == 'W' && map_line[*i + 1] == 'E' && \
 	(map_line[*i + 2] == ' ' || map_line[*i + 2] == '\t'))
 	{
+		if (p->w)
+			p->map_error = true;
 		*i += 2;
 		while (ft_isspace(map_line[*i]))
 			(*i)++;
@@ -52,6 +58,8 @@ static int	save_texture_we_ea(char *map_line, t_pars *p, int *i)
 	else if (map_line[*i] == 'E' && map_line[*i + 1] == 'A' && \
 	(map_line[*i + 2] == ' ' || map_line[*i + 2] == '\t'))
 	{
+		if (p->e)
+			p->map_error = true;
 		*i += 2;
 		while (ft_isspace(map_line[*i]))
 			(*i)++;
@@ -67,9 +75,10 @@ static int	save_texture_f_c_extra(char *map_line, t_pars *p, int *i)
 	if (map_line[*i] == 'F' && \
 	(map_line[*i + 1] == ' ' || map_line[*i + 1] == '\t'))
 	{
-		*i += 1;
-		while (ft_isspace(map_line[*i]))
-			(*i)++;
+		if (p->f)
+			p->map_error = true;
+		while (ft_isspace(map_line[++(*i)]))
+			;
 		p->f_color_rgb = &map_line[*i];
 		p->f = true;
 		return (0);
@@ -77,9 +86,10 @@ static int	save_texture_f_c_extra(char *map_line, t_pars *p, int *i)
 	else if (map_line[*i] == 'C' && \
 	(map_line[*i + 1] == ' ' || map_line[*i + 1] == '\t'))
 	{
-		*i += 1;
-		while (ft_isspace(map_line[*i]))
-			(*i)++;
+		if (p->c)
+			p->map_error = true;
+		while (ft_isspace(map_line[++(*i)]))
+			;
 		p->c_color_rgb = &map_line[*i];
 		p->c = true;
 		return (0);
@@ -121,16 +131,16 @@ void	init_map_save(char *file_path, t_pars *p)
 	int		fd;
 
 	get_max_x_y(file_path, p);
-	p->full_file = ft_calloc((p->file_h + 1), sizeof(char **));
+	p->full_file = ft_calloc_p((p->file_h + 1), sizeof(char **));
 	fd = open(file_path, O_RDONLY);
 	if (fd == -1)
 	{
 		printf("%sError: %s can't be open%s\n", RED, file_path, RESET);
 		exit(1);
 	}
-	i = 0;
+	i = -1;
 	get_index = false;
-	while (i < p->file_h)
+	while (++i < p->file_h)
 	{
 		p->full_file[i] = get_next_line(fd);
 		remove_nl(p->full_file[i]);
@@ -141,7 +151,6 @@ void	init_map_save(char *file_path, t_pars *p)
 			get_index = true;
 			p->map_starting_i = i - 1;
 		}
-		i++;
 	}
 	close(fd);
 }

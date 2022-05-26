@@ -1,9 +1,9 @@
-NO ./textures/fence/PINK!.xpm
-SO ./textures/fence/PINK!.xpm
-WE ./textures/fence/PINK!.xpm
-EA ./textures/fence/PINK!.xpm
+NO ./textures/fence/purple.xpm
+SO ./textures/fence/purple.xpm
+WE ./textures/fence/purple.xpm
+EA ./textures/fence/purple.xpm
 
-C 135,206,235
+C 255,149,6
 F ./textures/grass/grass.xpm
 
         1111111111111111111111111

@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 16:45:15 by anasr             #+#    #+#             */
-/*   Updated: 2022/05/25 18:54:11 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:10:14 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	close_x(t_main *s)
 	mlx_destroy_image(s->mlx, s->texture[2].image);
 	mlx_destroy_image(s->mlx, s->texture[3].image);
 	i = -1;
-	while (++i < 9)
+	while (s->p->leaf_is_here && ++i < 9)
 		mlx_destroy_image(s->mlx, s->leaf_dude[i].image);
 	if (s->p->c_is_texture)
 		mlx_destroy_image(s->mlx, s->ceiling_tex.image);
@@ -54,6 +54,7 @@ int	close_x(t_main *s)
 
 	//free allocations
 	free_double_char(s->p->full_file);
-	free(s->sprite->position);
+	if (s->p->leaf_is_here)
+		free(s->sprite->position);
 	exit(1);
 }

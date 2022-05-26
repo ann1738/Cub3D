@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 02:29:56 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 18:44:59 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:04:00 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	key_hooks(int keycode, t_main *s)
 		redraw_window(s);
 	else if (keycode == ESC_KEY)
 		close_x(s);
+	else if (keycode == H_KEY)
+		toggle_mouse(s);
 	else if (s->end_screen_done)
 		return (0);
 	else if (keycode == W_KEY)
@@ -81,8 +83,6 @@ int	key_hooks(int keycode, t_main *s)
 		rotate(ROTATION_AMOUNT, s);
 	else if (keycode == M_KEY)
 		toggle_minimap_n_draw(s);
-	else if (keycode == H_KEY)
-		toggle_mouse(s);
 	else if (keycode == I_KEY)
 		toggle_info_n_draw(s);
 	return (0);
@@ -94,7 +94,7 @@ int	mouse_perspective(int x, int y, t_main *s)
 	double	change_angle;
 
 	(void)y;
-	if (s->is_using_mouse)
+	if (!s->end_screen_done && s->is_using_mouse)
 	{
 		change_angle = (x - (WINDOW_X / 2)) / 1069.521218;
 		rotate(change_angle, s);

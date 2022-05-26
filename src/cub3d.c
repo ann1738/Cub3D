@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 07:58:57 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 18:43:18 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 14:55:13 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ static void	parse(int argc, char **argv, t_pars *p)
 	check_file_validity(p);
 	p->map = &p->full_file[p->map_starting_i];
 	check_map_content(p);
-	if (p->map_error)
+	if (p->map_error || !has_dot_xpm(p->e_texture) || \
+	!has_dot_xpm(p->w_texture) || !has_dot_xpm(p->n_texture) || \
+	!has_dot_xpm(p->s_texture) || \
+	(p->f_is_texture && !has_dot_xpm(p->f_color_rgb)) || \
+	(p->c_is_texture && !has_dot_xpm(p->f_color_rgb)))
 	{
-		printf("%soooi .. fix your shit%s\n", RED, RESET);
-		// printf("%sError: check map%s\n", RED, RESET);
+		printf("%sError: check map%s\n", RED, RESET);
 		free_char_double_pointer(p->full_file);
-		exit(0);
+		exit(1);
 	}
 }
 
@@ -51,6 +54,14 @@ static void	initiate_main_struct(t_main *s, t_pars *p, t_sprite *sprite)
 	s->map_width_max = p->map_w;
 	s->ceiling_color = rgb_to_uint(0, p->c_color_rgb_int[0], p->c_color_rgb_int[1], p->c_color_rgb_int[2]);
 	s->floor_color = rgb_to_uint(0, p->f_color_rgb_int[0], p->f_color_rgb_int[1], p->f_color_rgb_int[2]);
+	
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MALLOC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+	if (p->leaf_is_here)
+		sprite->position = ft_calloc_p(s->p->full_sprite_count, sizeof(t_coord));
+	s->sprite = sprite;
+	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 	/* defining useful colors */
 	assign_rgb_color(171, 174, 176, &s->fog);
@@ -58,12 +69,6 @@ static void	initiate_main_struct(t_main *s, t_pars *p, t_sprite *sprite)
 	assign_rgb_color(0, 0, 0, &s->black);
 	load_textures(p, s);
 
-	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MALLOC !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-	sprite->position = ft_calloc(s->p->full_sprite_count, sizeof(t_coord));
-	s->sprite = sprite;
-	/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 	/* features to start with the game or to be toggled by the player */
 	s->minimap_on = MINIMAP_DEFAULT == 1;

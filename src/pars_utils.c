@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:31:26 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/19 16:16:34 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 13:17:04 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,17 @@ void	get_max_x_y(char *file_path, t_pars *p)
 		temp = get_next_line(fd);
 	}
 	close(fd);
+}
+
+void	*ft_calloc_p(size_t count, size_t size)
+{
+	void	*ptr;
+
+	ptr = ft_calloc(count, size);
+	if (!ptr)
+	{
+		printf("%sError: fatal error%s\n", RED2, RESET);
+		exit(1);
+	}
+	return (ptr);
 }

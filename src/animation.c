@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/25 18:21:59 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:19:09 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,8 @@ void	sprite_cast(t_main *s, t_texture *tex)
 {
 	int	i;
 	
-	s->sprite->s_order = ft_calloc(s->sprite->in_screen_count, sizeof(int));
-	if (!s->sprite->s_order)
-	{
-		printf("%sError: fatal error%s\n", RED2, RESET);
-		exit(1);
-	}
-	s->sprite->s_distance = ft_calloc(s->sprite->in_screen_count, sizeof(double));
-	if (!s->sprite->s_distance)
-	{
-		printf("%sError: fatal error%s\n", RED2, RESET);
-		exit(1);
-	}
+	s->sprite->s_order = ft_calloc_p(s->sprite->in_screen_count, sizeof(int));
+	s->sprite->s_distance = ft_calloc_p(s->sprite->in_screen_count, sizeof(double));
 	i = -1;
 	while (++i < s->sprite->in_screen_count)
 	{

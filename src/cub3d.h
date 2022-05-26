@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 12:16:01 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/26 14:46:33 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,8 +421,10 @@ void			remove_nl(char *str);
 void			ft_open(char *file_path);
 void			free_char_double_pointer(char **str);
 void			get_max_x_y(char *file_path, t_pars *p);
+void			*ft_calloc_p(size_t count, size_t size);
 
 /* ----------- ** check user input ** ------------ */
+bool			has_dot_xpm(char *file_path);
 void			user_input_check(int argc, char **argv);
 void			print_error_n_exit(int flag, char *argv1);
 

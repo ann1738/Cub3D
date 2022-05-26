@@ -6,7 +6,7 @@
 /*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 16:49:27 by Alia              #+#    #+#             */
-/*   Updated: 2022/05/25 17:53:15 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:00:27 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ bool	ft_str_isrgb(char *str)
 	int	comma_count;
 	int	digit_count;
 
-	i = 0;
+	i = -1;
 	comma_count = 0;
 	digit_count = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == ',' && ft_isdigit(str[i + 1]))
 		{
+			if (!digit_count)
+				return (false);
 			digit_count = 0;
 			comma_count++;
 		}
@@ -33,8 +35,9 @@ bool	ft_str_isrgb(char *str)
 		if (digit_count > 3 || comma_count > 2)
 			return (false);
 		digit_count++;
-		i++;
 	}
+	if (comma_count != 2)
+		return (false);
 	return (true);
 }
 
@@ -62,7 +65,7 @@ void	check_file_validity(t_pars *p)
 	{
 		printf("%sError: check map%s\n", RED, RESET);
 		free_char_double_pointer(p->full_file);
-		exit(0);
+		exit(1);
 	}
 	check_textures_validity(p);
 	if (!p->f_is_texture)
@@ -73,7 +76,7 @@ void	check_file_validity(t_pars *p)
 		{
 			printf("%sError: check map%s\n", RED, RESET);
 			free_char_double_pointer(p->full_file);
-			exit(0);
+			exit(1);
 		}
 	}
 	if (!p->c_is_texture)
@@ -84,7 +87,7 @@ void	check_file_validity(t_pars *p)
 		{
 			printf("%sError: check map%s\n", RED, RESET);
 			free_char_double_pointer(p->full_file);
-			exit(0);
+			exit(1);
 		}
 	}
 }
