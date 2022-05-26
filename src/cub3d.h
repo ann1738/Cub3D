@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 19:42:21 by ann               #+#    #+#             */
-/*   Updated: 2022/05/25 18:35:59 by aalsuwai         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:16:01 by anasr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,10 @@
 # define MOVEMENT_AMOUNT 0.25
 # define ROTATION_AMOUNT 0.1
 # define MINI_PLAYER_ICON_SIZE 3
-# define NUMBER_OF_RAYS 420
+# define NUMBER_OF_RAYS 1680
 
-# define START_SCREEN_PATH "images/start_screen.xpm"
-# define END_SCREEN_PATH "images/end_screen.xpm"
+# define START_SCREEN_PATH "textures/start_n_end/start_screen.xpm"
+# define END_SCREEN_PATH "textures/start_n_end/end_screen.xpm"
 
 /* customizable defaults */
 
