@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   animation.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 11:58:25 by aalsuwai          #+#    #+#             */
-/*   Updated: 2022/05/26 19:09:08 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/27 13:06:28 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ void	draw_sprite(t_main *s, t_texture *tex)
 
 int	animation(t_main *s)
 {
-	static int	i = 0;
+	static double	i = 0;
 
 	if (!s->sprite->in_screen_count)
 		return (0);
-	s->leaf_index = i;
+	s->leaf_index = (int)i;
 	redraw_window(s);
-	usleep(100000);
-	if (++i >= 8)
+	usleep(10000);
+	i += 0.2;
+	if (i >= 8)
 		i = 0;
 	return (0);
 }

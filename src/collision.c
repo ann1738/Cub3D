@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anasr <anasr@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aalsuwai <aalsuwai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 12:18:31 by ann               #+#    #+#             */
-/*   Updated: 2022/05/26 16:57:27 by anasr            ###   ########.fr       */
+/*   Updated: 2022/05/27 12:56:19 by aalsuwai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	check_collision(double move_amount, double change_angle, t_main *s)
 	int			i;
 	t_collision	c;
 
+	ft_bzero(&c, sizeof(t_collision));
 	init_collision_struct(move_amount, change_angle, &c, s);
 	i = 0;
 	while (i < 10)
